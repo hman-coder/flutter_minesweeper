@@ -1,0 +1,19 @@
+// A file to write notes about the structure of the game
+
+minesweeper_tile:
+  flagged child
+  mine child
+  empty child
+  animation config
+
+minesweeper_tile_state:
+  a tile can be one of three things: 1) Mine, 2) Number, 3)Empty. We will call those Static States (because they cannot be changed for the duration).
+  a tile can be set as flagged regardless of its Static State.
+  the Static State dictates what happens when the tile is explored (tapped).
+
+  Active States are: 1) Explored 2) Unexplored (default) 3) Flagged
+  These states can be changed (hence, they are active).
+
+minesweeper_game:
+  A grid of minesweeper_tile.
+  It creates and dictates the state of minesweeper_tiles. 
