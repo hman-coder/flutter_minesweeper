@@ -11,7 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  shared_preferences: ^2.0.5
+  equatable: ^2.0.0
   flutter_bloc: ^7.0.0
   sqflite: ^2.0.0+3
   cupertino_icons: ^1.0.2
@@ -19,8 +20,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  bloc_test: ^8.0.0
 
 flutter:
-  assets:
-    - assets/minesweeper_icons
+  # assets:
+  #   - assets/minesweeper_icons
   uses-material-design: true
