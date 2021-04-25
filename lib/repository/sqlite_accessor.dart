@@ -33,16 +33,8 @@ class SqliteAccessor {
     );
   }
 
-  update(String table, Map<String, String> values) {
-    _db!.query(table);
-  }
-
   Future<List<Map<String, dynamic>>> fetch(String table) async {
     return await _db!.query(table);
-  }
-
-  insert(String query) {
-    _db!.rawInsert(query);
   }
 
   String get _createStatement => '''
