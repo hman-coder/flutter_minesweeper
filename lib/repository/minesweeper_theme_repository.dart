@@ -8,10 +8,11 @@ abstract class MinesweeperThemeRepository {
 }
 
 class MinesweeperSqliteThemeRepository extends MinesweeperThemeRepository {
-  Future<MinesweeperThemeEntity> fetchTheme() async {
+  Future<MinesweeperThemeEntity?> fetchTheme() async {
     var accessor = await SqliteAccessor.accessor;
     var results = await accessor.fetch(_tableName);
-    var entity = MinesweeperThemeEntity.fromMap(results[0]);
+    if(results[0] == null) return null;
+    var entity = MinesweeperThemeEntity.fromMap(results[0]!);
     return entity;
   }
 }
