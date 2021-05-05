@@ -4,7 +4,7 @@ import 'package:minesweeper_flutter/repository/sqlite_accessor.dart';
 const _tableName = "minesweeper_theme";
 
 abstract class MinesweeperThemeRepository {
-  Future<MinesweeperThemeEntity> fetchTheme();
+  fetchTheme();
 }
 
 class MinesweeperSqliteThemeRepository extends MinesweeperThemeRepository {

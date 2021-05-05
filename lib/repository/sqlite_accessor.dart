@@ -26,14 +26,25 @@ class SqliteAccessor {
   _initializeDb() async {
     _db = await openDatabase(
       kpSqliteDbPath,
-      version: 1,
+      version: 2,
       onCreate: (db, version) {
         db.execute(_createStatement);
+      },
+      onUpgrade: (db, oldVersion, newVersion) => {
+        db.execute(
+            """
+              CREATE TABLE "minesweeper_level_settings" (
+              "height" NUMERIC,
+              "width" NUMERIC,
+              "mines" NUMERIC,
+              )
+            """,
+        ),
       },
     );
   }
 
-  Future<List<Map<String, dynamic>>> fetch(String table) async {
+  Future<List<Map<String, dynamic?>?>> fetch(String table) async {
     return await _db!.query(table);
   }
 
@@ -45,6 +56,12 @@ class SqliteAccessor {
 	"flag_icon"	TEXT,
   "animation" TEXT,
 	"tile_shape"	TEXT);
+
+  CREATE TABLE "minesweeper_level_settings" (
+	"height" NUMERIC,
+  "width" NUMERIC,
+  "mines" NUMERIC,
+  )
 
   INSERT INTO minesweeper_theme VALUES (
     "0xFFFFFFFF", "0xFF000000", "standard", "standard", "animation", "circle"
