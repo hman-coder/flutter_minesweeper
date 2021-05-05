@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:minesweeper_flutter/model/minesweeper_theme.dart';
-import 'package:minesweeper_flutter/repository/minesweeper_theme_repo.dart';
+import 'package:minesweeper_flutter/repository/minesweeper_theme_repository.dart';
 
 import 'minesweeper_theme_event.dart';
 import 'minesweeper_theme_state.dart';
