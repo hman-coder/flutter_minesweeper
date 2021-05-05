@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:minesweeper_flutter/repository/minesweeper_theme_repo.dart';
+import 'package:minesweeper_flutter/repository/minesweeper_theme_repository.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:minesweeper_flutter/bloc/minesweeper_theme.dart';
 import 'package:minesweeper_flutter/model/minesweeper_theme.dart';
