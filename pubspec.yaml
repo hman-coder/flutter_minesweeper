@@ -1,7 +1,7 @@
 name: minesweeper_flutter
 description: A minesweeper app in flutter
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 
 version: 1.0.0+1
 
@@ -23,6 +23,9 @@ dev_dependencies:
   bloc_test: ^8.0.0
 
 flutter:
-  # assets:
-  #   - assets/minesweeper_icons
+  fonts:
+    - family:  Minesweeper
+      fonts:
+       - asset: assets/icons/Minesweeper.ttf
+  
   uses-material-design: true
