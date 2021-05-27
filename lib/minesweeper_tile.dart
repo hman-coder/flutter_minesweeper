@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class MinesweeperTile extends StatefulWidget {
   final double width;
 
+  
   final double height;
 
   final Widget unexploredWidget;
@@ -12,12 +13,12 @@ class MinesweeperTile extends StatefulWidget {
   final Widget flaggedWidget;
 
   const MinesweeperTile({
-    Key key,
-    @required this.width,
-    @required this.height,
-    @required this.unexploredWidget,
-    @required this.exploredWidget,
-    @required this.flaggedWidget,
+    Key? key,
+    required this.width,
+    required this.height,
+    required this.unexploredWidget,
+    required this.exploredWidget,
+    required this.flaggedWidget,
   }) : super(key: key);
 
   @override
@@ -25,7 +26,7 @@ class MinesweeperTile extends StatefulWidget {
 }
 
 class _MinesweeperTileState extends State<MinesweeperTile> {
-  Widget activeWidget;
+  Widget? activeWidget;
 
   @override
   void initState() {
@@ -44,10 +45,12 @@ class _MinesweeperTileState extends State<MinesweeperTile> {
     return GestureDetector(
       onTap: () => setState(() => switchWidget()),
       child: Container(
-        width: widget.height,
-        height: widget.width,
+        margin: EdgeInsets.all(2),
+        width: widget.height - 2,
+        height: widget.width - 2,
         child: Center(child: activeWidget),
         decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
           border: Border.all(
             width: 1,
             color: Colors.black,

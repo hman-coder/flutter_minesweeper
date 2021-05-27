@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:minesweeper_flutter/minesweeper_tile.dart';
 
 class MinesweeperWidget extends StatelessWidget {
-  final List<int> mock = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  final List<int> mock = [1, 2, 3, 4, 5, 6, 7, 8,];
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: SafeArea(
         child: LayoutBuilder(
@@ -18,13 +19,13 @@ class MinesweeperWidget extends StatelessWidget {
               children: mock
                   .map<Widget>((e) => Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [1, 2, 3, 4, 5]
+                        children: [1, 2, 3, 4, 5, 6, 7, 8,]
                             .map<Widget>((e) => MinesweeperTile(
-                              width: 25,
-                              height: 25,
+                              width: 35,
+                              height: 35,
                               unexploredWidget: Text('un'),
-                              exploredWidget: Text('e'),
-                              flaggedWidget: null,
+                              exploredWidget: Text(e.toString()),
+                              flaggedWidget: Text('f'),
                             ))
                             .toList(),
                       ))
