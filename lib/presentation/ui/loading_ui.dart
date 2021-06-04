@@ -10,7 +10,9 @@ class LoadingUI extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              LoadingWidget(type: LoadingWidgetType.screen_width_scan),
+              Text("Minesweeper", style: Theme.of(context).textTheme.headline5,),
+              SizedBox(height: 150,),
+              LoadingWidget(type: LoadingWidgetType.flag_circles_mine),
               SizedBox(height: 100,),
               Text("Loading..."),
             ],
