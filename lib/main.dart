@@ -25,6 +25,7 @@ class _MyAppState extends State<MyApp> {
     return BlocProvider<MinesweeperThemeBloc>(
       create: (context) => _createMinesweeperThemeBloc(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: kffFontFamily,
           textTheme: kttMainTextTheme,
