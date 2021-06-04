@@ -23,4 +23,5 @@ class MinesweeperIcons {
 
   static const IconData mine = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData flag = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData mine_relaxed = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
