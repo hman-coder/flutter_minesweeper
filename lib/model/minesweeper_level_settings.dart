@@ -1,4 +1,6 @@
-import 'package:minesweeper_flutter/entities/minesweeper_level_settings_entity.dart';
+const String kkMinesKey = 'mines';
+const String kkHeightKey = 'height';
+const String kkWidthKey = 'width';
 
 class MinesweeperLevelSettings {
   final int height;
@@ -7,35 +9,34 @@ class MinesweeperLevelSettings {
 
   final int mines;
 
-  MinesweeperLevelSettings.beginner({
+  const MinesweeperLevelSettings.beginner({
     this.height = 10,
     this.width = 10,
     this.mines = 10,
   });
 
-  MinesweeperLevelSettings.intermediate({
+  const MinesweeperLevelSettings.intermediate({
     this.height = 16,
     this.width = 13,
     this.mines = 40,
   });
 
-  MinesweeperLevelSettings.expert({
+  const MinesweeperLevelSettings.expert({
     this.height = 30,
     this.width = 16,
     this.mines = 99,
   });
 
-  MinesweeperLevelSettings.custom({
+  const MinesweeperLevelSettings.custom({
     required this.height,
     required this.width,
     required this.mines,
   });
 
-  MinesweeperLevelSettings.fromEntity(
-      {required MinesweeperLevelSettingsEntity entity})
-      : this.height = entity.height,
-        this.width = entity.width,
-        this.mines = entity.mines;
+  MinesweeperLevelSettings.fromMap(Map<String, dynamic> map)
+      : this.height = map[kkHeightKey],
+        this.width = map[kkWidthKey],
+        this.mines = map[kkMinesKey];
 
   MinesweeperLevelSettings copyWith({int? height, int? width, int? mines}) {
     return MinesweeperLevelSettings.custom(
@@ -45,11 +46,11 @@ class MinesweeperLevelSettings {
     );
   }
 
-  MinesweeperLevelSettingsEntity toEntity() {
-    return MinesweeperLevelSettingsEntity(
-      mines: this.mines,
-      height: this.height,
-      width: this.width,
-    );
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = Map();
+    map[kkMinesKey] = this.mines;
+    map[kkHeightKey] = this.height;
+    map[kkWidthKey] = this.width;
+    return map;
   }
 }

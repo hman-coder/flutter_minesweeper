@@ -21,16 +21,15 @@ class MinesweeperLevelSettingsBloc extends Bloc<MinesweeperLevelSettingsEvent, M
     assert (height != null || width!= null || mines != null);
     yield LoadingState();
     var newSettings = _currentSettings!.copyWith(height: height, width: width, mines: mines);
-    await repository.updateSettings(newSettings.toEntity());
+    await repository.updateSettings(newSettings);
   }
 
   Stream<MinesweeperLevelSettingsState> _handleReloadEvent() async*{
     yield LoadingState();
-    MinesweeperLevelSettings settings;
+    MinesweeperLevelSettings? settings;
     
-    var entity = await repository.fetchSettings();
-    if(entity == null) settings = MinesweeperLevelSettings.beginner();
-    else settings = MinesweeperLevelSettings.fromEntity(entity: entity);
+    settings = await repository.fetchSettings();
+    if(settings == null) settings = MinesweeperLevelSettings.beginner();
     _currentSettings = settings;
     yield SettingsUpdatedState(settings);
   }

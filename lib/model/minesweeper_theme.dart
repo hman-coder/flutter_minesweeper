@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:minesweeper_flutter/entities/minesweeper_theme_entity.dart';
+
+const String kkForegroundColorKey = "foreground_color";
+const String kkAnimationKey = "animation";
+const String kkBackgroundColorKey = "background_color";
+const String kkFlagIconKey = "flag_icon";
+const String kkMineIconKey = "mine_icon";
+const String kkTileShapeKey = "tile_shape";
 
 class MinesweeperTheme {
   final Color tileBackgroundColor;
@@ -15,7 +21,7 @@ class MinesweeperTheme {
 
   final MinesweeperTileShape tileShape;
 
-  MinesweeperTheme({
+  const MinesweeperTheme({
     this.animation = '',
     this.foregroundColor = Colors.black,
     this.tileBackgroundColor = Colors.white,
@@ -24,16 +30,19 @@ class MinesweeperTheme {
     this.tileShape = MinesweeperTileShape.circle,
   });
 
-  MinesweeperTheme.fromEntity(MinesweeperThemeEntity entity)
-      : flagIconPath = entity.flagIconPath,
-        mineIconPath = entity.mineIconPath,
-        tileShape = MinesweeperTileShapeExtension.fromString(entity.tileShape),
-        foregroundColor = Color(entity.foregroundColorValue),
-        tileBackgroundColor = Color(entity.tileBackgroundColorValue),
-        animation = entity.animation;
+  MinesweeperTheme.fromMap(Map<String, dynamic> map)
+      : this.foregroundColor = Color(map[kkForegroundColorKey]),
+        this.animation = map[kkAnimationKey] ?? '',
+        this.tileBackgroundColor = Color(map[kkBackgroundColorKey]),
+        this.flagIconPath = map[kkFlagIconKey],
+        this.mineIconPath = map[kkMineIconKey],
+        this.tileShape = (map[kkTileShapeKey] as String).toMinesweeperTileShape();
 
-  MinesweeperTheme copyWith({Color? tileBackgroundColor, String? flagIconPath,
-      String? mineIconPath, MinesweeperTileShape? tileShape}) {
+  MinesweeperTheme copyWith(
+      {Color? tileBackgroundColor,
+      String? flagIconPath,
+      String? mineIconPath,
+      MinesweeperTileShape? tileShape}) {
     return MinesweeperTheme(
       tileBackgroundColor: tileBackgroundColor ?? this.tileBackgroundColor,
       flagIconPath: flagIconPath ?? this.flagIconPath,
@@ -41,6 +50,18 @@ class MinesweeperTheme {
       tileShape: tileShape ?? this.tileShape,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = Map();
+    map[kkForegroundColorKey] = foregroundColor.value;
+    map[kkBackgroundColorKey] = tileBackgroundColor.value;
+    map[kkAnimationKey] = animation;
+    map[kkFlagIconKey] = flagIconPath;
+    map[kkMineIconKey] = mineIconPath;
+    map[kkTileShapeKey] = tileShape.toSimpleString();
+    return map;
+  }
+
 }
 
 enum MinesweeperTileShape {
@@ -48,7 +69,7 @@ enum MinesweeperTileShape {
   square,
 }
 
-extension MinesweeperTileShapeExtension on MinesweeperTileShape {
+extension MinesweeperTileShapeToString on MinesweeperTileShape {
   String toSimpleString() {
     switch (this) {
       case MinesweeperTileShape.circle:
@@ -58,8 +79,12 @@ extension MinesweeperTileShapeExtension on MinesweeperTileShape {
     }
   }
 
-  static MinesweeperTileShape fromString(String s) {
-    switch (s) {
+  
+}
+
+extension StringToMinesweeperTileShape on String {
+  MinesweeperTileShape toMinesweeperTileShape() {
+    switch (this) {
       case 'circle':
         return MinesweeperTileShape.circle;
 

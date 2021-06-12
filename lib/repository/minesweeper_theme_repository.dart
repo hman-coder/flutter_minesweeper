@@ -1,18 +1,18 @@
-import 'package:minesweeper_flutter/entities/minesweeper_theme_entity.dart';
+import 'package:minesweeper_flutter/model/minesweeper_theme.dart';
 import 'package:minesweeper_flutter/repository/sqlite_accessor.dart';
 
 const _tableName = "minesweeper_theme";
 
 abstract class MinesweeperThemeRepository {
-  Future<MinesweeperThemeEntity?> fetchTheme();
+  Future<MinesweeperTheme?> fetchTheme();
 }
 
 class MinesweeperSqliteThemeRepository extends MinesweeperThemeRepository {
-  Future<MinesweeperThemeEntity?> fetchTheme() async {
+  Future<MinesweeperTheme?> fetchTheme() async {
     var accessor = await SqliteAccessor.accessor;
     var results = await accessor.fetch(_tableName);
     if(results[0] == null) return null;
-    var entity = MinesweeperThemeEntity.fromMap(results[0]!);
+    var entity = MinesweeperTheme.fromMap(results[0]!);
     return entity;
   }
 }

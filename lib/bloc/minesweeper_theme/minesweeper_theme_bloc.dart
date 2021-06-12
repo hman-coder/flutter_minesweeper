@@ -18,9 +18,8 @@ class MinesweeperThemeBloc extends Bloc<MinesweeperThemeEvent, MinesweeperThemeS
 
   Stream<MinesweeperThemeState> _handleReloadThemeEvent() async* {
     yield LoadingState();
-    var entity = await _repository.fetchTheme();
-    var newConfig = MinesweeperTheme.fromEntity(entity!);
-    yield ThemeUpdatedState(newConfig);
+    MinesweeperTheme? newConfig = await _repository.fetchTheme();
+    yield ThemeUpdatedState(newConfig!);
   }
   
 }

@@ -4,14 +4,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:minesweeper_flutter/bloc/minesweeper_level_settings/minesweeper_level_settings_bloc.dart';
 import 'package:minesweeper_flutter/bloc/minesweeper_level_settings/minesweeper_level_settings_event.dart';
 import 'package:minesweeper_flutter/bloc/minesweeper_level_settings/minesweeper_level_settings_state.dart';
-import 'package:minesweeper_flutter/entities/minesweeper_level_settings_entity.dart';
 import 'package:minesweeper_flutter/repository/minesweeper_level_settings_repository.dart';
+import 'package:minesweeper_flutter/model/minesweeper_level_settings.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockRepository extends Mock implements MinesweeperLevelSettingsRepository{}
 
-class MockEntity extends MinesweeperLevelSettingsEntity with EquatableMixin{
-  MockEntity() : super(height: 10, width: 10, mines: 10);
+class MockEntity extends MinesweeperLevelSettings with EquatableMixin{
+  MockEntity() : super.custom(height: 10, width: 10, mines: 10);
 
   @override
   List<Object?> get props => [height, width, mines];

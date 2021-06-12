@@ -1,22 +1,20 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:minesweeper_flutter/repository/minesweeper_theme_repository.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:minesweeper_flutter/bloc/minesweeper_theme.dart';
 import 'package:minesweeper_flutter/model/minesweeper_theme.dart';
-import 'package:minesweeper_flutter/entities/minesweeper_theme_entity.dart';
 
 class MockThemeRepository extends Mock implements MinesweeperThemeRepository {}
 
-class MockTheme extends Mock implements MinesweeperTheme {}
-
-class MockThemeEntity extends MinesweeperThemeEntity with EquatableMixin{
-  MockThemeEntity() : super(
+class MockTheme extends MinesweeperTheme with EquatableMixin{
+  MockTheme() : super(
     flagIconPath: "",
-    foregroundColorValue: 1,
+    foregroundColor: Colors.black,
     mineIconPath: "",
-    tileBackgroundColorValue: 1,
-    tileShape: "circle"
+    tileBackgroundColor: Colors.white,
+    tileShape: "circle".toMinesweeperTileShape()
   );
 
   @override
@@ -54,7 +52,7 @@ void main() {
     ];
 
     // When the _bloc calls [_repo.fetchTheme()] a future with mock entity will be returned
-    when(() => _repo.fetchTheme()).thenAnswer((invocation) => Future(() => MockThemeEntity()));
+    when(() => _repo.fetchTheme()).thenAnswer((invocation) => Future(() => MockTheme()));
 
     _bloc.add(ReloadThemeEvent());
 
