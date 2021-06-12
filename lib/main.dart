@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:minesweeper_flutter/bloc/minesweeper_theme.dart';
 import 'package:minesweeper_flutter/presentation/ui/loading_ui.dart';
 import 'package:minesweeper_flutter/repository/minesweeper_theme_repository.dart';
-import 'package:minesweeper_flutter/config/text_theme_config.dart';
+import 'package:minesweeper_flutter/constants/text.dart';
+import 'package:minesweeper_flutter/config/themes.dart';
 import 'package:minesweeper_flutter/config/route_generators.dart';
 
 void main() {
@@ -29,6 +30,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           fontFamily: kffFontFamily,
           textTheme: kttMainTextTheme,
+          appBarTheme: kabtAppBarTheme,
         ),
         onGenerateRoute: materialRouteGenerator,
         home: LoadingUI(),

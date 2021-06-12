@@ -6,9 +6,12 @@ class MainMenuUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text("next ui"),
-      ),
+      appBar: AppBar(title: Text("Minesweeper",)),
+      body: Column(
+        children: [
+      
+        ],
+      )
     );
   }
 }
