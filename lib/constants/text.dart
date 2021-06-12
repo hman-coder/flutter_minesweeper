@@ -14,3 +14,5 @@ const TextStyle headline5 = TextStyle(fontSize: kfsiLargeFontSize,);
 const TextStyle headline6 = TextStyle(color: Colors.black, fontSize: kfsiLargeFontSize);
 
 const TextStyle bodyText2 = TextStyle(fontSize: kfsiSmallFontSize);
+
+const TextStyle button = TextStyle(fontSize: kfsiSmallFontSize);
