@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:minesweeper_flutter/bloc/minesweeper_theme.dart';
-import 'package:minesweeper_flutter/presentation/ui/loading_ui.dart';
+import 'package:minesweeper_flutter/constants/routes.dart';
 import 'package:minesweeper_flutter/repository/minesweeper_theme_repository.dart';
 import 'package:minesweeper_flutter/constants/text.dart';
 import 'package:minesweeper_flutter/config/themes.dart';
@@ -28,12 +28,15 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          textButtonTheme: kbtTextButtonTheme,
+          outlinedButtonTheme: kbtOutlinedButtonTheme,
           fontFamily: kffFontFamily,
           textTheme: kttMainTextTheme,
           appBarTheme: kabtAppBarTheme,
         ),
+
         onGenerateRoute: materialRouteGenerator,
-        home: LoadingUI(),
+        initialRoute: kprLoadingRoute,
       ),
     );
   }
