@@ -1,3 +1,3 @@
-const String kprLoadingRoute = "/loading";
+const String kprLoadingRoute = "/";
 
 const String kprMainMenuRoute = "/main_menu";

@@ -4,11 +4,16 @@ import 'package:minesweeper_flutter/presentation/ui/loading_ui.dart';
 import 'package:minesweeper_flutter/presentation/ui/uis.dart';
 
 Route Function(RouteSettings settings) materialRouteGenerator = (settings) {
+  print(settings.name);
   switch (settings.name) {
+    
     case kprMainMenuRoute:
       return CustomMaterialPageRoute(builder: (context) => MainMenuUI());
-    default:
+    case kprLoadingRoute:
       return CustomMaterialPageRoute(builder: (context) => LoadingUI());
+
+      default:
+       throw Exception("Route name was not found.");
   }
 };
 

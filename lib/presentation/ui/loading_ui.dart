@@ -7,7 +7,6 @@ class LoadingUI extends StatefulWidget {
   _LoadingUIState createState() => _LoadingUIState();
 }
 
-
 class _LoadingUIState extends State<LoadingUI> {
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,7 @@ class _LoadingUIState extends State<LoadingUI> {
             children: [
               TextButton(
                 onPressed: () =>
-                    Navigator.pushNamed(context, kprMainMenuRoute),
+                    Navigator.pushReplacementNamed(context, kprMainMenuRoute),
                 child: Text("Finish"),
               ),
               Text(
