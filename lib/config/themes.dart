@@ -24,7 +24,7 @@ final OutlinedButtonThemeData kbtOutlinedButtonTheme = OutlinedButtonThemeData(
     side: MaterialStateProperty.all(BorderSide(color: Colors.blueGrey, width: 1)),
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(
-        horizontal: 18,
+        horizontal: 30,
         vertical: 8,
       ),
     ),
