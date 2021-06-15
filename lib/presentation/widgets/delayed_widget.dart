@@ -140,7 +140,7 @@ class _DelayController {
     int index = rank - 1;
     if (animations[index] == null) {
       int totalWeight = 0;
-      for(int i = 0; i < index; i++) totalWeight += weights[i];
+      for(int i = 0; i <= index; i++) totalWeight += weights[i];
       double fraction = totalWeight / total;
       int delayInMilliseconds =
           rank * (fraction * overallDuration.inMilliseconds).truncate();
