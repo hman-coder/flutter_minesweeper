@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+/// An animation that rocks its child forward and backwards around its center.
 class RockingAnimation extends StatefulWidget {
   final double startingRadians;
 
@@ -11,6 +13,8 @@ class RockingAnimation extends StatefulWidget {
 
   final AnimationController? controller;
 
+  /// Defnies the value at which the animation woud begin. That is, the value passed to
+  /// [AnimationController.forward] method.
   final double startingAnimationValue;
 
   const RockingAnimation({
@@ -41,7 +45,6 @@ class _RockingAnimationState extends State<RockingAnimation>
     if (controller == null) {
       controller = AnimationController(vsync: this, duration: widget.duration);
       controller!.addStatusListener((status) {
-        print(status);
         if (status == AnimationStatus.completed) controller!.reverse();
         if (status == AnimationStatus.dismissed) controller!.forward();
       });
