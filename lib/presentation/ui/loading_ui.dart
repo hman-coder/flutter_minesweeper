@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minesweeper_flutter/constants/routes.dart';
+import 'package:minesweeper_flutter/presentation/icons/minesweeper_icons.dart';
 import 'package:minesweeper_flutter/presentation/widgets/loading_widget.dart';
 
 class LoadingUI extends StatefulWidget {
@@ -28,7 +29,11 @@ class _LoadingUIState extends State<LoadingUI> {
               SizedBox(
                 height: 150,
               ),
-              LoadingWidget(type: LoadingWidgetType.flag_circles_mine),
+              Hero(
+                tag: "mine",
+                child: LoadingWidget(type: LoadingWidgetType.flag_circles_mine),
+                flightShuttleBuilder: _shuttleBuilder,
+              ),
               SizedBox(
                 height: 100,
               ),
@@ -39,4 +44,18 @@ class _LoadingUIState extends State<LoadingUI> {
       ),
     );
   }
+
+  HeroFlightShuttleBuilder get _shuttleBuilder => (flightContext, animation,
+          flightDirection, fromHeroContext, toHeroContext) =>
+      AnimatedBuilder(
+        animation: animation,
+        builder: (context, child) => Opacity(
+          opacity: 1 - (animation.value * 0.5),
+          child: Icon(
+            MinesweeperIcons.mine,
+            color: Colors.black,
+            size: (animation.value * 300) + 150,
+          ),
+        ),
+      );
 }
