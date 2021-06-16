@@ -19,10 +19,9 @@ Route Function(RouteSettings settings) materialRouteGenerator = (settings) {
 
 
 class CustomMaterialPageRoute extends MaterialPageRoute {
-  CustomMaterialPageRoute({required builder}) : super(builder: builder);
+  final Duration transitionDuration;
+  CustomMaterialPageRoute({required builder, this.transitionDuration = const Duration(milliseconds: 1000)}) : super(builder: builder);
 
-  @override
-  Duration get transitionDuration => const Duration(milliseconds: 700);
 
   Animation? curved;
 
