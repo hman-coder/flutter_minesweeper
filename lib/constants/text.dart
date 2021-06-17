@@ -3,16 +3,24 @@ import 'package:google_fonts/google_fonts.dart';
 
 final String kffFontFamily = GoogleFonts.electrolize().fontFamily!;
 
-const double kfsiSmallFontSize = 25;
+const double kfsiTinyFontSize = 16;
 
-const double kfsiMediumFontSize = 27.5;
+const double kfsiSmallFontSize = 19.5;
 
-const double kfsiLargeFontSize = 30;
+const double kfsiMediumFontSize = 23;
 
-const TextStyle headline5 = TextStyle(fontSize: kfsiLargeFontSize,);
+const double kfsiLargeFontSize = 26.5;
 
-const TextStyle headline6 = TextStyle(color: Colors.black, fontSize: kfsiLargeFontSize);
+const double kfsiHugeFontSize = 30;
 
-const TextStyle bodyText2 = TextStyle(fontSize: kfsiSmallFontSize);
+const TextStyle headline5 = TextStyle(fontSize: kfsiHugeFontSize,);
 
-const TextStyle button = TextStyle(fontSize: kfsiSmallFontSize);
+const TextStyle headline6 = TextStyle(color: Colors.black, fontSize: kfsiHugeFontSize);
+
+const TextStyle bodyText2 = TextStyle(fontSize: kfsiMediumFontSize);
+
+const TextStyle button = TextStyle(fontSize: kfsiMediumFontSize);
+
+const TextStyle subtitle1 = TextStyle(fontSize: kfsiMediumFontSize);
+
+const TextStyle subtitle2 = TextStyle(fontSize: kfsiTinyFontSize);

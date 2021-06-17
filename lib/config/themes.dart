@@ -4,8 +4,10 @@ import 'package:minesweeper_flutter/constants/text.dart';
 const TextTheme kttMainTextTheme = TextTheme(
   headline5: headline5,
   headline6: headline6,
-  bodyText2: bodyText2,
+  bodyText2: subtitle2,
   button: button,
+  subtitle1: subtitle1,
+  
 );
 
 final AppBarTheme kabtAppBarTheme = AppBarTheme(
