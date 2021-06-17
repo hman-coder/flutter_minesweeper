@@ -7,7 +7,7 @@ abstract class MinesweeperThemeRepository {
   Future<MinesweeperTheme?> fetchTheme();
 }
 
-class MinesweeperSqliteThemeRepository extends MinesweeperThemeRepository {
+class MinesweeperThemeSqliteRepository extends MinesweeperThemeRepository {
   Future<MinesweeperTheme?> fetchTheme() async {
     var accessor = await SqliteAccessor.accessor;
     var results = await accessor.fetch(_tableName);

@@ -58,9 +58,17 @@ class SqliteAccessor {
 	"tile_shape"	TEXT);
 
   CREATE TABLE "minesweeper_level_settings" (
-	"height" NUMERIC,
-  "width" NUMERIC,
-  "mines" NUMERIC,
+    "height"	INTEGER,
+    "width"	INTEGER,
+    "mines"	INTEGER,
+    "diffculty"	INTEGER,
+    "mode"	INTEGER
+  );
+
+  CREATE TABLE "game_settings" (
+    "music"	INTEGER,
+    "sfx"	INTEGER,
+    "notifications"	INTEGER
   )
 
   INSERT INTO minesweeper_theme VALUES (
