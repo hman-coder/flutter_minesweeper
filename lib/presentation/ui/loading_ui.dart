@@ -18,8 +18,9 @@ class _LoadingUIState extends State<LoadingUI> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextButton(
-                onPressed: () =>
-                    Navigator.pushReplacementNamed(context, kprMainMenuRoute),
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, kprMainMenuRoute);
+                },
                 child: Text("Finish"),
               ),
               Text(

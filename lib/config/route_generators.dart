@@ -11,6 +11,8 @@ Route Function(RouteSettings settings) materialRouteGenerator = (settings) {
       return CustomMaterialPageRoute(builder: (context) => MainMenuUI());
     case kprLoadingRoute:
       return CustomMaterialPageRoute(builder: (context) => LoadingUI());
+    case kprSettingsRoute:
+      return CustomMaterialPageRoute(builder: (context) => SettingsUI());
 
       default:
        throw Exception("Route name was not found.");

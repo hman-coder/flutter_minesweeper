@@ -6,16 +6,30 @@ import 'package:minesweeper_flutter/presentation/widgets/constant_widgets.dart';
 import 'package:minesweeper_flutter/presentation/widgets/delayed_widget.dart';
 
 class MainMenuUI extends StatelessWidget {
-  const MainMenuUI({Key? key}) : super(key: key);
+  final double bottomMineSize;
 
-  static final double _bottomMineSize = 450;
+  /// A little portion of the mine is always hidden.
+  final double hiddenPortionOfMine;
+
+  static const double appBarHeight = 70;
+
+  /// A bottom margin for the main components of the ui (buttons) such that
+  /// they won't be overimposed on the bottom big mine
+  final double bottomMarginOfContents;
+
+  const MainMenuUI({
+    Key? key,
+    this.bottomMineSize = 450,
+  })  : hiddenPortionOfMine = bottomMineSize * 0.4,
+        bottomMarginOfContents = bottomMineSize * 0.6,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Minesweeper"),
-        toolbarHeight: 70,
+        toolbarHeight: appBarHeight,
       ),
       extendBodyBehindAppBar: true,
       body: DelayedWidgetsController(
@@ -27,8 +41,8 @@ class MainMenuUI extends StatelessWidget {
             Positioned(
               left: 0,
               right: 0,
-              bottom: 450 - 175,
-              top: 70,
+              bottom: bottomMarginOfContents,
+              top: appBarHeight,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -49,7 +63,9 @@ class MainMenuUI extends StatelessWidget {
                     curve: Curves.decelerate,
                     builder: defaultDelayedTransition,
                     child: TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed("/settings");
+                      },
                       label: Text("Settings"),
                       icon: Icon(Icons.settings),
                     ),
@@ -65,8 +81,8 @@ class MainMenuUI extends StatelessWidget {
 
   Widget _buildBottomMine() {
     return Positioned(
-      left: -175,
-      bottom: -175,
+      left: -1 * hiddenPortionOfMine,
+      bottom: -1 * hiddenPortionOfMine,
       child: Hero(
         tag: "mine",
         child: RockingAnimation(
