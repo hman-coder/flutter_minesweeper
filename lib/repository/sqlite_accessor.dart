@@ -1,4 +1,5 @@
 import 'package:sqflite/sqflite.dart';
+import 'package:minesweeper_flutter/constants/db_raw_statements.dart';
 
 const String kpSqliteDbPath = "sksminesweeperdb.db";
 
@@ -26,53 +27,51 @@ class SqliteAccessor {
   _initializeDb() async {
     _db = await openDatabase(
       kpSqliteDbPath,
-      version: 2,
-      onCreate: (db, version) {
-        db.execute(_createStatement);
+      version: 1,
+      onCreate: (db, version) async {
+        await db.transaction((txn) async {
+          await txn.execute(ksGameSettingsTableCreateStatement);
+          await txn.execute(ksMinesweeperLevelSettingsTableCreateStatement);
+          await txn.execute(ksMinesweeperThemeTableCreateStatement);
+          
+          await txn.execute(ksGameSettingsInitialDataInsertStatement);
+        });
       },
       onUpgrade: (db, oldVersion, newVersion) => {
-        db.execute(
-            """
-              CREATE TABLE "minesweeper_level_settings" (
-              "height" NUMERIC,
-              "width" NUMERIC,
-              "mines" NUMERIC,
-              )
-            """,
-        ),
+        db.execute(""),
       },
     );
+  }
+
+  void deleteDb() async {
+    try {
+      await deleteDatabase("${(await getDatabasesPath())}/$kpSqliteDbPath");
+      print('deleted');
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  void printDb() async {
+    (await _db!.query('sqlite_master', columns: ['type', 'name'])).forEach((row) {
+      print(row.values);
+    });
   }
 
   Future<List<Map<String, dynamic?>?>> fetch(String table) async {
     return await _db!.query(table);
   }
 
-  String get _createStatement => '''
-  CREATE TABLE "minesweeper_theme" (
-	"background_color"	TEXT,
-  "foreground_color" TEXT,
-	"mine_icon"	TEXT,
-	"flag_icon"	TEXT,
-  "animation" TEXT,
-	"tile_shape"	TEXT);
+  Future<int> updateSettings(
+      String table, Map<String, dynamic> updatedColumnValues) async {
+    int updatedRows = await _db!.update(table, updatedColumnValues);
+    return updatedRows;
+  }
 
-  CREATE TABLE "minesweeper_level_settings" (
-    "height"	INTEGER,
-    "width"	INTEGER,
-    "mines"	INTEGER,
-    "diffculty"	INTEGER,
-    "mode"	INTEGER
-  );
-
-  CREATE TABLE "game_settings" (
-    "music"	INTEGER,
-    "sfx"	INTEGER,
-    "notifications"	INTEGER
-  )
-
-  INSERT INTO minesweeper_theme VALUES (
-    "0xFFFFFFFF", "0xFF000000", "standard", "standard", "animation", "circle"
-  )
-  ''';
+  Future<int> update(
+      String table, Map<String, dynamic> updatedColumnValues, int rowId) async {
+    int updatedRows = await _db!.update(table, updatedColumnValues,
+        where: "WHERE id = ?s", whereArgs: [rowId]);
+    return updatedRows;
+  }
 }
