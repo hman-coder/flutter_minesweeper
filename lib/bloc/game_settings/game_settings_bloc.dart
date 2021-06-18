@@ -14,30 +14,29 @@ class GameSettingsBloc extends Cubit<GameSettings> {
           ),
         );
 
-  void load() async {
-    try {
-      var data = await repository.fetch();
+  void load() async {    
+    var data = await repository.fetch();
+    if(data != null)
       emit(data);
-    } catch (err) {
-      print(err);
-    }
+
+    else emit(GameSettings());
   }
 
-  void toggleMusic() {
+  void toggleMusic() async {
     var data = state.copyWith(music: !state.music);
-    // TODO: STORE CHANGED SETTINGS
+    await repository.update(data);
     emit(data);
   }
 
-  void toggleSFX() {
+  void toggleSFX() async {
     var data = state.copyWith(effects: !state.sfx);
-    // TODO: STORE CHANGED SETTINGS
+    await repository.update(data);
     emit(data);
   }
 
-  void toggleNotifications() {
+  void toggleNotifications() async {
     var data = state.copyWith(notifications: !state.notifications);
-    // TODO: STORE CHANGED SETTINGS
+    await repository.update(data);
     emit(data);
   }
 }

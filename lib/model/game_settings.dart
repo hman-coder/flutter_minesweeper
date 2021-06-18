@@ -1,3 +1,5 @@
+import 'package:minesweeper_flutter/constants/db_keys.dart';
+
 class GameSettings {
   final bool music;
 
@@ -6,15 +8,15 @@ class GameSettings {
   final bool notifications;
 
   GameSettings({
-    required this.music,
-    required this.sfx,
-    required this.notifications,
+    this.music = true,
+    this.sfx = true,
+    this.notifications = true,
   });
 
   GameSettings.fromMap(Map<String, dynamic> map)
-      : music = map['music'],
-        sfx = map['sfx'],
-        notifications = map['notifications'];
+      : music = map[ksGameSettingsMusic] > 0,
+        sfx = map[ksGameSettingsSFX] > 0,
+        notifications = map[ksGameSettingsNotifications] > 0;
 
   GameSettings copyWith({bool? music, bool? effects, bool? notifications}) {
     return GameSettings(
@@ -22,5 +24,13 @@ class GameSettings {
       sfx: effects ?? this.sfx,
       notifications: notifications ?? this.notifications,
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = Map();
+    map.putIfAbsent(ksGameSettingsMusic, () => this.music ? 1 : 0);
+    map.putIfAbsent(ksGameSettingsSFX, () => this.sfx ? 1 : 0);
+    map.putIfAbsent(ksGameSettingsNotifications, () => this.notifications ? 1 : 0);
+    return map;
   }
 }
