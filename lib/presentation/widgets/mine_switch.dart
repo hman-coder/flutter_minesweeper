@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:minesweeper_flutter/helpers/math.dart';
 import 'package:minesweeper_flutter/presentation/widgets/flag_icon_widget.dart';
 import 'package:minesweeper_flutter/presentation/widgets/mine_icon_widget.dart';
