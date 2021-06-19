@@ -27,6 +27,8 @@ dev_dependencies:
   bloc_test: ^8.0.0
 
 flutter:
+  assets:
+    - assets/audio/
   fonts:
     - family:  Minesweeper
       fonts:
