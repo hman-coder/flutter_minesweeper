@@ -52,7 +52,7 @@ class MainMenuUI extends StatelessWidget {
                   kwEmptyExpanded,
                   _buildNewGameButton(),
                   kwEnormousVerticalSpacer,
-                  _buildThemesButton(),
+                  _buildThemesButton(context),
                   kwEnormousVerticalSpacer,
                   _buildSettingsButton(context),
                   kwEmptyExpanded,
@@ -80,7 +80,7 @@ class MainMenuUI extends StatelessWidget {
     );
   }
 
-  Widget _buildThemesButton() {
+  Widget _buildThemesButton(BuildContext context) {
     return DelayedWidget(
       rank: 2,
       builder: defaultDelayedTransition,
@@ -88,7 +88,10 @@ class MainMenuUI extends StatelessWidget {
       child: TextButton.icon(
         icon: Icon(Icons.brush),
         label: Text("Theme"),
-        onPressed: () => print("themes"),
+        onPressed: () {
+          AudioManager().normalClick();
+          Navigator.of(context).pushNamed("/themes");
+        },
       ),
     );
   }

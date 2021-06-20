@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:minesweeper_flutter/constants/routes.dart';
-import 'package:minesweeper_flutter/presentation/ui/loading_ui.dart';
 import 'package:minesweeper_flutter/presentation/ui/uis.dart';
 
 Route Function(RouteSettings settings) materialRouteGenerator = (settings) {
@@ -13,6 +12,8 @@ Route Function(RouteSettings settings) materialRouteGenerator = (settings) {
       return CustomMaterialPageRoute(builder: (context) => LoadingUI());
     case kprSettingsRoute:
       return CustomMaterialPageRoute(builder: (context) => SettingsUI());
+    case kprThemesRoute:
+      return CustomMaterialPageRoute(builder: (context) => ThemesUI());
 
       default:
        throw Exception("Route name was not found.");
@@ -23,7 +24,6 @@ Route Function(RouteSettings settings) materialRouteGenerator = (settings) {
 class CustomMaterialPageRoute extends MaterialPageRoute {
   final Duration transitionDuration;
   CustomMaterialPageRoute({required builder, this.transitionDuration = const Duration(milliseconds: 700)}) : super(builder: builder);
-
 
   Animation? curved;
 
