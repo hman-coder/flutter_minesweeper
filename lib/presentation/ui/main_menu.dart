@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minesweeper_flutter/bloc/audio_manager.dart';
 import 'package:minesweeper_flutter/helpers/math.dart';
 import 'package:minesweeper_flutter/presentation/animations/rocking_animation.dart';
 import 'package:minesweeper_flutter/presentation/icons/minesweeper_icons.dart';
@@ -53,7 +54,9 @@ class MainMenuUI extends StatelessWidget {
                     curve: Curves.decelerate,
                     builder: defaultDelayedTransition,
                     child: OutlinedButton(
-                      onPressed: () => print("null"),
+                      onPressed: () {
+                        AudioManager().normalClick();
+                      },
                       child: Text("New Game"),
                     ),
                   ),
@@ -64,6 +67,7 @@ class MainMenuUI extends StatelessWidget {
                     builder: defaultDelayedTransition,
                     child: TextButton.icon(
                       onPressed: () {
+                        AudioManager().normalClick();
                         Navigator.of(context).pushNamed("/settings");
                       },
                       label: Text("Settings"),

@@ -96,27 +96,24 @@ class _MineSwitchState extends State<MineSwitch>
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 10.0),
-      child: Container(
-        height: widget.size,
-        width: widget.size,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(100),
-          boxShadow: [
-            BoxShadow(
-              color: colorAnim.value!.withOpacity(0.3),
-              blurRadius: 1,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Transform(
-          alignment: Alignment.center,
-          transform: Matrix4.rotationZ(rotationAnim.value),
-          child: _currentChild,
-        ),
+    return Container(
+      height: widget.size,
+      width: widget.size,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(100),
+        boxShadow: [
+          BoxShadow(
+            color: colorAnim.value!.withOpacity(0.3),
+            blurRadius: 1,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Transform(
+        alignment: Alignment.center,
+        transform: Matrix4.rotationZ(rotationAnim.value),
+        child: _currentChild,
       ),
     );
   }
