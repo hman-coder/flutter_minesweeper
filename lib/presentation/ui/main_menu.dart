@@ -5,6 +5,7 @@ import 'package:minesweeper_flutter/presentation/animations/rocking_animation.da
 import 'package:minesweeper_flutter/presentation/icons/minesweeper_icons.dart';
 import 'package:minesweeper_flutter/presentation/widgets/constant_widgets.dart';
 import 'package:minesweeper_flutter/presentation/widgets/delayed_widget.dart';
+import 'package:minesweeper_flutter/presentation/widgets/spacers.dart';
 
 class MainMenuUI extends StatelessWidget {
   final double bottomMineSize;
@@ -34,8 +35,8 @@ class MainMenuUI extends StatelessWidget {
       ),
       extendBodyBehindAppBar: true,
       body: DelayedWidgetsController(
-        overallDelay: Duration(seconds: 2),
-        weights: [6, 2, 12],
+        overallDelay: Duration(milliseconds: 600),
+        weights: [5, 2, 2],
         child: Stack(
           children: [
             _buildBottomMine(),
@@ -48,37 +49,63 @@ class MainMenuUI extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  DelayedWidget(
-                    rank: 1,
-                    duration: Duration(milliseconds: 800),
-                    curve: Curves.decelerate,
-                    builder: defaultDelayedTransition,
-                    child: OutlinedButton(
-                      onPressed: () {
-                        AudioManager().normalClick();
-                      },
-                      child: Text("New Game"),
-                    ),
-                  ),
-                  DelayedWidget(
-                    rank: 2,
-                    duration: Duration(milliseconds: 800),
-                    curve: Curves.decelerate,
-                    builder: defaultDelayedTransition,
-                    child: TextButton.icon(
-                      onPressed: () {
-                        AudioManager().normalClick();
-                        Navigator.of(context).pushNamed("/settings");
-                      },
-                      label: Text("Settings"),
-                      icon: Icon(Icons.settings),
-                    ),
-                  )
+                  kwEmptyExpanded,
+                  _buildNewGameButton(),
+                  kwEnormousVerticalSpacer,
+                  _buildThemesButton(),
+                  kwEnormousVerticalSpacer,
+                  _buildSettingsButton(context),
+                  kwEmptyExpanded,
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildNewGameButton() {
+    return DelayedWidget(
+      rank: 1,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.decelerate,
+      builder: defaultDelayedTransition,
+      child: OutlinedButton(
+        onPressed: () {
+          AudioManager().normalClick();
+        },
+        child: Text("New Game"),
+      ),
+    );
+  }
+
+  Widget _buildThemesButton() {
+    return DelayedWidget(
+      rank: 2,
+      builder: defaultDelayedTransition,
+      duration: Duration(milliseconds: 500),
+      child: TextButton.icon(
+        icon: Icon(Icons.brush),
+        label: Text("Theme"),
+        onPressed: () => print("themes"),
+      ),
+    );
+  }
+
+  Widget _buildSettingsButton(BuildContext context) {
+    return DelayedWidget(
+      rank: 3,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.decelerate,
+      builder: defaultDelayedTransition,
+      child: TextButton.icon(
+        onPressed: () {
+          AudioManager().normalClick();
+          Navigator.of(context).pushNamed("/settings");
+        },
+        label: Text("Settings"),
+        icon: Icon(Icons.settings),
       ),
     );
   }

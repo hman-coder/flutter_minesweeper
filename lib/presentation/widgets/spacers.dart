@@ -11,3 +11,5 @@ const Widget kwSmallVerticalSpacer = SizedBox(height: 15,);
 const Widget kwMediumVerticalSpacer = SizedBox(height: 20,);
 const Widget kwLargeVerticalSpacer = SizedBox(height: 25,);
 const Widget kwEnormousVerticalSpacer = SizedBox(height: 30,);
+
+const Widget kwEmptyExpanded = Expanded(child: const SizedBox());

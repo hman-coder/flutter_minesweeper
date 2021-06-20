@@ -42,6 +42,12 @@ final OutlinedButtonThemeData kbtOutlinedButtonTheme = OutlinedButtonThemeData(
 
 final TextButtonThemeData kbtTextButtonTheme = TextButtonThemeData(
   style: ButtonStyle(
-    foregroundColor: MaterialStateProperty.all(Colors.black)
+    foregroundColor: MaterialStateProperty.all(Colors.black),
+    padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 20,)),
+    shape: MaterialStateProperty.all(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(50),
+      ),
+    ),
   )
 );
