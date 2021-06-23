@@ -34,6 +34,7 @@ class SqliteAccessor {
           await txn.execute(ksMinesweeperLevelSettingsTableCreateStatement);
           await txn.execute(ksMinesweeperThemeTableCreateStatement);
           
+          await txn.execute(ksMinesweeperThemeInitialDataInsertStatement);
           await txn.execute(ksGameSettingsInitialDataInsertStatement);
         });
       },
@@ -58,7 +59,7 @@ class SqliteAccessor {
     });
   }
 
-  Future<List<Map<String, dynamic?>?>> fetch(String table) async {
+  Future<List<Map<String, dynamic>?>> fetch(String table) async {
     return await _db!.query(table);
   }
 
