@@ -6,6 +6,7 @@ import 'package:minesweeper_flutter/presentation/icons/minesweeper_icons.dart';
 import 'package:minesweeper_flutter/presentation/widgets/constant_widgets.dart';
 import 'package:minesweeper_flutter/presentation/widgets/delayed_widget.dart';
 import 'package:minesweeper_flutter/presentation/widgets/spacers.dart';
+import 'package:minesweeper_flutter/repository/sqlite_accessor.dart';
 
 class MainMenuUI extends StatelessWidget {
   final double bottomMineSize;
@@ -32,6 +33,7 @@ class MainMenuUI extends StatelessWidget {
       appBar: AppBar(
         title: Text("Minesweeper"),
         toolbarHeight: appBarHeight,
+        actions: [_buildDeleteTableButton()],
       ),
       extendBodyBehindAppBar: true,
       body: DelayedWidgetsController(
@@ -62,6 +64,13 @@ class MainMenuUI extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildDeleteTableButton() {
+    return IconButton(
+      icon: Icon(Icons.delete),
+      onPressed: () async => (await SqliteAccessor.accessor).deleteDb(),
     );
   }
 
