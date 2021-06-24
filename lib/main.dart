@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
                 MinesweeperThemeBloc(MinesweeperThemeSqliteRepository())),
         BlocProvider<GameSettingsBloc>(
             create: (context) =>
-                GameSettingsBloc(GameSettingsSqliteRepository())..load()),
+                GameSettingsBloc(GameSettingsSqliteRepository())),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

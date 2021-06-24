@@ -6,20 +6,13 @@ class GameSettingsBloc extends Cubit<GameSettings> {
   final GameSettingsRepository repository;
 
   GameSettingsBloc(this.repository)
-      : super(
-          GameSettings(
-            music: false,
-            sfx: false,
-            notifications: false,
-          ),
-        );
+      : super(GameSettings(music: false, sfx: false, notifications: false)) {
+    load();
+  }
 
-  void load() async {    
+  void load() async {
     var data = await repository.fetch();
-    if(data != null)
-      emit(data);
-
-    else emit(GameSettings());
+    emit(data);
   }
 
   void toggleMusic() async {
