@@ -34,7 +34,7 @@ INSERT INTO "game_settings" VALUES (1, 1, 1)
 ''';
 
 const String ksMinesweeperThemeInitialDataInsertStatement = '''
-INSERT INTO "minesweeper_theme" VALUES ("mine", "flag", "tile", 0xFF000000, 0xFFFFC107, 0xFFFFFFFF, 0xFFFFFFFF, "animation",)
+INSERT INTO "minesweeper_theme" VALUES ("mine", "flag", "tile", 0xFF000000, 0xFFFFC107, 0xFFFFFFFF, 0xFFFFFFFF, "animation")
 ''';
 
 String Function(int oldVersion, int newVersion) getUpdateStatement =
