@@ -10,11 +10,14 @@ class MockThemeRepository extends Mock implements MinesweeperThemeRepository {}
 
 class MockTheme extends MinesweeperTheme with EquatableMixin{
   MockTheme() : super(
-    flagIconPath: "",
-    foregroundColor: Colors.black,
-    mineIconPath: "",
-    tileBackgroundColor: Colors.white,
-    tileShape: "circle".toMinesweeperTileShape()
+    animation: '',
+    backgroundColor: Colors.white,
+    flagColor: Colors.white,
+    flagIcon: Icons.ac_unit,
+    mineColor: Colors.white,
+    mineIcon: Icons.ac_unit,
+    tileColor: Colors.white,
+    tileIcon: Icons.ac_unit,
   );
 
   @override

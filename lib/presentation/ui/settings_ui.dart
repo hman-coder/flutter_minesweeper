@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:minesweeper_flutter/bloc/audio_manager.dart';
-import 'package:minesweeper_flutter/bloc/game_settings.dart';
+import 'package:minesweeper_flutter/bloc/game_settings_bloc.dart';
 import 'package:minesweeper_flutter/presentation/widgets/mine_switch.dart';
 
 class SettingsUI extends StatefulWidget {

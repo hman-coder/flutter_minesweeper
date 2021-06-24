@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:minesweeper_flutter/bloc/minesweeper_theme.dart';
+import 'package:minesweeper_flutter/bloc/minesweeper_theme_bloc.dart';
 import 'package:minesweeper_flutter/constants/routes.dart';
 import 'package:minesweeper_flutter/repository/game_settings_repository.dart';
 import 'package:minesweeper_flutter/repository/minesweeper_theme_repository.dart';
 import 'package:minesweeper_flutter/constants/text.dart';
 import 'package:minesweeper_flutter/config/themes.dart';
 import 'package:minesweeper_flutter/config/route_generators.dart';
-import 'package:minesweeper_flutter/bloc/game_settings.dart';
+import 'package:minesweeper_flutter/bloc/game_settings_bloc.dart';
 
 void main() {
   runApp(MyApp());
