@@ -14,9 +14,9 @@ class GameSettings {
   });
 
   GameSettings.fromMap(Map<String, dynamic> map)
-      : music = map[ksGameSettingsMusic] > 0,
-        sfx = map[ksGameSettingsSFX] > 0,
-        notifications = map[ksGameSettingsNotifications] > 0;
+      : music = map[kkGameSettingsMusic] > 0,
+        sfx = map[kkGameSettingsSFX] > 0,
+        notifications = map[kkGameSettingsNotifications] > 0;
 
   GameSettings copyWith({bool? music, bool? effects, bool? notifications}) {
     return GameSettings(
@@ -28,9 +28,9 @@ class GameSettings {
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = Map();
-    map.putIfAbsent(ksGameSettingsMusic, () => this.music ? 1 : 0);
-    map.putIfAbsent(ksGameSettingsSFX, () => this.sfx ? 1 : 0);
-    map.putIfAbsent(ksGameSettingsNotifications, () => this.notifications ? 1 : 0);
+    map.putIfAbsent(kkGameSettingsMusic, () => this.music ? 1 : 0);
+    map.putIfAbsent(kkGameSettingsSFX, () => this.sfx ? 1 : 0);
+    map.putIfAbsent(kkGameSettingsNotifications, () => this.notifications ? 1 : 0);
     return map;
   }
 }

@@ -12,14 +12,14 @@ class GameSettingsSqliteRepository extends GameSettingsRepository {
   @override
   Future<GameSettings> fetch() async {
     var accessor = await SqliteAccessor.accessor;
-    var data = await accessor.fetch(ksGameSettingsTableName);
+    var data = await accessor.fetch(kkGameSettingsTableName);
     return GameSettings.fromMap(data[0]!);
   }
 
   @override
   Future<bool> update(GameSettings settings) async {
     var accessor = await SqliteAccessor.accessor;
-    int updatedRows =  await accessor.updateSettings(ksGameSettingsTableName, settings.toMap());
+    int updatedRows =  await accessor.updateSettings(kkGameSettingsTableName, settings.toMap());
     return updatedRows > 0;
   }
 
