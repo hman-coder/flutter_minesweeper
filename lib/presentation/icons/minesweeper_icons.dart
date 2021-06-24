@@ -11,9 +11,11 @@
 ///      fonts:
 ///       - asset: fonts/Minesweeper.ttf
 ///
-/// 
 ///
+///
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:minesweeper_flutter/constants/db_default_values.dart';
 
 const _kFontFam = 'Minesweeper';
 
@@ -26,27 +28,51 @@ class MinesweeperIcons {
 
   static const String? _kFontPkg = null;
 
-  static const IconData mine = IconData(_kcpMineCodePoint, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData flag = IconData(_kcpFlagCodePoint, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData mine_relaxed = IconData(_kcpMineRelaxedCodePoint, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData mine = IconData(_kcpMineCodePoint,
+      fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData flag = IconData(_kcpFlagCodePoint,
+      fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData mine_relaxed = IconData(_kcpMineRelaxedCodePoint,
+      fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData tile = Icons.circle;
 }
-
 
 extension MinesweeperIconToString on IconData {
   String toAppString() {
-    if(this.fontFamily == _kFontFam) {
-      switch(this.codePoint) {
+    if (this.fontFamily == _kFontFam) {
+      switch (this.codePoint) {
         case _kcpMineCodePoint:
-          return "mine";
+          return kvMineDefaultIconValue;
 
         case _kcpMineRelaxedCodePoint:
-          return "relaxed";
+          return kvMineRelaxedIconValue;
 
         case _kcpFlagCodePoint:
-          return "flag";
+          return kvFlagDefaultIconValue;
       }
-    }
+    } else if(this.fontFamily == MinesweeperIcons.tile.fontFamily && this.codePoint == MinesweeperIcons.tile.codePoint)
+      return kvTileDefaultIconValue;
 
     throw Exception("This icon data is not of MinesweeperIcons.");
+  }
+}
+
+extension StringToMinesweeperIcon on String {
+    IconData toMinesweeperIcon() {
+    switch (this) {
+      case kvMineDefaultIconValue:
+        return MinesweeperIcons.mine;
+
+      case kvFlagDefaultIconValue:
+        return MinesweeperIcons.flag;
+
+      case kvMineRelaxedIconValue:
+        return MinesweeperIcons.mine_relaxed;
+
+      case kvTileDefaultIconValue:
+        return MinesweeperIcons.tile;
+    }
+
+    throw Exception("This String does not represet a MinesweeperIcons constant.");
   }
 }
