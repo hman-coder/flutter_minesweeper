@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:minesweeper_flutter/helpers/math.dart';
 import 'package:minesweeper_flutter/presentation/icons/minesweeper_icons.dart';
+import 'package:minesweeper_flutter/presentation/widgets/mine_icon_widget.dart';
 
 /// A Loading animation widget that shows a flag rotating around a mine, like a moon circling a planet
 class FlagCirclesMine extends StatefulWidget {
@@ -123,11 +124,7 @@ class _LoadingUIState extends State<FlagCirclesMine> with TickerProviderStateMix
   Widget _buildMine() {
     return AnimatedBuilder(
       animation: rotationAnimation,
-      child: Icon(
-        MinesweeperIcons.mine,
-        color: Colors.black,
-        size: _mineSize,
-      ),
+      child: MineIcon(size: _mineSize,),
       builder: (_, child) {
         return Transform.rotate(
           angle: rotationAnimation.value,

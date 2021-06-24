@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:minesweeper_flutter/presentation/icons/minesweeper_icons.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:minesweeper_flutter/bloc/minesweeper_theme_bloc.dart';
 
 class FlagIcon extends StatelessWidget {
   final double? size;
 
-  final Color color;
+  final Color? color;
 
   /// The flag icon is not centered by default. This is a little
   /// adjustment handle to help center the flag. Default value is 2.
@@ -14,7 +15,7 @@ class FlagIcon extends StatelessWidget {
     Key? key,
     this.size,
     this.xOffset = 2,
-    this.color = Colors.amber,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -22,9 +23,9 @@ class FlagIcon extends StatelessWidget {
     return Transform.translate(
       offset:  Offset(xOffset, 0),
       child: Icon(
-        MinesweeperIcons.flag,
+        context.watch<MinesweeperThemeBloc>().state.flagIcon,
         size: size,
-        color: color,
+        color: this.color ?? context.watch<MinesweeperThemeBloc>().state.flagColor,
       ),
     );
   }

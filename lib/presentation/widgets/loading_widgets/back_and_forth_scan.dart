@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:minesweeper_flutter/presentation/icons/minesweeper_icons.dart';
+import 'package:minesweeper_flutter/presentation/widgets/flag_icon_widget.dart';
 import 'package:minesweeper_flutter/presentation/widgets/horizontal_percentage_clipper.dart';
+import 'package:minesweeper_flutter/presentation/widgets/mine_icon_widget.dart';
 
 /// A loading animation that shows a red bar going back and forth as it scans a mine
 class BackAndForthScan extends StatefulWidget {
@@ -103,8 +105,7 @@ class _BackAndForthScanState extends State<BackAndForthScan>
         ),
         child: child,
       ),
-      child: Icon(
-        MinesweeperIcons.mine,
+      child: MineIcon(
         size: _mineSize,
       ),
     );
@@ -120,14 +121,10 @@ class _BackAndForthScanState extends State<BackAndForthScan>
         ),
         child: child,
       ),
-      child: Transform.translate(
-        offset: Offset(10, 0),
-        child: Icon(
-          MinesweeperIcons.flag,
-          size: _mineSize,
-          color: Colors.amber,
-        ),
-      ),
+      child: FlagIcon(
+        size: _mineSize,
+        xOffset: 10,
+      )    
     );
   }
 

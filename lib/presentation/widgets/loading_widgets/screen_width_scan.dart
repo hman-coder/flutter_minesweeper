@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:minesweeper_flutter/presentation/icons/minesweeper_icons.dart';
+import 'package:minesweeper_flutter/presentation/widgets/flag_icon_widget.dart';
 import 'package:minesweeper_flutter/presentation/widgets/horizontal_percentage_clipper.dart';
+import 'package:minesweeper_flutter/presentation/widgets/mine_icon_widget.dart';
 
 class ScreenWidthScan extends StatefulWidget {
   @override
   _ScreenWidthScanState createState() => _ScreenWidthScanState();
 }
 
-class _ScreenWidthScanState extends State<ScreenWidthScan> with TickerProviderStateMixin {
+class _ScreenWidthScanState extends State<ScreenWidthScan>
+    with TickerProviderStateMixin {
   late AnimationController flashController;
 
   late AnimationController barMotionController;
@@ -94,19 +97,12 @@ class _ScreenWidthScanState extends State<ScreenWidthScan> with TickerProviderSt
     );
   }
 
-  Widget _currentWidget = Transform.translate(
-    offset: Offset(10, 0),
-    child: Icon(
-      MinesweeperIcons.flag,
-      size: _mineSize,
-      color: Colors.amber,
-    ),
-  );
-
-  Widget _nextWidget = Icon(
-    MinesweeperIcons.mine,
+  Widget _currentWidget = FlagIcon(
+    xOffset: 10,
     size: _mineSize,
   );
+
+  Widget _nextWidget = MineIcon(size: _mineSize);
 
   void switchWidgets() {
     var temp = _currentWidget;
@@ -118,7 +114,8 @@ class _ScreenWidthScanState extends State<ScreenWidthScan> with TickerProviderSt
     return AnimatedBuilder(
       animation: switchableIconAnimation,
       builder: (_, child) => ClipRect(
-        clipper: HorizontalPercentageClipper(getRectValue(context), TextDirection.ltr),
+        clipper: HorizontalPercentageClipper(
+            getRectValue(context), TextDirection.ltr),
         child: _nextWidget,
       ),
       child: _nextWidget,
@@ -129,7 +126,8 @@ class _ScreenWidthScanState extends State<ScreenWidthScan> with TickerProviderSt
     return AnimatedBuilder(
       animation: switchableIconAnimation,
       builder: (_, child) => ClipRect(
-        clipper: HorizontalPercentageClipper(getRectValue(context), TextDirection.rtl),
+        clipper: HorizontalPercentageClipper(
+            getRectValue(context), TextDirection.rtl),
         child: _currentWidget,
       ),
     );
