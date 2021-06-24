@@ -1,98 +1,88 @@
 import 'package:flutter/material.dart';
-
-const String kkForegroundColorKey = "foreground_color";
-const String kkAnimationKey = "animation";
-const String kkBackgroundColorKey = "background_color";
-const String kkFlagIconKey = "flag_icon";
-const String kkMineIconKey = "mine_icon";
-const String kkTileShapeKey = "tile_shape";
+import 'package:minesweeper_flutter/presentation/icons/minesweeper_icons.dart';
+import 'package:minesweeper_flutter/constants/db_keys.dart';
 
 class MinesweeperTheme {
-  final Color tileBackgroundColor;
+  final Color flagColor;
 
-  /// The color of mine/flag
-  final Color foregroundColor;
+  final Color mineColor;
 
-  final String flagIconPath;
+  final Color tileColor;
 
-  final String mineIconPath;
+  final Color backgroundColor;
+
+  final IconData flagIcon;
+
+  final IconData mineIcon;
+
+  final IconData tileIcon;
 
   final String animation;
 
-  final MinesweeperTileShape tileShape;
-
-  const MinesweeperTheme({
-    this.animation = '',
-    this.foregroundColor = Colors.black,
-    this.tileBackgroundColor = Colors.white,
-    this.flagIconPath = "flag.png",
-    this.mineIconPath = "mine.png",
-    this.tileShape = MinesweeperTileShape.circle,
+  MinesweeperTheme({
+    required this.flagColor,
+    required this.mineColor,
+    required this.tileColor,
+    required this.backgroundColor,
+    required this.flagIcon,
+    required this.mineIcon,
+    required this.tileIcon,
+    required this.animation,
   });
 
+  MinesweeperTheme.initial() :
+    this.flagColor = Colors.amber,
+    this.mineColor = Colors.black,
+    this.tileColor = Colors.transparent,
+    this.backgroundColor = Colors.white,
+    this.flagIcon = MinesweeperIcons.flag,
+    this.mineIcon = MinesweeperIcons.mine,
+    this.tileIcon = Icons.circle,
+    this.animation = 'animation'
+    ;
+
   MinesweeperTheme.fromMap(Map<String, dynamic> map)
-      : this.foregroundColor = Color(map[kkForegroundColorKey]),
-        this.animation = map[kkAnimationKey] ?? '',
-        this.tileBackgroundColor = Color(map[kkBackgroundColorKey]),
-        this.flagIconPath = map[kkFlagIconKey],
-        this.mineIconPath = map[kkMineIconKey],
-        this.tileShape = (map[kkTileShapeKey] as String).toMinesweeperTileShape();
+      : this.backgroundColor = Color(map[kkBackgroundColorKey]),
+        this.mineColor = Color(map[kkMineColorKey]),
+        this.flagColor = Color(map[kkTileColorKey]),
+        this.tileColor = Color(map[kkTileColorKey]),
+        this.flagIcon = (map[kkFlagIconKey] as String).toMinesweeperIcon(),
+        this.mineIcon = (map[kkMineIconKey] as String).toMinesweeperIcon(),
+        this.tileIcon = (map[kkTileIconKey] as String).toMinesweeperIcon(),
+        this.animation = map[kkAnimationKey] ?? '';
 
   MinesweeperTheme copyWith(
-      {Color? tileBackgroundColor,
-      String? flagIconPath,
-      String? mineIconPath,
-      MinesweeperTileShape? tileShape}) {
+      {Color? tileColor,
+      Color? mineColor,
+      Color? flagColor,
+      Color? backgroundColor,
+      IconData? mineIcon,
+      IconData? flagIcon,
+      IconData? tileIcon,
+      String? animation}) {
     return MinesweeperTheme(
-      tileBackgroundColor: tileBackgroundColor ?? this.tileBackgroundColor,
-      flagIconPath: flagIconPath ?? this.flagIconPath,
-      mineIconPath: mineIconPath ?? this.mineIconPath,
-      tileShape: tileShape ?? this.tileShape,
+      animation: animation ?? this.animation,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      flagColor: flagColor ?? this.flagColor,
+      flagIcon: flagIcon ?? this.flagIcon,
+      mineColor: mineColor ?? this.mineColor,
+      mineIcon: mineIcon ?? this.mineIcon,
+      tileColor: tileColor ?? this.tileColor,
+      tileIcon: tileIcon ?? this.tileIcon,
     );
   }
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = Map();
-    map[kkForegroundColorKey] = foregroundColor.value;
-    map[kkBackgroundColorKey] = tileBackgroundColor.value;
-    map[kkAnimationKey] = animation;
-    map[kkFlagIconKey] = flagIconPath;
-    map[kkMineIconKey] = mineIconPath;
-    map[kkTileShapeKey] = tileShape.toSimpleString();
+    map[kkAnimationKey] = this.animation;
+    map[kkMineColorKey] = this.mineColor.value;
+    map[kkFlagColorKey] = this.flagColor.value;
+    map[kkTileColorKey] = this.tileColor.value;
+    map[kkBackgroundColorKey] = this.backgroundColor.value;
+    map[kkFlagIconKey] = this.flagIcon.toAppString();
+    map[kkMineIconKey] = this.mineIcon.toAppString();
+    map[kkTileIconKey] = this.tileIcon.toAppString();
+
     return map;
-  }
-
-}
-
-enum MinesweeperTileShape {
-  circle,
-  square,
-}
-
-extension MinesweeperTileShapeToString on MinesweeperTileShape {
-  String toSimpleString() {
-    switch (this) {
-      case MinesweeperTileShape.circle:
-        return 'circle';
-      case MinesweeperTileShape.square:
-        return 'square';
-    }
-  }
-
-  
-}
-
-extension StringToMinesweeperTileShape on String {
-  MinesweeperTileShape toMinesweeperTileShape() {
-    switch (this) {
-      case 'circle':
-        return MinesweeperTileShape.circle;
-
-      case 'square':
-        return MinesweeperTileShape.square;
-
-      default:
-        return MinesweeperTileShape.circle;
-    }
   }
 }
