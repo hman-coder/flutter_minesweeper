@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:minesweeper_flutter/bloc/minesweeper_theme_bloc.dart';
+import 'package:minesweeper_flutter/bloc/unlocked_features_bloc.dart';
 import 'package:minesweeper_flutter/constants/routes.dart';
 import 'package:minesweeper_flutter/repository/game_settings_repository.dart';
 import 'package:minesweeper_flutter/repository/minesweeper_theme_repository.dart';
@@ -10,10 +11,10 @@ import 'package:minesweeper_flutter/config/route_generators.dart';
 import 'package:minesweeper_flutter/bloc/game_settings_bloc.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MinesweeperApp());
 }
 
-class MyApp extends StatelessWidget {
+class MinesweeperApp extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
@@ -25,19 +26,22 @@ class MyApp extends StatelessWidget {
         BlocProvider<GameSettingsBloc>(
             create: (context) =>
                 GameSettingsBloc(GameSettingsSqliteRepository())),
+                BlocProvider<UnlockedFeaturesBloc>(create: (context) => UnlockedFeaturesBloc())
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          textButtonTheme: kbtTextButtonTheme,
-          outlinedButtonTheme: kbtOutlinedButtonTheme,
-          fontFamily: kffFontFamily,
-          textTheme: kttMainTextTheme,
-          appBarTheme: kabtAppBarTheme,
-          
+      child: Builder(
+        builder: (context) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            textButtonTheme: kbtTextButtonTheme,
+            outlinedButtonTheme: kbtOutlinedButtonTheme,
+            fontFamily: kffFontFamily,
+            textTheme: kttMainTextTheme,
+            appBarTheme: kabtAppBarTheme,
+            backgroundColor: context.watch<MinesweeperThemeBloc>().state.backgroundColor,          
+          ),
+          onGenerateRoute: materialRouteGenerator,
+          initialRoute: kprLoadingRoute,
         ),
-        onGenerateRoute: materialRouteGenerator,
-        initialRoute: kprLoadingRoute,
       ),
     );
   }
