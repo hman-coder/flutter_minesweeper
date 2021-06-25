@@ -44,7 +44,7 @@ class MinesweeperTheme {
   MinesweeperTheme.fromMap(Map<String, dynamic> map)
       : this.backgroundColor = Color(map[kkBackgroundColorKey]),
         this.mineColor = Color(map[kkMineColorKey]),
-        this.flagColor = Color(map[kkTileColorKey]),
+        this.flagColor = Color(map[kkFlagColorKey]),
         this.tileColor = Color(map[kkTileColorKey]),
         this.flagIcon = (map[kkFlagIconKey] as String).toMinesweeperIcon(),
         this.mineIcon = (map[kkMineIconKey] as String).toMinesweeperIcon(),
