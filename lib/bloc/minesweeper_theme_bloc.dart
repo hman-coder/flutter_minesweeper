@@ -17,24 +17,26 @@ class MinesweeperThemeBloc extends Cubit<MinesweeperTheme> {
   void changeFlagColor(Color color) async {
     var newTheme = state.copyWith(flagColor: color);
     await repository.update(newTheme);
-    emit(newTheme);
+    _update(newTheme);
   }
 
   void changeFlagIcon(IconData icon) async {
     var newTheme = state.copyWith(flagIcon: icon);
     await repository.update(newTheme);
-    emit(newTheme);
+    _update(newTheme);
   }
 
   void changeMineColor(Color color) async {
     var newTheme = state.copyWith(mineColor: color);
-    await repository.update(newTheme);
-    emit(newTheme);
+    _update(newTheme);
   }
 
   void changeMineIcon(IconData icon) async {
     var newTheme = state.copyWith(mineIcon: icon);
-    await repository.update(newTheme);
-    emit(newTheme);
+    _update(newTheme);
+  }
+
+  void _update(MinesweeperTheme theme) {
+    repository.update(theme).then((value) => emit(theme));
   }
 }
