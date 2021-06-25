@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minesweeper_flutter/constants/routes.dart';
-import 'package:minesweeper_flutter/presentation/icons/minesweeper_icons.dart';
 import 'package:minesweeper_flutter/presentation/widgets/loading_widget.dart';
+import 'package:minesweeper_flutter/presentation/widgets/mine_icon_widget.dart';
 
 class LoadingUI extends StatefulWidget {
   @override
@@ -52,11 +52,9 @@ class _LoadingUIState extends State<LoadingUI> {
         animation: animation,
         builder: (context, child) => Opacity(
           opacity: 1 - (animation.value * 0.5),
-          child: Icon(
-            MinesweeperIcons.mine,
-            color: Colors.black,
+          child: MineIcon(
             size: (animation.value * 300) + 150,
-          ),
+          )
         ),
       );
 }
