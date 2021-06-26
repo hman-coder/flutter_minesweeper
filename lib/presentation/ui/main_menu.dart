@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minesweeper_flutter/bloc/audio_manager.dart';
 import 'package:minesweeper_flutter/bloc/minesweeper_theme_bloc.dart';
+import 'package:minesweeper_flutter/constants/routes.dart';
 import 'package:provider/provider.dart';
 import 'package:minesweeper_flutter/helpers/math.dart';
 import 'package:minesweeper_flutter/presentation/animations/rocking_animation.dart';
@@ -86,6 +87,7 @@ class MainMenuUI extends StatelessWidget {
       child: OutlinedButton(
         onPressed: () {
           AudioManager().normalClick();
+          Navigator.of(context).pushNamed(kprNewGameRoute);
         },
         child: Text(context.localization().newGame),
       ),
@@ -102,7 +104,7 @@ class MainMenuUI extends StatelessWidget {
         label: Text(context.localization().theme),
         onPressed: () {
           AudioManager().normalClick();
-          Navigator.of(context).pushNamed("/themes");
+          Navigator.of(context).pushNamed(kprThemesRoute);
         },
       ),
     );
@@ -117,7 +119,7 @@ class MainMenuUI extends StatelessWidget {
       child: TextButton.icon(
         onPressed: () {
           AudioManager().normalClick();
-          Navigator.of(context).pushNamed("/settings");
+          Navigator.of(context).pushNamed(kprSettingsRoute);
         },
         label: Text(context.localization().settings),
         icon: Icon(Icons.settings),
