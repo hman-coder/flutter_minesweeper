@@ -22,4 +22,6 @@ class AudioManager {
   void normalClick() => _cache.play(ksNormalClick);
 
   void toggle() => _cache.play(ksToggle);
+
+  void itemChanged() => normalClick();
 }
