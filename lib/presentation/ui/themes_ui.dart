@@ -1,10 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:minesweeper_flutter/bloc/minesweeper_theme/minesweeper_theme_bloc.dart';
+import 'package:minesweeper_flutter/bloc/minesweeper_theme_bloc.dart';
+import 'package:minesweeper_flutter/bloc/unlocked_features_bloc.dart';
 import 'package:minesweeper_flutter/helpers/math.dart';
 import 'package:minesweeper_flutter/presentation/animations/rocking_animation.dart';
-import 'package:minesweeper_flutter/presentation/icons/minesweeper_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:minesweeper_flutter/presentation/widgets/spacers.dart';
+import 'package:minesweeper_flutter/presentation/widgets/spinner.dart';
+import 'package:minesweeper_flutter/presentation/widgets/text_widget.dart';
 
 class ThemesUI extends StatelessWidget {
   const ThemesUI({Key? key}) : super(key: key);
@@ -12,17 +16,77 @@ class ThemesUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: TextWidget(data: "Themes", type: TextWidgetType.headline6,)),
       body: Center(
-          child: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        child: ThemeModifier(
-          color: context.watch<MinesweeperThemeBloc>().state.mineColor,
-          icon: context.watch<MinesweeperThemeBloc>().state.mineIcon,
-          onColorChanged: context.read<MinesweeperThemeBloc>().changeMineColor,
-          onIconChanged: context.read<MinesweeperThemeBloc>().changeMineIcon,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              kwEnormousVerticalSpacer,
+              TextWidget(
+                type: TextWidgetType.subtitle1,
+                data: "Background Color",
+              ),
+              kwMediumVerticalSpacer,
+              _buildBackgroundModifier(context),
+              kwEnormousVerticalSpacer,
+              _buildMineModifier(context),
+              kwEnormousVerticalSpacer,
+              _buildFlagModifier(context),
+            ],
+          ),
         ),
-      )),
+      ),
+    );
+  }
+
+  Widget _buildBackgroundModifier(BuildContext context) {
+    return SizedBox(
+      height: 70,
+      child: Spinner<Color>(
+        values: context.watch<UnlockedFeaturesBloc>().state.backgroundColors,
+        itemBuilder: (element) => Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black, width: 1),
+            color: element,
+            borderRadius: BorderRadius.circular(100),
+          ),
+        ),
+        onValueChanged:
+            context.read<MinesweeperThemeBloc>().changeBackgroundColor,
+        value: context.watch<MinesweeperThemeBloc>().state.backgroundColor,
+      ),
+    );
+  }
+
+  Widget _buildMineModifier(BuildContext context) {
+    return ThemeModifier(
+      title: TextWidget(
+        data: "Mine Appearance",
+        type: TextWidgetType.subtitle1,
+      ),
+      color: context.watch<MinesweeperThemeBloc>().state.mineColor,
+      icon: context.watch<MinesweeperThemeBloc>().state.mineIcon,
+      onColorChanged: context.read<MinesweeperThemeBloc>().changeMineColor,
+      onIconChanged: context.read<MinesweeperThemeBloc>().changeMineIcon,
+      colors: context.watch<UnlockedFeaturesBloc>().state.mineColors,
+      icons: context.watch<UnlockedFeaturesBloc>().state.mineIcons,
+    );
+  }
+
+  Widget _buildFlagModifier(BuildContext context) {
+    return ThemeModifier(
+      title: TextWidget(
+        data: "Flag Appearance",
+        type: TextWidgetType.subtitle1,
+      ),
+      color: context.watch<MinesweeperThemeBloc>().state.flagColor,
+      icon: context.watch<MinesweeperThemeBloc>().state.flagIcon,
+      onColorChanged: context.read<MinesweeperThemeBloc>().changeFlagColor,
+      onIconChanged: context.read<MinesweeperThemeBloc>().changeFlagIcon,
+      colors: context.watch<UnlockedFeaturesBloc>().state.flagColors,
+      icons: context.watch<UnlockedFeaturesBloc>().state.flagIcons,
     );
   }
 }
@@ -42,12 +106,18 @@ class ThemeModifier extends StatelessWidget {
 
   final Widget? title;
 
+  final List<Color> colors;
+
+  final List<IconData> icons;
+
   const ThemeModifier({
     Key? key,
     required this.color,
     required this.onColorChanged,
     required this.icon,
     required this.onIconChanged,
+    required this.icons,
+    required this.colors,
     this.title,
     this.width,
     this.height,
@@ -62,6 +132,7 @@ class ThemeModifier extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (title != null) title!,
+          if (title != null) kwLargeVerticalSpacer,
           _buildPreviewWidget(),
           kwMediumVerticalSpacer,
           _buildColorSpinner(),
@@ -74,6 +145,7 @@ class ThemeModifier extends StatelessWidget {
 
   Widget _buildPreviewWidget() {
     return RockingAnimation(
+      startingAnimationValue: Random(DateTime.now().millisecond).nextDouble(),
       endingRadians: MathHelper.degreesToRadians(-35),
       startingRadians: MathHelper.degreesToRadians(50),
       child: Icon(
@@ -98,7 +170,7 @@ class ThemeModifier extends StatelessWidget {
         ),
         onValueChanged: onColorChanged,
         value: color,
-        values: [Colors.black, Colors.red, Colors.purple],
+        values: colors,
       ),
     );
   }
@@ -110,105 +182,7 @@ class ThemeModifier extends StatelessWidget {
           itemBuilder: (item) => Icon(item, size: 35),
           onValueChanged: onIconChanged,
           value: icon,
-          values: [MinesweeperIcons.mine, MinesweeperIcons.mine_relaxed]),
-    );
-  }
-}
-
-class Spinner<T> extends StatefulWidget {
-  final List<T> values;
-
-  final Widget Function(T) itemBuilder;
-
-  final Function(T) onValueChanged;
-
-  final T value;
-
-  const Spinner({
-    Key? key,
-    required this.values,
-    required this.itemBuilder,
-    required this.onValueChanged,
-    required this.value,
-  }) : super(key: key);
-
-  @override
-  _SpinnerState<T> createState() => _SpinnerState<T>();
-}
-
-class _SpinnerState<T> extends State<Spinner<T>> {
-  late FixedExtentScrollController scrollController;
-
-  @override
-  void initState() {
-    int initialItemIndex = widget.values.indexOf(widget.value);
-    scrollController =
-        FixedExtentScrollController(initialItem: initialItemIndex);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
-  }
-
-  _animateTo(int index) {
-    scrollController.animateToItem(index,
-        duration: Duration(milliseconds: 150), curve: Curves.easeInOut);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        _buildLeftArrow(),
-        Expanded(child: _buildCurrentItem()),
-        _buildRightArrow(),
-      ],
-    );
-  }
-
-  Widget _buildLeftArrow() {
-    return IconButton(
-      onPressed: () => _animateTo(scrollController.selectedItem - 1),
-      icon: Icon(Icons.arrow_back),
-    );
-  }
-
-  Widget _buildRightArrow() {
-    return IconButton(
-      onPressed: () => _animateTo(scrollController.selectedItem + 1),
-      icon: Icon(Icons.arrow_forward),
-    );
-  }
-
-  Widget _buildCurrentItem() {
-    return RotatedBox(
-      quarterTurns: 3,
-      child: ListWheelScrollView.useDelegate(
-        onSelectedItemChanged: (index) =>
-            widget.onValueChanged(widget.values[(index)]),
-        diameterRatio: 1.5,
-        overAndUnderCenterOpacity: 0.5,
-        childDelegate: ListWheelChildLoopingListDelegate(
-          children: widget.values
-              .map<Widget>(
-                (e) => RotatedBox(
-                  quarterTurns: 1,
-                  child: Center(
-                    child: widget.itemBuilder(e),
-                  ),
-                ),
-              )
-              .toList(),
-        ),
-        itemExtent: 60,
-        controller: scrollController,
-        physics: FixedExtentScrollPhysics(),
-      ),
+          values: icons),
     );
   }
 }

@@ -25,7 +25,7 @@ const List<IconData> defaultTileIcons = [MinesweeperIcons.tile];
 
 const List<IconData> premiumTileIcons = [];
 
-const List<Color> defaultBackgroundColors = [Colors.white];
+const List<Color> defaultBackgroundColors = [Colors.white, Colors.yellow];
 
 const List<Color> premiumBackgroundColors = [];
 
