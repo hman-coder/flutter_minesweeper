@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:minesweeper_flutter/bloc/audio_manager.dart';
 import 'package:minesweeper_flutter/bloc/game_settings_bloc.dart';
 import 'package:minesweeper_flutter/presentation/widgets/mine_switch.dart';
+import 'package:minesweeper_flutter/helpers/context_extensions.dart';
 
 class SettingsUI extends StatefulWidget {
   const SettingsUI({Key? key}) : super(key: key);
@@ -19,8 +20,7 @@ class _SettingsUIState extends State<SettingsUI> {
       body: Column(
         children: [
           ListTile(
-            title: Text("music"),
-            subtitle: Text("music is beautiful"),
+            title: Text(context.localization().music),
             onTap: () {
               AudioManager().toggle();
               context.read<GameSettingsBloc>().toggleMusic();
@@ -34,7 +34,7 @@ class _SettingsUIState extends State<SettingsUI> {
             ),
           ),
           ListTile(
-              title: Text("sfx"),
+              title: Text(context.localization().sfx),
               onTap: () {
                 AudioManager().toggle();
                 context.read<GameSettingsBloc>().toggleSFX();
@@ -47,7 +47,7 @@ class _SettingsUIState extends State<SettingsUI> {
                 ),
               )),
           ListTile(
-            title: Text("notifications"),
+            title: Text(context.localization().notifications),
             onTap: () {
               AudioManager().toggle();
               context.read<GameSettingsBloc>().toggleNotifications();

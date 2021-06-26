@@ -9,6 +9,7 @@ import 'package:minesweeper_flutter/presentation/widgets/delayed_widget.dart';
 import 'package:minesweeper_flutter/presentation/widgets/mine_icon_widget.dart';
 import 'package:minesweeper_flutter/presentation/widgets/spacers.dart';
 import 'package:minesweeper_flutter/repository/sqlite_accessor.dart';
+import 'package:minesweeper_flutter/helpers/context_extensions.dart';
 
 class MainMenuUI extends StatelessWidget {
   final double bottomMineSize;
@@ -33,7 +34,7 @@ class MainMenuUI extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Minesweeper"),
+        title: Text(context.localization().minesweeper),
         toolbarHeight: appBarHeight,
         actions: [_buildDeleteTableButton()],
       ),
@@ -54,7 +55,7 @@ class MainMenuUI extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   kwEmptyExpanded,
-                  _buildNewGameButton(),
+                  _buildNewGameButton(context),
                   kwEnormousVerticalSpacer,
                   _buildThemesButton(context),
                   kwEnormousVerticalSpacer,
@@ -76,7 +77,7 @@ class MainMenuUI extends StatelessWidget {
     );
   }
 
-  Widget _buildNewGameButton() {
+  Widget _buildNewGameButton(BuildContext context) {
     return DelayedWidget(
       rank: 1,
       duration: Duration(milliseconds: 500),
@@ -86,7 +87,7 @@ class MainMenuUI extends StatelessWidget {
         onPressed: () {
           AudioManager().normalClick();
         },
-        child: Text("New Game"),
+        child: Text(context.localization().newGame),
       ),
     );
   }
@@ -98,7 +99,7 @@ class MainMenuUI extends StatelessWidget {
       duration: Duration(milliseconds: 500),
       child: TextButton.icon(
         icon: Icon(Icons.brush),
-        label: Text("Theme"),
+        label: Text(context.localization().theme),
         onPressed: () {
           AudioManager().normalClick();
           Navigator.of(context).pushNamed("/themes");
@@ -118,7 +119,7 @@ class MainMenuUI extends StatelessWidget {
           AudioManager().normalClick();
           Navigator.of(context).pushNamed("/settings");
         },
-        label: Text("Settings"),
+        label: Text(context.localization().settings),
         icon: Icon(Icons.settings),
       ),
     );

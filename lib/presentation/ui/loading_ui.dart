@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:minesweeper_flutter/constants/routes.dart';
 import 'package:minesweeper_flutter/presentation/widgets/loading_widget.dart';
 import 'package:minesweeper_flutter/presentation/widgets/mine_icon_widget.dart';
+import 'package:minesweeper_flutter/helpers/context_extensions.dart';
 
 class LoadingUI extends StatefulWidget {
   @override
@@ -21,10 +22,10 @@ class _LoadingUIState extends State<LoadingUI> {
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, kprMainMenuRoute);
                 },
-                child: Text("Finish"),
+                child: Text(context.localization().finish),
               ),
               Text(
-                "Minesweeper",
+                context.localization().minesweeper,
                 style: Theme.of(context).textTheme.headline5,
               ),
               SizedBox(
@@ -38,7 +39,7 @@ class _LoadingUIState extends State<LoadingUI> {
               SizedBox(
                 height: 100,
               ),
-              Text("Loading..."),
+              Text("${context.localization().loading}..."),
             ],
           ),
         ),

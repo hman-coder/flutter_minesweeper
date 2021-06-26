@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:minesweeper_flutter/presentation/widgets/spacers.dart';
 import 'package:minesweeper_flutter/presentation/widgets/spinner.dart';
 import 'package:minesweeper_flutter/presentation/widgets/text_widget.dart';
+import 'package:minesweeper_flutter/helpers/context_extensions.dart';
 
 class ThemesUI extends StatelessWidget {
   const ThemesUI({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class ThemesUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: TextWidget(data: "Themes", type: TextWidgetType.headline6,)),
+      appBar: AppBar(title: TextWidget(data: context.localization().theme, type: TextWidgetType.headline6,)),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -24,7 +25,7 @@ class ThemesUI extends StatelessWidget {
               kwEnormousVerticalSpacer,
               TextWidget(
                 type: TextWidgetType.subtitle1,
-                data: "Background Color",
+                data: context.localization().backgroundColor,
               ),
               kwMediumVerticalSpacer,
               _buildBackgroundModifier(context),
@@ -63,7 +64,7 @@ class ThemesUI extends StatelessWidget {
   Widget _buildMineModifier(BuildContext context) {
     return ThemeModifier(
       title: TextWidget(
-        data: "Mine Appearance",
+        data: context.localization().mineAppearance,
         type: TextWidgetType.subtitle1,
       ),
       color: context.watch<MinesweeperThemeBloc>().state.mineColor,
@@ -78,7 +79,7 @@ class ThemesUI extends StatelessWidget {
   Widget _buildFlagModifier(BuildContext context) {
     return ThemeModifier(
       title: TextWidget(
-        data: "Flag Appearance",
+        data: context.localization().flagAppearance,
         type: TextWidgetType.subtitle1,
       ),
       color: context.watch<MinesweeperThemeBloc>().state.flagColor,

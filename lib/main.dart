@@ -9,13 +9,13 @@ import 'package:minesweeper_flutter/constants/text.dart';
 import 'package:minesweeper_flutter/config/themes.dart';
 import 'package:minesweeper_flutter/config/route_generators.dart';
 import 'package:minesweeper_flutter/bloc/game_settings_bloc.dart';
+import 'package:flutter_gen/gen_l10n/minesweeper_localizations.dart';
 
 void main() {
   runApp(MinesweeperApp());
 }
 
 class MinesweeperApp extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -26,18 +26,22 @@ class MinesweeperApp extends StatelessWidget {
         BlocProvider<GameSettingsBloc>(
             create: (context) =>
                 GameSettingsBloc(GameSettingsSqliteRepository())),
-                BlocProvider<UnlockedFeaturesBloc>(create: (context) => UnlockedFeaturesBloc())
+        BlocProvider<UnlockedFeaturesBloc>(
+            create: (context) => UnlockedFeaturesBloc())
       ],
       child: Builder(
         builder: (context) => MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             textButtonTheme: kbtTextButtonTheme,
             outlinedButtonTheme: kbtOutlinedButtonTheme,
             fontFamily: kffFontFamily,
             textTheme: kttMainTextTheme,
-            appBarTheme: kabtAppBarTheme,  
-            scaffoldBackgroundColor: context.watch<MinesweeperThemeBloc>().state.backgroundColor,
+            appBarTheme: kabtAppBarTheme,
+            scaffoldBackgroundColor:
+                context.watch<MinesweeperThemeBloc>().state.backgroundColor,
           ),
           onGenerateRoute: materialRouteGenerator,
           initialRoute: kprLoadingRoute,

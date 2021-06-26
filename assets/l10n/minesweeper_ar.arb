@@ -1,0 +1,20 @@
+{
+	"backgroundColor" : "لون الخلفية",
+	
+	"finish" : "إنهاء",
+	"flagAppearance" : "مظهر العلم",
+
+	"loading" : "يتم التحميل",
+
+	"mineAppearance" : "مظهر اللغم",
+	"minesweeper": "كانسة الألغام",
+	"music" : "الموسيقا",
+
+	"newGame" : "لعبة جديدة",
+	"notifications" : "الإشعارات",
+
+	"settings" : "الإعدادات",
+	"sfx" : "التأثيرات الصوتية",
+
+	"theme" : "التنسيق"
+}

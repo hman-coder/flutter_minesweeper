@@ -1,0 +1,20 @@
+{
+  "backgroundColor": "Background Color",
+
+  "finish" : "Finish",
+  "flagAppearance" : "Flag Appearance",
+
+  "loading" : "Loading",
+  
+  "mineAppearance" : "Mine Appearance",
+  "minesweeper" : "Minesweeper",
+  "music" : "Music",
+
+  "newGame" : "New Game",
+  "notifications" : "Notifications",
+  
+  "settings" : "Settings",
+  "sfx" : "Effects",
+
+  "theme" : "Theme"
+}
