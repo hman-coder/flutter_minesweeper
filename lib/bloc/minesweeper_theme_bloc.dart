@@ -36,6 +36,11 @@ class MinesweeperThemeBloc extends Cubit<MinesweeperTheme> {
     _update(newTheme);
   }
 
+  void changeBackgroundColor(Color color) {
+    var newTheme = state.copyWith(backgroundColor: color);
+    _update(newTheme);
+  }
+
   void _update(MinesweeperTheme theme) {
     repository.update(theme).then((value) => emit(theme));
   }
