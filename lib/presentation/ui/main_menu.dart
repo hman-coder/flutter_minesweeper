@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minesweeper_flutter/bloc/audio_manager.dart';
-import 'package:minesweeper_flutter/bloc/minesweeper_theme_bloc.dart';
 import 'package:minesweeper_flutter/constants/routes.dart';
-import 'package:provider/provider.dart';
 import 'package:minesweeper_flutter/helpers/math.dart';
 import 'package:minesweeper_flutter/presentation/animations/rocking_animation.dart';
 import 'package:minesweeper_flutter/presentation/widgets/constant_widgets.dart';
@@ -138,7 +136,7 @@ class MainMenuUI extends StatelessWidget {
           endingRadians: MathHelper.degreesToRadians(-40),
           startingRadians: MathHelper.degreesToRadians(40),
           child: MineIcon(
-            color: context.watch<MinesweeperThemeBloc>().state.mineColor.withOpacity(0.5),
+            opacity: 0.4,
             size: 450,
           ),
         ),

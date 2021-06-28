@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:minesweeper_flutter/bloc/minesweeper_theme_bloc.dart';
+import 'package:minesweeper_flutter/bloc/minesweeper_theme.dart';
 
 class FlagIcon extends StatelessWidget {
   final double? size;
@@ -21,11 +21,19 @@ class FlagIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Transform.translate(
-      offset:  Offset(xOffset, 0),
-      child: Icon(
-        context.watch<MinesweeperThemeBloc>().state.flagIcon,
-        size: size,
-        color: this.color ?? context.watch<MinesweeperThemeBloc>().state.flagColor,
+      offset: Offset(xOffset, 0),
+      child: BlocBuilder<MinesweeperThemeBloc, MinesweeperThemeState>(
+        buildWhen: (prev, cur) => cur is FlagThemeChangedState || cur is InitialState,
+        builder: (context, state) {
+          var flagTheme;
+          if(state is InitialState) flagTheme = state.theme.flagTheme;
+          else if (state is FlagThemeChangedState) flagTheme = state.flagTheme;
+          return Icon(
+            flagTheme.icon,
+            size: size,
+            color: this.color ?? flagTheme.color,
+          );
+        },
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:minesweeper_flutter/bloc/minesweeper_theme_bloc.dart';
+import 'package:minesweeper_flutter/bloc/minesweeper_theme.dart';
 import 'package:minesweeper_flutter/bloc/unlocked_features_bloc.dart';
 import 'package:minesweeper_flutter/helpers/math.dart';
 import 'package:minesweeper_flutter/presentation/animations/rocking_animation.dart';
@@ -17,7 +17,11 @@ class ThemesUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: TextWidget(data: context.localization().theme, type: TextWidgetType.headline6,)),
+      appBar: AppBar(
+          title: TextWidget(
+        data: context.localization().theme,
+        type: TextWidgetType.headline6,
+      )),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -43,51 +47,86 @@ class ThemesUI extends StatelessWidget {
   Widget _buildBackgroundModifier(BuildContext context) {
     return SizedBox(
       height: 70,
-      child: Spinner<Color>(
-        values: context.watch<UnlockedFeaturesBloc>().state.backgroundColors,
-        itemBuilder: (element) => Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black, width: 1),
-            color: element,
-            borderRadius: BorderRadius.circular(100),
-          ),
-        ),
-        onValueChanged:
-            context.read<MinesweeperThemeBloc>().changeBackgroundColor,
-        value: context.watch<MinesweeperThemeBloc>().state.backgroundColor,
-      ),
+      child: BlocBuilder<MinesweeperThemeBloc, MinesweeperThemeState>(
+          buildWhen: (prev, current) =>
+              current is BackgroundColorChangeState || current is InitialState,
+          builder: (context, state) {
+            var color;
+            if (state is BackgroundColorChangeState)
+              color = state.color;
+            else if (state is InitialState) color = state.theme.backgroundColor;
+            return Spinner<Color>(
+              values:
+                  context.watch<UnlockedFeaturesBloc>().state.backgroundColors,
+              itemBuilder: (element) => Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1),
+                  color: element,
+                  borderRadius: BorderRadius.circular(100),
+                ),
+              ),
+              onValueChanged: (value) => context
+                  .read<MinesweeperThemeBloc>()
+                  .add(BackgroundColorChangeEvent(value)),
+              value: color,
+            );
+          }),
     );
   }
 
   Widget _buildMineModifier(BuildContext context) {
-    return ThemeModifier(
-      title: TextWidget(
-        data: context.localization().mineAppearance,
-        type: TextWidgetType.subtitle1,
-      ),
-      color: context.watch<MinesweeperThemeBloc>().state.mineColor,
-      icon: context.watch<MinesweeperThemeBloc>().state.mineIcon,
-      onColorChanged: context.read<MinesweeperThemeBloc>().changeMineColor,
-      onIconChanged: context.read<MinesweeperThemeBloc>().changeMineIcon,
-      colors: context.watch<UnlockedFeaturesBloc>().state.mineColors,
-      icons: context.watch<UnlockedFeaturesBloc>().state.mineIcons,
-    );
+    return BlocBuilder<MinesweeperThemeBloc, MinesweeperThemeState>(
+        buildWhen: (prev, cur) => cur is MineThemeChangedState || cur is InitialState,
+        builder: (context, state) {
+          var mineTheme;
+          if(state is MineThemeChangedState) mineTheme = state.mineTheme;
+          else if (state is InitialState) mineTheme = state.theme.mineTheme;
+
+          return ThemeModifier(
+            title: TextWidget(
+              data: context.localization().mineAppearance,
+              type: TextWidgetType.subtitle1,
+            ),
+            color: mineTheme.color,
+            icon: mineTheme.icon,
+            onColorChanged: (color) => context
+                .read<MinesweeperThemeBloc>()
+                .add(MineThemeChangeEvent(color: color)),
+            onIconChanged: (icon) => context
+                .read<MinesweeperThemeBloc>()
+                .add(MineThemeChangeEvent(icon: icon)),
+            colors: context.watch<UnlockedFeaturesBloc>().state.mineColors,
+            icons: context.watch<UnlockedFeaturesBloc>().state.mineIcons,
+          );
+        });
   }
 
   Widget _buildFlagModifier(BuildContext context) {
-    return ThemeModifier(
-      title: TextWidget(
-        data: context.localization().flagAppearance,
-        type: TextWidgetType.subtitle1,
-      ),
-      color: context.watch<MinesweeperThemeBloc>().state.flagColor,
-      icon: context.watch<MinesweeperThemeBloc>().state.flagIcon,
-      onColorChanged: context.read<MinesweeperThemeBloc>().changeFlagColor,
-      onIconChanged: context.read<MinesweeperThemeBloc>().changeFlagIcon,
-      colors: context.watch<UnlockedFeaturesBloc>().state.flagColors,
-      icons: context.watch<UnlockedFeaturesBloc>().state.flagIcons,
+    return BlocBuilder<MinesweeperThemeBloc, MinesweeperThemeState>(
+      buildWhen: (prev, cur) => cur is FlagThemeChangedState || cur is InitialState,
+      builder: (context, state) {
+        var flagTheme;
+        if (state is InitialState) flagTheme = state.theme.flagTheme;
+        else if (state is FlagThemeChangedState) flagTheme = state.flagTheme;
+        return ThemeModifier(
+          title: TextWidget(
+            data: context.localization().flagAppearance,
+            type: TextWidgetType.subtitle1,
+          ),
+          color: flagTheme.color,
+          icon: flagTheme.icon,
+          onColorChanged: (color) => context
+              .read<MinesweeperThemeBloc>()
+              .add(FlagThemeChangeEvent(color: color)),
+          onIconChanged: (icon) => context
+              .read<MinesweeperThemeBloc>()
+              .add(FlagThemeChangeEvent(icon: icon)),
+          colors: context.watch<UnlockedFeaturesBloc>().state.flagColors,
+          icons: context.watch<UnlockedFeaturesBloc>().state.flagIcons,
+        );
+      },
     );
   }
 }
