@@ -41,3 +41,4 @@ app.*.symbols
 app.*.map.json
 .vscode/launch.json
 .gitignore
+lib/theme_test_ui.dart
