@@ -1,36 +1,72 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/painting.dart';
 import 'package:minesweeper_flutter/model/minesweeper_theme.dart';
 
-abstract class MinesweeperThemeState {}
+abstract class MinesweeperThemeState extends Equatable {
+}
 
 class InitialState extends MinesweeperThemeState {
   final MinesweeperTheme theme;
   
   InitialState() : this.theme= MinesweeperTheme.initial();
+
+  @override
+  List<Object?> get props => [theme];
 }
 
-class BackgroundColorChangeState extends MinesweeperThemeState {
+class ThemeReloadedState extends MinesweeperThemeState{
+  final MinesweeperTheme theme;
+
+  ThemeReloadedState(this.theme);
+
+  @override
+  List<Object?> get props => [theme];
+}
+
+class BackgroundColorUpdatedState extends MinesweeperThemeState {
   final Color color;
 
-  BackgroundColorChangeState(this.color);
+  BackgroundColorUpdatedState(this.color);
+
+  @override
+  List<Object?> get props => [color];
 }
 
-class MineThemeChangedState extends MinesweeperThemeState {
+class MineThemeUpdatedState extends MinesweeperThemeState {
   final MinesweeperElementTheme mineTheme;
 
-  MineThemeChangedState(this.mineTheme);
+  MineThemeUpdatedState(this.mineTheme);
+
+  @override
+  List<Object?> get props => [mineTheme];
 }
 
-class FlagThemeChangedState extends MinesweeperThemeState {
+class FlagThemeUpdatedState extends MinesweeperThemeState {
   final MinesweeperElementTheme flagTheme;
 
-  FlagThemeChangedState(this.flagTheme);
+  FlagThemeUpdatedState(this.flagTheme);
+
+  @override
+  List<Object?> get props => [flagTheme];
 }
 
-class TileThemeChangedState extends MinesweeperThemeState {
+class TileThemeUpdatedState extends MinesweeperThemeState {
   final MinesweeperElementTheme tileTheme;
 
-  TileThemeChangedState(this.tileTheme);
+  TileThemeUpdatedState(this.tileTheme);
+
+  @override
+  List<Object?> get props => [tileTheme];
+}
+
+class TileAnimationUpdatedState extends MinesweeperThemeState {
+  final TileAnimation animation;
+
+  TileAnimationUpdatedState(this.animation);
+
+  @override
+  List<Object?> get props => [animation];
+  
 }
 
 class MinesweeperThemeUpdatedState extends MinesweeperThemeState {
@@ -38,4 +74,15 @@ class MinesweeperThemeUpdatedState extends MinesweeperThemeState {
 
   MinesweeperThemeUpdatedState(this.theme);
 
+  @override
+  List<Object?> get props => [theme];
+}
+
+class ErrorState extends MinesweeperThemeState {
+  final String message;
+
+  ErrorState(this.message);
+
+  @override
+  List<Object?> get props => [message];
 }

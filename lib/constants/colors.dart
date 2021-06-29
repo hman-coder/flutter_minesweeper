@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
 
-extension IsDark on Color {
-  bool get isDark {
-    return _darkBackgroundColors.contains(this);    
-  }
-}
-
 // Color palletes urls:
 // https://coolors.co/d4afb9-d3bfce-d1cfe2-9cadce-7ec4cf-52b2cf-000000
 // https://coolors.co/51a3a3-75485e-cb904d-cc92c2-37423d-c57b57-ffffff
@@ -55,6 +49,5 @@ const Color kcBackgroundWhiteColor = Colors.white;
 // Dark
 const Color kcBackgroundDarkColor = Color(0xFF121212);
 
-
 // Dark background colors
-const List<Color> _darkBackgroundColors = [kcBackgroundDarkColor];
+const List<Color> darkBackgroundColors = [kcBackgroundDarkColor];

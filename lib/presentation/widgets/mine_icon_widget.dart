@@ -19,11 +19,9 @@ class MineIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MinesweeperThemeBloc, MinesweeperThemeState>(
-      buildWhen: (previous, current) => current is MineThemeChangedState || current is InitialState,
+      buildWhen: _blocRebuildCondition,
       builder: (context, state) {
-        var mineTheme;
-        if(state is InitialState) mineTheme = state.theme.mineTheme;
-        else if (state is MineThemeChangedState) mineTheme = state.mineTheme;
+        var mineTheme = context.read<MinesweeperThemeBloc>().currentTheme.mineTheme;
         return Icon(
         mineTheme.icon,
         size: size,
@@ -31,5 +29,9 @@ class MineIcon extends StatelessWidget {
       );
       }
     );
+  }
+
+  bool _blocRebuildCondition(previous, current) {
+    return current is MineThemeUpdatedState || current is InitialState || current is ThemeReloadedState;
   }
 }

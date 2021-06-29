@@ -6,6 +6,7 @@ import 'package:minesweeper_flutter/bloc/unlocked_features_bloc.dart';
 import 'package:minesweeper_flutter/helpers/math.dart';
 import 'package:minesweeper_flutter/presentation/animations/rocking_animation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:minesweeper_flutter/presentation/widgets/color_widget.dart';
 import 'package:minesweeper_flutter/presentation/widgets/spacers.dart';
 import 'package:minesweeper_flutter/presentation/widgets/spinner.dart';
 import 'package:minesweeper_flutter/presentation/widgets/text_widget.dart';
@@ -48,25 +49,14 @@ class ThemesUI extends StatelessWidget {
     return SizedBox(
       height: 70,
       child: BlocBuilder<MinesweeperThemeBloc, MinesweeperThemeState>(
-          buildWhen: (prev, current) =>
-              current is BackgroundColorChangeState || current is InitialState,
+          buildWhen: (prev, cur) =>
+              cur is BackgroundColorUpdatedState || cur is InitialState || cur is ThemeReloadedState,
           builder: (context, state) {
-            var color;
-            if (state is BackgroundColorChangeState)
-              color = state.color;
-            else if (state is InitialState) color = state.theme.backgroundColor;
+            var color = context.read<MinesweeperThemeBloc>().currentTheme.backgroundColor;
             return Spinner<Color>(
               values:
                   context.watch<UnlockedFeaturesBloc>().state.backgroundColors,
-              itemBuilder: (element) => Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 1),
-                  color: element,
-                  borderRadius: BorderRadius.circular(100),
-                ),
-              ),
+              itemBuilder: (item) => ColorWidget(item),
               onValueChanged: (value) => context
                   .read<MinesweeperThemeBloc>()
                   .add(BackgroundColorChangeEvent(value)),
@@ -78,11 +68,9 @@ class ThemesUI extends StatelessWidget {
 
   Widget _buildMineModifier(BuildContext context) {
     return BlocBuilder<MinesweeperThemeBloc, MinesweeperThemeState>(
-        buildWhen: (prev, cur) => cur is MineThemeChangedState || cur is InitialState,
+        buildWhen: (prev, cur) => cur is MineThemeUpdatedState || cur is InitialState || cur is ThemeReloadedState,
         builder: (context, state) {
-          var mineTheme;
-          if(state is MineThemeChangedState) mineTheme = state.mineTheme;
-          else if (state is InitialState) mineTheme = state.theme.mineTheme;
+          var mineTheme = context.read<MinesweeperThemeBloc>().currentTheme.mineTheme;
 
           return ThemeModifier(
             title: TextWidget(
@@ -105,11 +93,9 @@ class ThemesUI extends StatelessWidget {
 
   Widget _buildFlagModifier(BuildContext context) {
     return BlocBuilder<MinesweeperThemeBloc, MinesweeperThemeState>(
-      buildWhen: (prev, cur) => cur is FlagThemeChangedState || cur is InitialState,
+      buildWhen: (prev, cur) => cur is FlagThemeUpdatedState || cur is InitialState || cur is ThemeReloadedState,
       builder: (context, state) {
-        var flagTheme;
-        if (state is InitialState) flagTheme = state.theme.flagTheme;
-        else if (state is FlagThemeChangedState) flagTheme = state.flagTheme;
+        var flagTheme = context.read<MinesweeperThemeBloc>().currentTheme.flagTheme;
         return ThemeModifier(
           title: TextWidget(
             data: context.localization().flagAppearance,
@@ -200,14 +186,7 @@ class ThemeModifier extends StatelessWidget {
     return SizedBox(
       height: 70,
       child: Spinner<Color>(
-        itemBuilder: (item) => Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
-            color: item,
-          ),
-        ),
+        itemBuilder: (color) => ColorWidget(color),
         onValueChanged: onColorChanged,
         value: color,
         values: colors,

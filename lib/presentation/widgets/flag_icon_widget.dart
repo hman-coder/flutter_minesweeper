@@ -23,11 +23,9 @@ class FlagIcon extends StatelessWidget {
     return Transform.translate(
       offset: Offset(xOffset, 0),
       child: BlocBuilder<MinesweeperThemeBloc, MinesweeperThemeState>(
-        buildWhen: (prev, cur) => cur is FlagThemeChangedState || cur is InitialState,
+        buildWhen: _blocRebuildCondition,
         builder: (context, state) {
-          var flagTheme;
-          if(state is InitialState) flagTheme = state.theme.flagTheme;
-          else if (state is FlagThemeChangedState) flagTheme = state.flagTheme;
+          var flagTheme = context.read<MinesweeperThemeBloc>().currentTheme.flagTheme;
           return Icon(
             flagTheme.icon,
             size: size,
@@ -36,5 +34,9 @@ class FlagIcon extends StatelessWidget {
         },
       ),
     );
+  }
+
+  bool _blocRebuildCondition(prev, cur) {
+    return cur is FlagThemeUpdatedState || cur is InitialState || cur is ThemeReloadedState;
   }
 }
