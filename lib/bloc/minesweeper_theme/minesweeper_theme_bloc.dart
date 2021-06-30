@@ -10,11 +10,11 @@ class MinesweeperThemeBloc
 
   MinesweeperTheme currentTheme;
 
+  bool initialized = false;
+
   MinesweeperThemeBloc(this._repository,)
       : currentTheme = MinesweeperTheme.initial(),
-        super(InitialState()) {
-    add(ReloadEvent());
-  }
+        super(InitialState());
 
   @override
   Stream<MinesweeperThemeState> mapEventToState(
@@ -36,6 +36,7 @@ class MinesweeperThemeBloc
     var result = await _repository.fetchTheme();
     currentTheme = result;
     yield ThemeReloadedState(result);
+    initialized = true;
   }
 
   Stream<MinesweeperThemeState> _handleBackgroundChange(

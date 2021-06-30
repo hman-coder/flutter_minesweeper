@@ -5,8 +5,14 @@ import 'package:flutter/material.dart';
 
 ThemeData themeOfBackgroundColor(Color color) {
   ThemeData returnedTheme;
-  if (darkBackgroundColors.contains(color))
+  if (color.isDarkThemeColor)
     returnedTheme = darkThemeData;
   else  returnedTheme = lightThemeData;
   return returnedTheme.copyWith(scaffoldBackgroundColor: color);
+}
+
+extension IsDarkThemeColor on Color {
+  bool get isDarkThemeColor {
+    return darkBackgroundColors.contains(this);
+  }
 }

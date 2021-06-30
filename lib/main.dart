@@ -20,23 +20,15 @@ class MinesweeperApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // return ThemeTestApp();
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<MinesweeperThemeBloc>(
-          lazy: false,
-            create: (context) =>
-                MinesweeperThemeBloc(MinesweeperThemeSqliteRepository())),
-        BlocProvider<GameSettingsBloc>(
-            create: (context) =>
-                GameSettingsBloc(GameSettingsSqliteRepository())),
-        BlocProvider<UnlockedFeaturesBloc>(
-            create: (context) => UnlockedFeaturesBloc())
-      ],
+    return CoreBlocsProvider(
       child: BlocBuilder<MinesweeperThemeBloc, MinesweeperThemeState>(
           buildWhen: (prev, cur) =>
-              cur is BackgroundColorUpdatedState || cur is InitialState || cur is ThemeReloadedState,
+              cur is BackgroundColorUpdatedState ||
+              cur is InitialState ||
+              cur is ThemeReloadedState,
           builder: (context, state) {
-            ThemeData theme = context.read<MinesweeperThemeBloc>().currentTheme.appTheme;
+            ThemeData theme =
+                context.read<MinesweeperThemeBloc>().currentTheme.appTheme;
             return MaterialApp(
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
@@ -46,6 +38,41 @@ class MinesweeperApp extends StatelessWidget {
               initialRoute: kprLoadingRoute,
             );
           }),
+    );
+  }
+}
+
+class CoreBlocsProvider extends StatelessWidget {
+  final MinesweeperThemeBloc themeBloc =
+      MinesweeperThemeBloc(MinesweeperThemeSqliteRepository())
+        ..add(ReloadEvent());
+
+  final Widget child;
+
+  CoreBlocsProvider({required this.child, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<MinesweeperThemeBloc>.value(
+          value: themeBloc,
+        ),
+        BlocProvider<GameSettingsBloc>(
+            create: (context) =>
+                GameSettingsBloc(GameSettingsSqliteRepository())),
+        BlocProvider<UnlockedFeaturesBloc>(
+            create: (context) => UnlockedFeaturesBloc(themeBloc))
+      ],
+      child: Builder(
+        builder: (context) => AnimatedSwitcher(
+          transitionBuilder: (child, animation) => FadeTransition(opacity: animation, child: child,),
+          duration: Duration(milliseconds: 1000),
+          child: context.read<MinesweeperThemeBloc>().initialized
+              ? Container()
+              : child,
+        ),
+      ),
     );
   }
 }
