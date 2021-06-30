@@ -55,6 +55,9 @@ extension TileAnimationToString on TileAnimation {
     switch (this) {
       case TileAnimation.normal:
         return 'normal';
+      case TileAnimation.test:
+        return 'test';
+
     }
   }
 }

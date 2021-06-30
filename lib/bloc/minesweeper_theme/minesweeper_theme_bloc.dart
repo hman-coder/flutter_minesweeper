@@ -90,12 +90,7 @@ class MinesweeperThemeBloc
 
     if (success) {
       currentTheme = newTheme;
-      yield TileThemeUpdatedState(
-        MinesweeperElementTheme(
-          color: event.color!,
-          icon: event.icon!,
-        ),
-      );
+      yield TileThemeUpdatedState(newTileTheme);
     } else {
       yield ErrorState("Error updating tile theme.");
     }

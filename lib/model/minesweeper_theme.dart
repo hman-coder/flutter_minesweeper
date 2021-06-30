@@ -120,4 +120,4 @@ class MinesweeperElementTheme extends Equatable {
   List<Object?> get props => [color, icon];
 }
 
-enum TileAnimation { normal }
+enum TileAnimation { normal, test }
