@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-final String kffFontFamily = GoogleFonts.electrolize().fontFamily!;
+const String kffFontFamily = "Electrolize";
 
 const double kfsiTinyFontSize = 16;
 
@@ -15,7 +14,7 @@ const double kfsiHugeFontSize = 30;
 
 const TextStyle headline5 = TextStyle(fontSize: kfsiHugeFontSize,);
 
-const TextStyle headline6 = TextStyle(color: Colors.black, fontSize: kfsiHugeFontSize);
+const TextStyle headline6 = TextStyle(color: Colors.black, fontSize: kfsiHugeFontSize, );
 
 const TextStyle bodyText2 = TextStyle(fontSize: kfsiMediumFontSize);
 
