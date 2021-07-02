@@ -1,19 +1,31 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:minesweeper_flutter/bloc/minesweeper_theme/minesweeper_theme_event.dart';
+import 'package:minesweeper_flutter/entities/minesweeper_theme_entity.dart';
 import 'package:minesweeper_flutter/model/minesweeper_theme.dart';
 import 'package:minesweeper_flutter/repository/minesweeper_theme_repository.dart';
+import 'package:minesweeper_flutter/services/transformers.dart';
 import 'minesweeper_theme_state.dart';
+import 'package:minesweeper_flutter/services/transformers/entity_transformer.dart';
+
+/// Transforms the given [MinesweeperTheme] object into an entity and then tries to update it using the [MinesweeperThemeRepository].
+Future<bool> _transformThemeAndUpdate(
+    MinesweeperThemeRepository repository, MinesweeperTheme theme) {
+  var entity = transformModel(theme) as MinesweeperThemeEntity;
+  return repository.update(entity);
+}
 
 class MinesweeperThemeBloc
     extends Bloc<MinesweeperThemeEvent, MinesweeperThemeState> {
+
   final MinesweeperThemeRepository _repository;
 
   MinesweeperTheme currentTheme;
 
   bool initialized = false;
 
-  MinesweeperThemeBloc(this._repository,)
-      : currentTheme = MinesweeperTheme.initial(),
+  MinesweeperThemeBloc(
+    this._repository,
+  )   : currentTheme = MinesweeperTheme.initial(),
         super(InitialState());
 
   @override
@@ -34,15 +46,17 @@ class MinesweeperThemeBloc
 
   Stream<MinesweeperThemeState> _handleReload(ReloadEvent event) async* {
     var result = await _repository.fetchTheme();
-    currentTheme = result;
-    yield ThemeReloadedState(result);
+    currentTheme = transformEntity(result);
+    yield ThemeReloadedState(currentTheme);
     initialized = true;
   }
 
   Stream<MinesweeperThemeState> _handleBackgroundChange(
       BackgroundColorChangeEvent event) async* {
     var newTheme = currentTheme.copyWith(backgroundColor: event.color);
-    var success = await _repository.update(newTheme);
+    var newThemeEntity = transformModel(newTheme);
+    var success = await _repository.update(newThemeEntity);
+
     if (success) {
       currentTheme = newTheme;
       yield BackgroundColorUpdatedState(event.color);
@@ -56,7 +70,7 @@ class MinesweeperThemeBloc
     var newFlagTheme =
         currentTheme.flagTheme.copyWith(color: event.color, icon: event.icon);
     var newTheme = currentTheme.copyWith(flagTheme: newFlagTheme);
-    var success = await _repository.update(newTheme);
+    var success = await _transformThemeAndUpdate(_repository, newTheme);
 
     if (success) {
       currentTheme = newTheme;
@@ -71,7 +85,7 @@ class MinesweeperThemeBloc
     var newMineTheme =
         currentTheme.mineTheme.copyWith(color: event.color, icon: event.icon);
     var newTheme = currentTheme.copyWith(mineTheme: newMineTheme);
-    var success = await _repository.update(newTheme);
+    var success = await _transformThemeAndUpdate(_repository, newTheme);
 
     if (success) {
       currentTheme = newTheme;
@@ -86,7 +100,7 @@ class MinesweeperThemeBloc
     var newTileTheme =
         currentTheme.tileTheme.copyWith(color: event.color, icon: event.icon);
     var newTheme = currentTheme.copyWith(tileTheme: newTileTheme);
-    var success = await _repository.update(newTheme);
+    var success = await _transformThemeAndUpdate(_repository, newTheme);
 
     if (success) {
       currentTheme = newTheme;
@@ -99,7 +113,7 @@ class MinesweeperThemeBloc
   Stream<MinesweeperThemeState> _handleTileAnimationChange(
       TileAnimationChangeEvent event) async* {
     var newTheme = currentTheme.copyWith(tileAnimation: event.animation);
-    var success = await _repository.update(newTheme);
+    var success = await _transformThemeAndUpdate(_repository, newTheme);
 
     if (success) {
       currentTheme = newTheme;

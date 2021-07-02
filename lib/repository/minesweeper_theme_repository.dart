@@ -1,26 +1,27 @@
 import 'package:minesweeper_flutter/constants/db_keys.dart';
-import 'package:minesweeper_flutter/model/minesweeper_theme.dart';
+import 'package:minesweeper_flutter/entities/minesweeper_theme_entity.dart';
 import 'package:minesweeper_flutter/repository/sqlite_accessor.dart';
 
 abstract class MinesweeperThemeRepository {
-  Future<MinesweeperTheme> fetchTheme();
+  Future<MinesweeperThemeEntity> fetchTheme();
 
-  Future<bool> update(MinesweeperTheme theme);
+  Future<bool> update(MinesweeperThemeEntity theme);
 }
 
 class MinesweeperThemeSqliteRepository extends MinesweeperThemeRepository {
   @override
-  Future<MinesweeperTheme> fetchTheme() async {
+  Future<MinesweeperThemeEntity> fetchTheme() async {
     var accessor = await SqliteAccessor.accessor;
     var results = await accessor.fetch(kkMinesweeperThemeTableKey);
-    var entity = MinesweeperTheme.fromMap(results[0]!);
+    var entity = MinesweeperThemeEntity.fromMap(results[0]!);
     return entity;
   }
 
   @override
-  Future<bool> update(MinesweeperTheme theme) async {
+  Future<bool> update(MinesweeperThemeEntity entity) async {
     var accessor = await SqliteAccessor.accessor;
-    int updatedRows =  await accessor.updateSettings(kkMinesweeperThemeTableKey, theme.toMap());
+    int updatedRows = await accessor.updateSettings(
+        kkMinesweeperThemeTableKey, entity.toMap());
     return updatedRows > 0;
   }
 }
