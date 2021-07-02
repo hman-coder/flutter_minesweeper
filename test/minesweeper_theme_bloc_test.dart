@@ -1,5 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:minesweeper_flutter/presentation/icons/minesweeper_icons.dart';
 import 'package:minesweeper_flutter/repository/minesweeper_theme_repository.dart';
+import 'package:minesweeper_flutter/services/transformers.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:minesweeper_flutter/bloc/minesweeper_theme.dart';
 import 'package:minesweeper_flutter/model/minesweeper_theme.dart';
@@ -13,7 +15,6 @@ void main() {
 
   final MinesweeperTheme initialTheme = MinesweeperTheme.initial();
   final Color testColor = Colors.yellow;
-  final IconData testIcon = Icons.ac_unit_sharp;
 
   setUp(() {
     _repo = MockThemeRepository();
@@ -34,7 +35,7 @@ void main() {
 
   test("Check initialized to be true after adding the first ReloadEvent", () {
     when(() => _repo.fetchTheme()).thenAnswer((invocation) =>
-        Future(() => initialTheme));
+        Future(() => transformModel(initialTheme)));
 
     expectLater(_bloc.stream.map((event) => _bloc.initialized), emitsInOrder([true]));
     _bloc.add(ReloadEvent());
@@ -48,13 +49,37 @@ void main() {
     _bloc.close();
   });
 
+  test("Adding ReloadEvent emits a correct ThemeUpdatedState", () {
+    var updatedColor = initialTheme;
+
+    when(() => _repo.fetchTheme()).thenAnswer((invocation) =>
+        Future(() => transformModel(updatedColor)));
+
+    expectLater(
+        _bloc.stream,
+        emitsInOrder([
+          ThemeReloadedState(updatedColor)
+        ]));
+
+    _bloc.add(ReloadEvent());
+  });
+
+  test("Adding ReloadEvent sets initialized to true", () {
+    when(() => _repo.fetchTheme())
+        .thenAnswer((invocation) => Future(() => transformModel(initialTheme)));
+
+    expectLater(
+        _bloc.stream.map((_) => _bloc.initialized), emitsInOrder([true]));
+    _bloc.add(ReloadEvent());
+  });
+
   test(
       "Adding TileAnimationChangeEvent emits a correct TileAnimationUpdatedState",
       () {
     TileAnimation tileAnimation = TileAnimation.test;
-
+    MinesweeperTheme updatedTheme = initialTheme.copyWith(tileAnimation: tileAnimation);
     when(() =>
-            _repo.update(initialTheme.copyWith(tileAnimation: tileAnimation)))
+            _repo.update(transformModel(updatedTheme)))
         .thenAnswer((invocation) => Future(() => true));
 
     expectLater(
@@ -63,32 +88,10 @@ void main() {
     _bloc.add(TileAnimationChangeEvent(tileAnimation));
   });
 
-  test("Adding ReloadEvent emits a correct ThemeUpdatedState", () {
-    when(() => _repo.fetchTheme()).thenAnswer((invocation) =>
-        Future(() => initialTheme.copyWith(backgroundColor: testColor)));
-
-    expectLater(
-        _bloc.stream,
-        emitsInOrder([
-          ThemeReloadedState(initialTheme.copyWith(backgroundColor: testColor))
-        ]));
-
-    _bloc.add(ReloadEvent());
-  });
-
-  test("Adding ReloadEvent sets initialized to true", () {
-    when(() => _repo.fetchTheme())
-        .thenAnswer((invocation) => Future(() => initialTheme));
-
-    expectLater(
-        _bloc.stream.map((_) => _bloc.initialized), emitsInOrder([true]));
-    _bloc.add(ReloadEvent());
-  });
-
   test("Adding BackgroundColorChangeEvent changes the backgroundColor", () {
     MinesweeperTheme modifiedTheme =
         initialTheme.copyWith(backgroundColor: testColor);
-    when(() => _repo.update(modifiedTheme))
+    when(() => _repo.update(transformModel(modifiedTheme)))
         .thenAnswer((invocation) => Future(() => true));
 
     expectLater(
@@ -102,17 +105,17 @@ void main() {
     MinesweeperElementTheme colorModifiedMineTheme =
         initialTheme.mineTheme.copyWith(color: testColor);
     MinesweeperElementTheme iconModifiedMineTheme =
-        colorModifiedMineTheme.copyWith(icon: testIcon);
+        colorModifiedMineTheme.copyWith(icon: MinesweeperIcons.flag);
     MinesweeperElementTheme modifiedMineTheme = initialTheme.mineTheme;
 
     when(() => _repo
-            .update(initialTheme.copyWith(mineTheme: colorModifiedMineTheme)))
+            .update(transformModel(initialTheme.copyWith(mineTheme: colorModifiedMineTheme))))
         .thenAnswer((invocation) => Future(() => true));
     when(() => _repo
-            .update(initialTheme.copyWith(mineTheme: iconModifiedMineTheme)))
+            .update(transformModel(initialTheme.copyWith(mineTheme: iconModifiedMineTheme))))
         .thenAnswer((invocation) => Future(() => true));
     when(() =>
-            _repo.update(initialTheme.copyWith(mineTheme: modifiedMineTheme)))
+            _repo.update(transformModel(initialTheme.copyWith(mineTheme: modifiedMineTheme))))
         .thenAnswer((invocation) => Future(() => true));
 
     expectLater(
@@ -138,17 +141,17 @@ void main() {
     MinesweeperElementTheme colorModifiedFlagTheme =
         initialTheme.flagTheme.copyWith(color: testColor);
     MinesweeperElementTheme iconModifiedFlagTheme =
-        colorModifiedFlagTheme.copyWith(icon: testIcon);
+        colorModifiedFlagTheme.copyWith(icon: MinesweeperIcons.mine);
     MinesweeperElementTheme modifiedFlagTheme = initialTheme.flagTheme;
 
     when(() => _repo
-            .update(initialTheme.copyWith(flagTheme: colorModifiedFlagTheme)))
+            .update(transformModel(initialTheme.copyWith(flagTheme: colorModifiedFlagTheme))))
         .thenAnswer((invocation) => Future(() => true));
     when(() => _repo
-            .update(initialTheme.copyWith(flagTheme: iconModifiedFlagTheme)))
+            .update(transformModel(initialTheme.copyWith(flagTheme: iconModifiedFlagTheme))))
         .thenAnswer((invocation) => Future(() => true));
     when(() =>
-            _repo.update(initialTheme.copyWith(flagTheme: modifiedFlagTheme)))
+            _repo.update(transformModel(initialTheme.copyWith(flagTheme: modifiedFlagTheme))))
         .thenAnswer((invocation) => Future(() => true));
 
     expectLater(
@@ -174,17 +177,17 @@ void main() {
     MinesweeperElementTheme colorModifiedTileTheme =
         initialTheme.tileTheme.copyWith(color: testColor);
     MinesweeperElementTheme iconModifiedTileTheme =
-        colorModifiedTileTheme.copyWith(icon: testIcon);
+        colorModifiedTileTheme.copyWith(icon: MinesweeperIcons.mine);
     MinesweeperElementTheme modifiedTileTheme = initialTheme.tileTheme;
 
     when(() => _repo
-            .update(initialTheme.copyWith(tileTheme: colorModifiedTileTheme)))
+            .update(transformModel(initialTheme.copyWith(tileTheme: colorModifiedTileTheme))))
         .thenAnswer((invocation) => Future(() => true));
     when(() => _repo
-            .update(initialTheme.copyWith(tileTheme: iconModifiedTileTheme)))
+            .update(transformModel(initialTheme.copyWith(tileTheme: iconModifiedTileTheme))))
         .thenAnswer((invocation) => Future(() => true));
     when(() =>
-            _repo.update(initialTheme.copyWith(tileTheme: modifiedTileTheme)))
+            _repo.update(transformModel(initialTheme.copyWith(tileTheme: modifiedTileTheme))))
         .thenAnswer((invocation) => Future(() => true));
 
     expectLater(
