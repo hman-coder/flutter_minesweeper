@@ -6,18 +6,18 @@ import 'package:flutter/material.dart';
 // https://coolors.co/51a3a3-75485e-cb904d-cc92c2-3f612d-c57b57-ffffff
 
 // General use
-const Color kcTransparentColor = Colors.transparent;
+const Color kcTransparentColor = Color(0x00FFFFFF);
 
-const Color kcBlueGreyColor = Colors.blueGrey;
+const Color kcBlueGreyColor = Color(0xFF606D8B);
 
 const Color kcCardDarkWhite = Color(0x12FFFFFF);
 
 // Texts and Icons
 const Color kcForegroundDarkBlue = Color(0xFF52B2CF); // Maximum blue
-const Color kcForegroundDarkWhite = Colors.white;
+const Color kcForegroundDarkWhite = Color(0xFFFFFFFF);
 
 const Color kcForegroundLightCopper = Color(0xFFC57B57); // Copper Crayola
-const Color kcForegroundLightBlack = Colors.black;
+const Color kcForegroundLightBlack = Color(0xFF000000);
 
 const Color kcForegroundLightBlue = Color(0xFF2196F3);
 
@@ -26,25 +26,25 @@ const Color kcForegroundLightBlue = Color(0xFF2196F3);
 const Color kcElementLightBlackOlive = Color(0xFF37423D); 
 const Color kcElementLightDarkMossGreen = Color(0xFF3F612D);
 const Color kcElementLightEggplant = Color(0xFF75485E); 
-const Color kcElementLightAmber = Colors.amber;
+const Color kcElementLightAmber = Color(0xFFFFC107);
 const Color kcElementLightPersianOrange = Color(0xFFCB904D);
 const Color kcElementLightCadetBlue = Color(0xFF51A3A3); 
-const Color kcElementLightBlack = Colors.black;
+const Color kcElementLightBlack = Color(0xFF000000);
 
 // Dark
 const Color kcElementDarkMiddleBlue = Color(0xFF7EC4CF);
 const Color kcElementDarkThistle = Color(0xFFD3BFCE); 
-const Color kcElementDarkWhite = Colors.white;
+const Color kcElementDarkWhite = Color(0xFFFFFFFF);
 const Color kcElementDarkWildBlueYonder = Color(0xFF9CADCE);
 const Color kcElementDarkCameoPink = Color(0xFFD4AFB9); 
 
 // -- Tile
-const Color kcTileColor = Colors.grey;
+const Color kcTileColor = Color(0xFF9E9E9E);
 
 // -- Background
 
 // Light
-const Color kcBackgroundWhiteColor = Colors.white;
+const Color kcBackgroundWhiteColor = Color(0xFFFFFFFF);
 
 // Dark
 const Color kcBackgroundDarkColor = Color(0xFF121212);
