@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:minesweeper_flutter/bloc/audio_manager.dart';
-import 'package:minesweeper_flutter/bloc/game_settings_bloc.dart';
+import 'package:minesweeper_flutter/bloc/game_settings.dart';
 import 'package:minesweeper_flutter/presentation/widgets/mine_switch.dart';
 import 'package:minesweeper_flutter/helpers/context_extensions.dart';
 
@@ -23,40 +23,86 @@ class _SettingsUIState extends State<SettingsUI> {
             title: Text(context.localization().music),
             onTap: () {
               AudioManager().toggle();
-              context.read<GameSettingsBloc>().toggleMusic();
+              context.read<GameSettingsBloc>().add(ToggleMusicEvent());
             },
             trailing: Padding(
               padding: const EdgeInsetsDirectional.only(end: 12),
-              child: MineSwitch(
-                size: 40,
-                value: context.watch<GameSettingsBloc>().state.music,
+              child: BlocBuilder<GameSettingsBloc, GameSettingsState>(
+                buildWhen: (prev, cur) =>
+                    cur is MusicOffState ||
+                    cur is MusicOnState ||
+                    cur is ReloadedState,
+                builder: (context, state) {
+                  var value;
+                  if (state is MusicOffState)
+                    value = false;
+                  else if (state is MusicOnState)
+                    value = true;
+                  else
+                    value = context.read<GameSettingsBloc>().settings.music;
+                  return MineSwitch(
+                    size: 40,
+                    value: value,
+                  );
+                },
               ),
             ),
           ),
           ListTile(
-              title: Text(context.localization().sfx),
-              onTap: () {
-                AudioManager().toggle();
-                context.read<GameSettingsBloc>().toggleSFX();
-              },
-              trailing: Padding(
-                padding: const EdgeInsetsDirectional.only(end: 12),
-                child: MineSwitch(
-                  value: context.watch<GameSettingsBloc>().state.sfx,
-                  size: 40,
-                ),
-              )),
+            title: Text(context.localization().sfx),
+            onTap: () {
+              AudioManager().toggle();
+              context.read<GameSettingsBloc>().add(ToggleSFXEvent());
+            },
+            trailing: Padding(
+              padding: const EdgeInsetsDirectional.only(end: 12),
+              child: BlocBuilder<GameSettingsBloc, GameSettingsState>(
+                buildWhen: (prev, cur) =>
+                    cur is SFXOffState ||
+                    cur is SFXOnState ||
+                    cur is ReloadedState,
+                builder: (context, state) {
+                  var value;
+                  if (state is SFXOffState)
+                    value = false;
+                  else if (state is SFXOnState)
+                    value = true;
+                  else
+                    value = context.read<GameSettingsBloc>().settings.sfx;
+                  return MineSwitch(
+                    size: 40,
+                    value: value,
+                  );
+                },
+              ),
+            ),
+          ),
           ListTile(
             title: Text(context.localization().notifications),
             onTap: () {
               AudioManager().toggle();
-              context.read<GameSettingsBloc>().toggleNotifications();
+              context.read<GameSettingsBloc>().add(ToggleNotificationsEvent());
             },
             trailing: Padding(
               padding: const EdgeInsetsDirectional.only(end: 12),
-              child: MineSwitch(
-                value: context.watch<GameSettingsBloc>().state.notifications,
-                size: 40,
+              child: BlocBuilder<GameSettingsBloc, GameSettingsState>(
+                buildWhen: (prev, cur) =>
+                    cur is NotificationsOffState ||
+                    cur is NotificationsOnState ||
+                    cur is ReloadedState,
+                builder: (context, state) {
+                  var value;
+                  if (state is NotificationsOffState)
+                    value = false;
+                  else if (state is NotificationsOnState)
+                    value = true;
+                  else
+                    value = context.read<GameSettingsBloc>().settings.notifications;
+                  return MineSwitch(
+                    size: 40,
+                    value: value,
+                  );
+                },
               ),
             ),
           )

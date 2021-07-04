@@ -1,23 +1,23 @@
 import 'package:minesweeper_flutter/constants/db_keys.dart';
-import 'package:minesweeper_flutter/model/game_settings.dart';
+import 'package:minesweeper_flutter/entities/game_settings_entity.dart';
 import 'package:minesweeper_flutter/repository/sqlite_accessor.dart';
 
 abstract class GameSettingsRepository {
-  Future<GameSettings> fetch();
+  Future<GameSettingsEntity> fetch();
 
-  Future<void> update(GameSettings settings);
+  Future<bool> update(GameSettingsEntity settings);
 }
 
 class GameSettingsSqliteRepository extends GameSettingsRepository {
   @override
-  Future<GameSettings> fetch() async {
+  Future<GameSettingsEntity> fetch() async {
     var accessor = await SqliteAccessor.accessor;
     var data = await accessor.fetch(kkGameSettingsTableName);
-    return GameSettings.fromMap(data[0]!);
+    return GameSettingsEntity.fromMap(data[0]!);
   }
 
   @override
-  Future<bool> update(GameSettings settings) async {
+  Future<bool> update(GameSettingsEntity settings) async {
     var accessor = await SqliteAccessor.accessor;
     int updatedRows =  await accessor.updateSettings(kkGameSettingsTableName, settings.toMap());
     return updatedRows > 0;

@@ -4,11 +4,10 @@ import 'package:minesweeper_flutter/bloc/minesweeper_theme.dart';
 import 'package:minesweeper_flutter/bloc/unlocked_features_bloc.dart';
 import 'package:minesweeper_flutter/bloc/bloc_observer.dart';
 import 'package:minesweeper_flutter/constants/routes.dart';
-import 'package:minesweeper_flutter/model/unlockable_features.dart';
 import 'package:minesweeper_flutter/repository/game_settings_repository.dart';
 import 'package:minesweeper_flutter/repository/minesweeper_theme_repository.dart';
 import 'package:minesweeper_flutter/config/route_generators.dart';
-import 'package:minesweeper_flutter/bloc/game_settings_bloc.dart';
+import 'package:minesweeper_flutter/bloc/game_settings/game_settings_bloc.dart';
 import 'package:flutter_gen/gen_l10n/minesweeper_localizations.dart';
 
 void main() {

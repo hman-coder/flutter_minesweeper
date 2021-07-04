@@ -1,9 +1,12 @@
+import 'package:minesweeper_flutter/entities/game_settings_entity.dart';
 import 'package:minesweeper_flutter/entities/minesweeper_theme_entity.dart';
+import 'package:minesweeper_flutter/model/game_settings.dart';
 import 'package:minesweeper_flutter/model/minesweeper_theme.dart';
-import 'package:minesweeper_flutter/helpers/db_values_converters.dart';
+import 'package:minesweeper_flutter/services/transformers/db_values_converters.dart';
 
 dynamic transformModel(dynamic model) {
   if (model is MinesweeperTheme) return _transformThemeModel(model);
+  else if (model is GameSettings) return _transformSettingsModel(model);
 }
 
 MinesweeperThemeEntity _transformThemeModel(MinesweeperTheme model) {
@@ -17,5 +20,12 @@ MinesweeperThemeEntity _transformThemeModel(MinesweeperTheme model) {
     flagIcon: model.flagTheme.icon.toDatabaseString(),
     tileIcon: model.tileTheme.icon.toDatabaseString(),
   );
+}
 
+GameSettingsEntity _transformSettingsModel(GameSettings model) {
+  return GameSettingsEntity(
+    music: model.music ? 1 : 0,
+    sfx: model.sfx ? 1 : 0,
+    notifications: model.notifications ? 1 : 0,
+  );
 }

@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:minesweeper_flutter/constants/db_keys.dart';
 
-class GameSettings {
+class GameSettings extends Equatable {
   final bool music;
 
   final bool sfx;
@@ -18,19 +19,14 @@ class GameSettings {
         sfx = map[kkGameSettingsSFX] > 0,
         notifications = map[kkGameSettingsNotifications] > 0;
 
-  GameSettings copyWith({bool? music, bool? effects, bool? notifications}) {
+  GameSettings copyWith({bool? music, bool? sfx, bool? notifications}) {
     return GameSettings(
       music: music ?? this.music,
-      sfx: effects ?? this.sfx,
+      sfx: sfx ?? this.sfx,
       notifications: notifications ?? this.notifications,
     );
   }
 
-  Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = Map();
-    map.putIfAbsent(kkGameSettingsMusic, () => this.music ? 1 : 0);
-    map.putIfAbsent(kkGameSettingsSFX, () => this.sfx ? 1 : 0);
-    map.putIfAbsent(kkGameSettingsNotifications, () => this.notifications ? 1 : 0);
-    return map;
-  }
+  @override
+  List<Object?> get props => [music, sfx, notifications];
 }
