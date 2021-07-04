@@ -89,7 +89,7 @@ class _SpinnerState<T> extends State<Spinner<T>> {
       quarterTurns: 3,
       child: ListWheelScrollView.useDelegate(
         onSelectedItemChanged: (index) {
-          AudioManager().itemChanged();
+          AudioManager().selectedItemChanged();
           widget.onValueChanged(widget.values[(index)]);
         },
         diameterRatio: 1.5,
