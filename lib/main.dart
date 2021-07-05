@@ -39,7 +39,6 @@ class MinesweeperApp extends StatelessWidget {
   }
 
   bool _rebuildWhen(prev, cur) {
-    print("checking rebuild");
     return cur is gameTheme.BackgroundColorUpdatedState ||
         cur is gameTheme.InitialState ||
         cur is gameTheme.ThemeReloadedState;
@@ -70,7 +69,14 @@ class _CoreBlocsProviderState extends State<CoreBlocsProvider> {
     AudioManager.initialize(_gameSettingsBloc);
     _themeBloc.add(gameTheme.ReloadEvent());
     _gameSettingsBloc.add(gameSettings.ReloadEvent());
-    
+  }
+
+  @override
+  void dispose() {
+    _themeBloc.close();
+    _featuresBloc.close();
+    _gameSettingsBloc.close();
+    super.dispose();
   }
 
   @override
@@ -88,16 +94,17 @@ class _CoreBlocsProviderState extends State<CoreBlocsProvider> {
         )
       ],
       child: Builder(
-        builder: (context) => AnimatedSwitcher(
-          transitionBuilder: (child, animation) => FadeTransition(
-            opacity: animation,
-            child: child,
-          ),
-          duration: Duration(milliseconds: 1000),
-          child: context.read<gameTheme.MinesweeperThemeBloc>().initialized
-              ? widget.child
-              : Container(),
-        ),
+        builder: (context) => widget.child,
+        // AnimatedSwitcher(
+        //   transitionBuilder: (child, animation) => FadeTransition(
+        //     opacity: animation,
+        //     child: child,
+        //   ),
+        //   duration: Duration(milliseconds: 1000),
+        //   child: context.read<gameTheme.MinesweeperThemeBloc>().initialized
+        //       ? widget.child
+        //       : Container(),
+        // ),
       ),
     );
   }
