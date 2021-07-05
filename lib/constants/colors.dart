@@ -10,7 +10,7 @@ const Color kcTransparentColor = Color(0x00FFFFFF);
 
 const Color kcBlueGreyColor = Color(0xFF606D8B);
 
-const Color kcCardDarkWhite = Color(0x12FFFFFF);
+const Color kcCardDarkWhite = Color(0x16FFFFFF);
 
 // Texts and Icons
 const Color kcForegroundDarkBlue = Color(0xFF52B2CF); // Maximum blue

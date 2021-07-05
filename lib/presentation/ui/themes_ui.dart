@@ -28,16 +28,34 @@ class ThemesUI extends StatelessWidget {
           child: Column(
             children: [
               kwEnormousVerticalSpacer,
-              TextWidget(
-                type: TextWidgetType.subtitle1,
-                data: context.localization().backgroundColor,
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    children: [
+                      TextWidget(
+                        type: TextWidgetType.subtitle1,
+                        data: context.localization().backgroundColor,
+                      ),
+                      kwMediumVerticalSpacer,
+                      _buildBackgroundModifier(context),
+                    ],
+                  ),
+                ),
               ),
-              kwMediumVerticalSpacer,
-              _buildBackgroundModifier(context),
-              kwEnormousVerticalSpacer,
-              _buildMineModifier(context),
-              kwEnormousVerticalSpacer,
-              _buildFlagModifier(context),
+
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: _buildMineModifier(context),
+                ),
+              ),
+
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: _buildFlagModifier(context),
+                )),
             ],
           ),
         ),
@@ -50,9 +68,14 @@ class ThemesUI extends StatelessWidget {
       height: 70,
       child: BlocBuilder<MinesweeperThemeBloc, MinesweeperThemeState>(
           buildWhen: (prev, cur) =>
-              cur is BackgroundColorUpdatedState || cur is InitialState || cur is ThemeReloadedState,
+              cur is BackgroundColorUpdatedState ||
+              cur is InitialState ||
+              cur is ThemeReloadedState,
           builder: (context, state) {
-            var color = context.read<MinesweeperThemeBloc>().currentTheme.backgroundColor;
+            var color = context
+                .read<MinesweeperThemeBloc>()
+                .currentTheme
+                .backgroundColor;
             return Spinner<Color>(
               values:
                   context.watch<UnlockedFeaturesBloc>().state.backgroundColors,
@@ -68,9 +91,13 @@ class ThemesUI extends StatelessWidget {
 
   Widget _buildMineModifier(BuildContext context) {
     return BlocBuilder<MinesweeperThemeBloc, MinesweeperThemeState>(
-        buildWhen: (prev, cur) => cur is MineThemeUpdatedState || cur is InitialState || cur is ThemeReloadedState,
+        buildWhen: (prev, cur) =>
+            cur is MineThemeUpdatedState ||
+            cur is InitialState ||
+            cur is ThemeReloadedState,
         builder: (context, state) {
-          var mineTheme = context.read<MinesweeperThemeBloc>().currentTheme.mineTheme;
+          var mineTheme =
+              context.read<MinesweeperThemeBloc>().currentTheme.mineTheme;
 
           return ThemeModifier(
             title: TextWidget(
@@ -93,9 +120,13 @@ class ThemesUI extends StatelessWidget {
 
   Widget _buildFlagModifier(BuildContext context) {
     return BlocBuilder<MinesweeperThemeBloc, MinesweeperThemeState>(
-      buildWhen: (prev, cur) => cur is FlagThemeUpdatedState || cur is InitialState || cur is ThemeReloadedState,
+      buildWhen: (prev, cur) =>
+          cur is FlagThemeUpdatedState ||
+          cur is InitialState ||
+          cur is ThemeReloadedState,
       builder: (context, state) {
-        var flagTheme = context.read<MinesweeperThemeBloc>().currentTheme.flagTheme;
+        var flagTheme =
+            context.read<MinesweeperThemeBloc>().currentTheme.flagTheme;
         return ThemeModifier(
           title: TextWidget(
             data: context.localization().flagAppearance,

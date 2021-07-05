@@ -5,7 +5,8 @@ import 'shared.dart';
 
 final ThemeData darkThemeData = ThemeData(
   fontFamily: kffFontFamily,
-  textTheme: kttMainTextTheme.apply(bodyColor: kcForegroundDarkWhite, fontFamily: kffFontFamily),
+  textTheme: kttMainTextTheme.apply(
+      bodyColor: kcForegroundDarkWhite, fontFamily: kffFontFamily),
   scaffoldBackgroundColor: kcBackgroundDarkColor,
   textButtonTheme: _kbtTextButtonDarkTheme,
   outlinedButtonTheme: _kbtOutlinedButtonDarkTheme,
@@ -17,6 +18,10 @@ final ThemeData darkThemeData = ThemeData(
 final CardTheme _kctCardDarkTheme = CardTheme(
   color: kcCardDarkWhite,
   elevation: 8,
+  margin: EdgeInsets.all(15),
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(20),
+  ),
 );
 
 final AppBarTheme _kabtAppBarDarkTheme = AppBarTheme(
@@ -24,8 +29,7 @@ final AppBarTheme _kabtAppBarDarkTheme = AppBarTheme(
   centerTitle: true,
   backwardsCompatibility: false,
   titleTextStyle: headline6.copyWith(
-    color: kcForegroundDarkWhite, fontFamily: kffFontFamily
-  ),
+      color: kcForegroundDarkWhite, fontFamily: kffFontFamily),
   iconTheme: IconThemeData(color: kcForegroundDarkWhite),
   actionsIconTheme: IconThemeData(color: kcForegroundDarkWhite),
   elevation: 0,
