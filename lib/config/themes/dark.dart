@@ -13,6 +13,33 @@ final ThemeData darkThemeData = ThemeData(
   appBarTheme: _kabtAppBarDarkTheme,
   iconTheme: _kitIconDarkTheme,
   cardTheme: _kctCardDarkTheme,
+  textSelectionTheme: _ktstTextSelectionTheme,
+  inputDecorationTheme: _kidtInputDecorationTheme,
+);
+
+final TextSelectionThemeData _ktstTextSelectionTheme = TextSelectionThemeData(
+  cursorColor: kcForegroundDarkBlue,
+  selectionColor: kcForegroundDarkBlue,
+  selectionHandleColor: kcForegroundDarkBlue,
+);
+
+final InputDecorationTheme _kidtInputDecorationTheme = InputDecorationTheme(
+  fillColor: kcForegroundDarkWhite.withOpacity(0.2),
+  focusColor: kcForegroundDarkWhite,
+  filled: true,
+  contentPadding: EdgeInsets.zero,
+  focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: kcForegroundDarkBlue),
+    borderRadius: BorderRadius.circular(20),
+  ),
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: kcForegroundDarkWhite),
+    borderRadius: BorderRadius.circular(20),
+  ),
+  disabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: kcForegroundDarkWhite.withOpacity(0.4)),
+    borderRadius: BorderRadius.circular(20),
+  ),
 );
 
 final CardTheme _kctCardDarkTheme = CardTheme(

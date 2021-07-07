@@ -7,13 +7,40 @@ final ThemeData lightThemeData = ThemeData(
   fontFamily: kffFontFamily,
   textTheme: kttMainTextTheme.apply(fontFamily: kffFontFamily),
   textButtonTheme: kbtTextButtonTheme,
-  outlinedButtonTheme: kbtOutlinedButtonLightTheme,
-  appBarTheme: kabtAppBarLightTheme,
-  iconTheme: kitIconLightTheme,
-  cardTheme: kctCardLightTheme,
+  outlinedButtonTheme: _kbtOutlinedButtonLightTheme,
+  appBarTheme: _kabtAppBarLightTheme,
+  iconTheme: _kitIconLightTheme,
+  cardTheme: _kctCardLightTheme,
+  textSelectionTheme: _ktstTextSelectionTheme,
+  inputDecorationTheme: _kidtInputDecorationTheme,
 );
 
-final CardTheme kctCardLightTheme = CardTheme(
+final TextSelectionThemeData _ktstTextSelectionTheme = TextSelectionThemeData(
+  cursorColor: kcForegroundDarkBlue,
+  selectionColor: kcForegroundDarkBlue,
+  selectionHandleColor: kcForegroundDarkBlue,
+);
+
+final InputDecorationTheme _kidtInputDecorationTheme = InputDecorationTheme(
+  fillColor: kcForegroundLightGrey,
+  focusColor: kcForegroundLightBlue,
+  filled: true,
+  contentPadding: EdgeInsets.zero,
+  focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: kcForegroundLightBlue),
+    borderRadius: BorderRadius.circular(20),
+  ),
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: kcForegroundLightBlack),
+    borderRadius: BorderRadius.circular(20),
+  ),
+  disabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: kcForegroundLightBlack),
+    borderRadius: BorderRadius.circular(20),
+  ),
+);
+
+final CardTheme _kctCardLightTheme = CardTheme(
     margin: EdgeInsets.all(15),
     elevation: 8,
     shape: RoundedRectangleBorder(
@@ -21,7 +48,7 @@ final CardTheme kctCardLightTheme = CardTheme(
     ),
   );
 
-final AppBarTheme kabtAppBarLightTheme = AppBarTheme(
+final AppBarTheme _kabtAppBarLightTheme = AppBarTheme(
   backgroundColor: kcTransparentColor,
   centerTitle: true,
   backwardsCompatibility: false,
@@ -32,7 +59,7 @@ final AppBarTheme kabtAppBarLightTheme = AppBarTheme(
   elevation: 0,
 );
 
-final IconThemeData kitIconLightTheme = IconThemeData(
+final IconThemeData _kitIconLightTheme = IconThemeData(
   color: kcForegroundLightBlack,
 );
 
@@ -52,7 +79,7 @@ final TextButtonThemeData kbtTextButtonLightTheme = TextButtonThemeData(
   ),
 );
 
-final OutlinedButtonThemeData kbtOutlinedButtonLightTheme =
+final OutlinedButtonThemeData _kbtOutlinedButtonLightTheme =
     OutlinedButtonThemeData(
   style: ButtonStyle(
     side:

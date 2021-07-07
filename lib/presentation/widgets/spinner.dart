@@ -18,12 +18,15 @@ class Spinner<T> extends StatefulWidget {
   /// Builds each item's represntation in the list.
   final Widget Function(T) itemBuilder;
 
+  final double itemWidth;
+
   const Spinner({
     Key? key,
     required this.values,
     required this.itemBuilder,
     required this.onValueChanged,
     required this.value,
+    this.itemWidth = 60,
     this.axis = Axis.horizontal,
   }) : super(key: key);
 
@@ -106,7 +109,7 @@ class _SpinnerState<T> extends State<Spinner<T>> {
               )
               .toList(),
         ),
-        itemExtent: 60,
+        itemExtent: widget.itemWidth,
         controller: scrollController,
         physics: FixedExtentScrollPhysics(),
       ),
