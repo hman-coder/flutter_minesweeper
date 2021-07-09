@@ -6,8 +6,8 @@ import 'shared.dart';
 final ThemeData darkThemeData = ThemeData(
   fontFamily: kffFontFamily,
   textTheme: kttMainTextTheme.apply(
-      bodyColor: kcForegroundDarkWhite, fontFamily: kffFontFamily),
-  scaffoldBackgroundColor: kcBackgroundDarkColor,
+      bodyColor: kcDarkModeForegroundWhite, fontFamily: kffFontFamily),
+  scaffoldBackgroundColor: kcDarkModeBackgroundDark,
   textButtonTheme: _kbtTextButtonDarkTheme,
   outlinedButtonTheme: _kbtOutlinedButtonDarkTheme,
   appBarTheme: _kabtAppBarDarkTheme,
@@ -18,26 +18,26 @@ final ThemeData darkThemeData = ThemeData(
 );
 
 final TextSelectionThemeData _ktstTextSelectionTheme = TextSelectionThemeData(
-  cursorColor: kcForegroundDarkBlue,
-  selectionColor: kcForegroundDarkBlue,
-  selectionHandleColor: kcForegroundDarkBlue,
+  cursorColor: kcDarkModeForegroundBlue,
+  selectionColor: kcDarkModeForegroundBlue,
+  selectionHandleColor: kcDarkModeForegroundBlue,
 );
 
 final InputDecorationTheme _kidtInputDecorationTheme = InputDecorationTheme(
-  fillColor: kcForegroundDarkWhite.withOpacity(0.2),
-  focusColor: kcForegroundDarkWhite,
+  fillColor: kcDarkModeForegroundWhite.withOpacity(0.2),
+  focusColor: kcDarkModeForegroundWhite,
   filled: true,
   contentPadding: EdgeInsets.zero,
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: kcForegroundDarkBlue),
+    borderSide: BorderSide(color: kcDarkModeForegroundBlue),
     borderRadius: BorderRadius.circular(20),
   ),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: kcForegroundDarkWhite),
+    borderSide: BorderSide(color: kcDarkModeForegroundWhite),
     borderRadius: BorderRadius.circular(20),
   ),
   disabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: kcForegroundDarkWhite.withOpacity(0.4)),
+    borderSide: BorderSide(color: kcDarkModeForegroundWhite.withOpacity(0.4)),
     borderRadius: BorderRadius.circular(20),
   ),
 );
@@ -56,19 +56,19 @@ final AppBarTheme _kabtAppBarDarkTheme = AppBarTheme(
   centerTitle: true,
   backwardsCompatibility: false,
   titleTextStyle: headline6.copyWith(
-      color: kcForegroundDarkWhite, fontFamily: kffFontFamily),
-  iconTheme: IconThemeData(color: kcForegroundDarkWhite),
-  actionsIconTheme: IconThemeData(color: kcForegroundDarkWhite),
+      color: kcDarkModeForegroundWhite, fontFamily: kffFontFamily),
+  iconTheme: IconThemeData(color: kcDarkModeForegroundWhite),
+  actionsIconTheme: IconThemeData(color: kcDarkModeForegroundWhite),
   elevation: 0,
 );
 
 final IconThemeData _kitIconDarkTheme = IconThemeData(
-  color: kcForegroundDarkWhite,
+  color: kcDarkModeForegroundWhite,
 );
 
 final TextButtonThemeData _kbtTextButtonDarkTheme = TextButtonThemeData(
   style: ButtonStyle(
-    foregroundColor: MaterialStateProperty.all(kcForegroundDarkWhite),
+    foregroundColor: MaterialStateProperty.all(kcDarkModeForegroundWhite),
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(
         horizontal: 20,
@@ -86,7 +86,7 @@ final OutlinedButtonThemeData _kbtOutlinedButtonDarkTheme =
     OutlinedButtonThemeData(
   style: ButtonStyle(
     side: MaterialStateProperty.all(
-        BorderSide(color: kcForegroundDarkWhite, width: 1)),
+        BorderSide(color: kcDarkModeForegroundWhite, width: 1)),
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(
         horizontal: 30,
@@ -99,6 +99,6 @@ final OutlinedButtonThemeData _kbtOutlinedButtonDarkTheme =
       ),
     ),
     backgroundColor: MaterialStateProperty.all(kcTransparentColor),
-    foregroundColor: MaterialStateProperty.all(kcForegroundDarkBlue),
+    foregroundColor: MaterialStateProperty.all(kcDarkModeForegroundBlue),
   ),
 );

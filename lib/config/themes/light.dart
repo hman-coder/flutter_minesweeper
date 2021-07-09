@@ -16,26 +16,26 @@ final ThemeData lightThemeData = ThemeData(
 );
 
 final TextSelectionThemeData _ktstTextSelectionTheme = TextSelectionThemeData(
-  cursorColor: kcForegroundDarkBlue,
-  selectionColor: kcForegroundDarkBlue,
-  selectionHandleColor: kcForegroundDarkBlue,
+  cursorColor: kcDarkModeForegroundBlue,
+  selectionColor: kcDarkModeForegroundBlue,
+  selectionHandleColor: kcDarkModeForegroundBlue,
 );
 
 final InputDecorationTheme _kidtInputDecorationTheme = InputDecorationTheme(
-  fillColor: kcForegroundLightGrey,
-  focusColor: kcForegroundLightBlue,
+  fillColor: kcLightModeForegroundGrey,
+  focusColor: kcLightModeForegroundBlue,
   filled: true,
   contentPadding: EdgeInsets.zero,
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: kcForegroundLightBlue),
+    borderSide: BorderSide(color: kcLightModeForegroundBlue),
     borderRadius: BorderRadius.circular(20),
   ),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: kcForegroundLightBlack),
+    borderSide: BorderSide(color: kcLightModeForegroundBlack),
     borderRadius: BorderRadius.circular(20),
   ),
   disabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: kcForegroundLightBlack),
+    borderSide: BorderSide(color: kcLightModeForegroundBlack),
     borderRadius: BorderRadius.circular(20),
   ),
 );
@@ -53,19 +53,19 @@ final AppBarTheme _kabtAppBarLightTheme = AppBarTheme(
   centerTitle: true,
   backwardsCompatibility: false,
   titleTextStyle: headline6.copyWith(
-      color: kcForegroundLightBlack, fontFamily: kffFontFamily),
-  iconTheme: IconThemeData(color: kcForegroundLightBlack),
-  actionsIconTheme: IconThemeData(color: kcForegroundLightBlack),
+      color: kcLightModeForegroundBlack, fontFamily: kffFontFamily),
+  iconTheme: IconThemeData(color: kcLightModeForegroundBlack),
+  actionsIconTheme: IconThemeData(color: kcLightModeForegroundBlack),
   elevation: 0,
 );
 
 final IconThemeData _kitIconLightTheme = IconThemeData(
-  color: kcForegroundLightBlack,
+  color: kcLightModeForegroundBlack,
 );
 
 final TextButtonThemeData kbtTextButtonLightTheme = TextButtonThemeData(
   style: ButtonStyle(
-    foregroundColor: MaterialStateProperty.all(kcForegroundLightBlack),
+    foregroundColor: MaterialStateProperty.all(kcLightModeForegroundBlack),
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(
         horizontal: 20,
@@ -96,6 +96,6 @@ final OutlinedButtonThemeData _kbtOutlinedButtonLightTheme =
       ),
     ),
     backgroundColor: MaterialStateProperty.all(kcTransparentColor),
-    foregroundColor: MaterialStateProperty.all(kcForegroundLightBlue),
+    foregroundColor: MaterialStateProperty.all(kcLightModeForegroundBlue),
   ),
 );

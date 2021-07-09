@@ -17,6 +17,8 @@ class MinesweeperTheme extends Equatable {
 
   final TileAnimation tileAnimation;
 
+   bool get isDarkTheme => backgroundColor.isDarkThemeColor;
+
   MinesweeperTheme({
     ThemeData? appTheme,
     required this.flagTheme,
@@ -27,20 +29,20 @@ class MinesweeperTheme extends Equatable {
   }) : this.appTheme = themeOfBackgroundColor(backgroundColor);
 
   MinesweeperTheme.initial()
-      : this.appTheme = themeOfBackgroundColor(kcBackgroundWhiteColor),
+      : this.appTheme = themeOfBackgroundColor(kcLightModeBackgroundWhite),
         this.flagTheme = MinesweeperElementTheme(
-          color: kcElementLightAmber,
+          color: kcLightModeElementAmber,
           icon: MinesweeperIcons.flag,
         ),
         this.mineTheme = MinesweeperElementTheme(
-          color: kcElementLightBlack,
+          color: kcLightModeElementBlack,
           icon: MinesweeperIcons.mine,
         ),
         this.tileTheme = MinesweeperElementTheme(
           color: kcTileColor,
           icon: MinesweeperIcons.tile,
         ),
-        this.backgroundColor = kcBackgroundWhiteColor,
+        this.backgroundColor = kcLightModeBackgroundWhite,
         this.tileAnimation = TileAnimation.normal;
 
   MinesweeperTheme copyWith({

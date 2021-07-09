@@ -18,26 +18,26 @@ const List<IconData> defaultTileIcons = [MinesweeperIcons.tile];
 const List<IconData> premiumTileIcons = [];
 
 const List<Color> defaultLightElementColors = [
-  kcElementLightAmber,
-  kcElementLightBlack,
-  kcElementLightBlackOlive,
-  kcElementLightCadetBlue,
-  kcElementLightDarkMossGreen,
-  kcElementLightEggplant,
-  kcElementLightPersianOrange,
+  kcLightModeElementAmber,
+  kcLightModeElementBlack,
+  kcLightModeElementBlackOlive,
+  kcLightModeElementCadetBlue,
+  kcLightModeElementDarkMossGreen,
+  kcLightModeElementEggplant,
+  kcLightModeElementPersianOrange,
 ];
 
 const List<Color> defaultDarkElementColors = [
-  kcElementDarkCameoPink,
-  kcElementDarkMiddleBlue,
-  kcElementDarkThistle,
-  kcElementDarkWhite,
-  kcElementDarkWildBlueYonder,
+  kcDarkModeElementCameoPink,
+  kcDarkModeElementMiddleBlue,
+  kcDarkModeElementThistle,
+  kcDarkModeElementWhite,
+  kcDarkModeElementWildBlueYonder,
 ];
 
 const List<Color> defaultBackgroundColors = [
-  kcBackgroundWhiteColor,
-  kcBackgroundDarkColor
+  kcLightModeBackgroundWhite,
+  kcDarkModeBackgroundDark
 ];
 
 const List<Color> premiumBackgroundColors = [];
