@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:minesweeper_flutter/bloc/minesweeper_theme.dart';
 import 'package:minesweeper_flutter/model/unlockable_features.dart';
-import 'package:minesweeper_flutter/config/themes.dart';
 
 class UnlockedFeaturesBloc extends Cubit<UnlockableFeatures> {
   final MinesweeperThemeBloc _themeBloc;
@@ -15,7 +14,7 @@ class UnlockedFeaturesBloc extends Cubit<UnlockableFeatures> {
       if (state is BackgroundColorUpdatedState ||
           state is InitialState ||
           state is ThemeReloadedState) {
-        if (_themeBloc.currentTheme.backgroundColor.isDarkThemeColor) {
+        if (_themeBloc.currentTheme.isDarkTheme) {
           emit(UnlockableFeatures.dark());
           
         } else {

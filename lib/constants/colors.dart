@@ -12,6 +12,8 @@ const Color kcDarkModeNeumorphicEmboss = Color(0xFF121212);
 
 const Color kcDarkModeNeumorphicBorderColor = Color(0x20FFFFFF);
 
+const Color kcDarkModeNeumorphicShadowColor = Color(0x60FFFFFF);
+
 // General use
 const Color kcTransparentColor = Color(0x00FFFFFF);
 

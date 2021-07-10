@@ -1,11 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:minesweeper_flutter/presentation/icons/minesweeper_icons.dart';
-import 'package:minesweeper_flutter/config/themes.dart';
 import 'package:minesweeper_flutter/constants/colors.dart';
 
 class MinesweeperTheme extends Equatable {
-  final ThemeData appTheme;
 
   final MinesweeperElementTheme flagTheme;
 
@@ -17,20 +15,20 @@ class MinesweeperTheme extends Equatable {
 
   final TileAnimation tileAnimation;
 
-   bool get isDarkTheme => backgroundColor.isDarkThemeColor;
+  ThemeMode get themeMode => isDarkTheme ? ThemeMode.dark : ThemeMode.light;
+  
+  bool get isDarkTheme => darkBackgroundColors.contains(backgroundColor);
 
   MinesweeperTheme({
-    ThemeData? appTheme,
     required this.flagTheme,
     required this.mineTheme,
     required this.tileTheme,
     required this.backgroundColor,
     required this.tileAnimation,
-  }) : this.appTheme = themeOfBackgroundColor(backgroundColor);
+  });
 
   MinesweeperTheme.initial()
-      : this.appTheme = themeOfBackgroundColor(kcLightModeBackgroundWhite),
-        this.flagTheme = MinesweeperElementTheme(
+      : this.flagTheme = MinesweeperElementTheme(
           color: kcLightModeElementAmber,
           icon: MinesweeperIcons.flag,
         ),
@@ -46,7 +44,6 @@ class MinesweeperTheme extends Equatable {
         this.tileAnimation = TileAnimation.normal;
 
   MinesweeperTheme copyWith({
-    ThemeData? appTheme,
     Color? backgroundColor,
     TileAnimation? tileAnimation,
     MinesweeperElementTheme? mineTheme,
@@ -54,7 +51,6 @@ class MinesweeperTheme extends Equatable {
     MinesweeperElementTheme? tileTheme,
   }) {
     var ret = MinesweeperTheme(
-      appTheme: appTheme,
       flagTheme: flagTheme ?? this.flagTheme,
       mineTheme: mineTheme ?? this.mineTheme,
       tileTheme: tileTheme ?? this.tileTheme,
@@ -66,7 +62,6 @@ class MinesweeperTheme extends Equatable {
 
   @override
   List<Object?> get props => [
-        appTheme,
         flagTheme,
         mineTheme,
         tileTheme,

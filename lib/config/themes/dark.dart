@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:minesweeper_flutter/constants/colors.dart';
 import 'package:minesweeper_flutter/constants/text.dart';
 import 'shared.dart';
@@ -52,6 +53,8 @@ final CardTheme _kctCardDarkTheme = CardTheme(
 );
 
 final AppBarTheme _kabtAppBarDarkTheme = AppBarTheme(
+  brightness: Brightness.dark,
+  systemOverlayStyle: SystemUiOverlayStyle( statusBarIconBrightness: Brightness.light, ),
   backgroundColor: kcTransparentColor,
   centerTitle: true,
   backwardsCompatibility: false,

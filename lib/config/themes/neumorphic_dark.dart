@@ -6,5 +6,8 @@ const NeumorphicThemeData kntdDarkNeumorphicTheme = NeumorphicThemeData(
   intensity: 1,
   baseColor: kcDarkModeNeumorphicBackground,
   shadowDarkColorEmboss: kcDarkModeNeumorphicEmboss,
-  borderColor: kcDarkModeNeumorphicBorderColor,
+  shadowLightColor: kcDarkModeNeumorphicShadowColor,
+  borderColor: kcDarkModeNeumorphicBorderColor, 
+  borderWidth: 1,
+  boxShape: NeumorphicBoxShape.circle(),
 );

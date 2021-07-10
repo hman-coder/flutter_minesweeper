@@ -49,6 +49,7 @@ final CardTheme _kctCardLightTheme = CardTheme(
   );
 
 final AppBarTheme _kabtAppBarLightTheme = AppBarTheme(
+  brightness: Brightness.light,
   backgroundColor: kcTransparentColor,
   centerTitle: true,
   backwardsCompatibility: false,

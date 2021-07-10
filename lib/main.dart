@@ -14,8 +14,6 @@ import 'package:minesweeper_flutter/bloc/game_settings.dart' as gameSettings;
 import 'package:flutter_gen/gen_l10n/minesweeper_localizations.dart';
 import 'package:minesweeper_flutter/config/themes.dart';
 
-import 'constants/colors.dart';
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MinesweeperBlocObserver();
@@ -30,19 +28,21 @@ class MinesweeperApp extends StatelessWidget {
               gameTheme.MinesweeperThemeState>(
           buildWhen: _rebuildWhen,
           builder: (context, state) {
-            ThemeData theme = context
+            var themeMode = context
                 .read<gameTheme.MinesweeperThemeBloc>()
                 .currentTheme
-                .appTheme;
+                .themeMode;
             return NeumorphicTheme(
               darkTheme: kntdDarkNeumorphicTheme,
               theme: kndtLightNeumorphicTheme,
-              themeMode: context.watch<gameTheme.MinesweeperThemeBloc>().currentTheme.isDarkTheme ? ThemeMode.dark : ThemeMode.light,
+              themeMode: themeMode,
               child: MaterialApp(
+                themeMode: themeMode,
                 localizationsDelegates: AppLocalizations.localizationsDelegates,
                 supportedLocales: AppLocalizations.supportedLocales,
                 debugShowCheckedModeBanner: false,
-                theme: theme,
+                theme: lightThemeData,
+                darkTheme: darkThemeData,
                 onGenerateRoute: materialRouteGenerator,
                 initialRoute: kprLoadingRoute,
               ),
