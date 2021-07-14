@@ -5,7 +5,7 @@ import 'shared.dart';
 
 final ThemeData lightThemeData = ThemeData(
   fontFamily: kffFontFamily,
-  textTheme: kttMainTextTheme.apply(fontFamily: kffFontFamily),
+  textTheme: kttMainTextTheme.apply(fontFamily: kffFontFamily, displayColor: Colors.black),
   textButtonTheme: kbtTextButtonTheme,
   outlinedButtonTheme: _kbtOutlinedButtonLightTheme,
   appBarTheme: _kabtAppBarLightTheme,
