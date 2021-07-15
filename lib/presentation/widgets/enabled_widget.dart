@@ -19,7 +19,7 @@ class EnabledWidget extends StatelessWidget {
     if(enabled) return child;
     var color = context.read<MinesweeperThemeBloc>().currentTheme.isDarkTheme
         ? Colors.grey
-        : Colors.white;
+        : Colors.white.withOpacity(0.5);
     return IgnorePointer(
       child: ColorFiltered(
           colorFilter: ColorFilter.mode(color, BlendMode.modulate), child: child),

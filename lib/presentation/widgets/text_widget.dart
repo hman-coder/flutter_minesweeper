@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// A normal [Text] widget. However, its [TextStyle] is based on
-/// the [type] variable. It reduces boilerplate code. 
+/// the [type] variable. It reduces boilerplate code.
 class TextWidget extends StatelessWidget {
   final TextWidgetType type;
 
@@ -31,23 +31,26 @@ class TextWidget extends StatelessWidget {
 
   final TextHeightBehavior? textHeightBehavior;
 
-  const TextWidget(
-      {Key? key,
-      required this.type,
-      required this.data,
-      this.textSpan,
-      this.strutStyle,
-      this.textAlign,
-      this.textDirection,
-      this.locale,
-      this.softWrap,
-      this.overflow,
-      this.textScaleFactor,
-      this.maxLines,
-      this.semanticsLabel,
-      this.textWidthBasis,
-      this.textHeightBehavior})
-      : super(key: key);
+  final Color? color;
+
+  const TextWidget({
+    Key? key,
+    required this.type,
+    required this.data,
+    this.textSpan,
+    this.strutStyle,
+    this.textAlign,
+    this.textDirection,
+    this.locale,
+    this.softWrap,
+    this.overflow,
+    this.textScaleFactor,
+    this.maxLines,
+    this.semanticsLabel,
+    this.textWidthBasis,
+    this.textHeightBehavior,
+    this.color,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -69,16 +72,23 @@ class TextWidget extends StatelessWidget {
   }
 
   TextStyle? _style(BuildContext context) {
+    TextStyle? ret;
     switch (this.type) {
       case TextWidgetType.headline6:
-        return Theme.of(context).textTheme.headline6;
+        ret= Theme.of(context).textTheme.headline6;
+        break;
       case TextWidgetType.bodyText2:
-        return Theme.of(context).textTheme.bodyText2;
+        ret = Theme.of(context).textTheme.bodyText2;
+        break;
       case TextWidgetType.subtitle1:
-        return Theme.of(context).textTheme.subtitle1;
+        ret = Theme.of(context).textTheme.subtitle1;
+        break;
       case TextWidgetType.subtitle2:
-        return Theme.of(context).textTheme.subtitle2;
+        ret = Theme.of(context).textTheme.subtitle2;
+        break;
     }
+    if(color != null) ret = ret!.copyWith(color: color);
+    return ret;
   }
 }
 
