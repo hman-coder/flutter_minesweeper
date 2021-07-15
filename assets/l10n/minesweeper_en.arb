@@ -1,20 +1,54 @@
 {
   "backgroundColor": "Background Color",
+  "beginner" : "Beginner",
+
+  "comingSoon" : "Coming soon",
+  "custom" : "Custom",
+
+  "description" : "Description",
+	"difficulty" : "Difficulty",
+
+	"easy" : "Easy",
+  "endlessGameMode" : "Endless",
+  "endlessGameModeDescriptionTitle" : "Endless mode description",
+  "endlessGameModeDescription" : "Endless mode. Keep clearing mines by placing flags on them in order to move on. Difficulty will go from easy to extreme as you progress. Score depends on how many mines you flag.",
+	"expert" : "Expert",
 
   "finish" : "Finish",
   "flagAppearance" : "Flag Appearance",
 
+  "gameMode" : "Game mode",
+
+  "hard": "Hard",
+  "height" : "Height",
+
+  "info_on" : "Info on",
+	"intermediate" : "Intermediate",
+
   "loading" : "Loading",
   
   "mineAppearance" : "Mine Appearance",
+  "mines" : "Mines",
   "minesweeper" : "Minesweeper",
+  "multiplayerGameMode" : "Multiplayer",
+  "multiplayerGameModeDescriptionTitle" : "Multiplayer mode description",
+  "multiplayerGameModeDescription" : "Coming soon",
   "music" : "Music",
 
   "newGame" : "New Game",
   "notifications" : "Notifications",
   
+  "runGameMode" : "Run, run",
+  "runGameModeDescriptionTitle" : "Run, run mode description",
+  "runGameModeDescription" : "You need to RUN! Clear the mines before the big mine falls down on your head. Your win condition is to get your character across the field without dying. Stepping on mines does not lose you the game, but it will decrease your character's health.",
+
   "settings" : "Settings",
   "sfx" : "Effects",
+  "standardGameMode" : "Standard",
+  "standardGameModeDescriptionTitle" : "Standard mode description",
+	"standardGameModeDescription" : "Standard/classic mode of Minesweeper. You need to have all safe tiles revealed in order to win. The faster you finish, the better the score.",
 
-  "theme" : "Theme"
+  "theme" : "Theme",
+
+  "width" : "Width"
 }

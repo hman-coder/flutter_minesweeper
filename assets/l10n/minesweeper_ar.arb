@@ -1,20 +1,54 @@
 {
 	"backgroundColor" : "لون الخلفية",
-	
+	"beginner" : "مبتدئ",
+
+	"comingSoon" : "قريباً",
+	"custom" : "تخصيص",
+
+	"description" : "شرح",
+	"difficulty" : "المستوى",
+
+	"easy" : "سهل",
+	"endlessGameMode" : "لا نهائي",
+	"endlessGameModeDescriptionTitle" : "شرح وضع اللعب اللانهائي", 
+	"endlessGameModeDescription" : "وضع اللانهاية. عليك الاستمرار بوضع الأعلام حتى تستطيع التقدم. ستزداد الصعوبة من سهل إلى مستحيل كلما تقدمت باللعبة. بإمكانك جمع النقاط عن طريق وضع الأعلام في مكانها الصحيح.",
+	"expert" : "خبير",
+
 	"finish" : "إنهاء",
 	"flagAppearance" : "مظهر العلم",
+
+	"gameMode" : "وضع اللعب",
+
+	"hard": "صعب",
+	"height" : "الارتفاع",
+
+	"info_on" : "معلومات حول",
+	"intermediate" : "متوسط",
 
 	"loading" : "يتم التحميل",
 
 	"mineAppearance" : "مظهر اللغم",
+	"mines" : "الألغام",
 	"minesweeper": "كانسة الألغام",
+	"multiplayerGameMode" : "تنافس",
+	"multiplayerGameModeDescriptionTitle" : "شرح وضع اللعب التنافسي", 
+  	"multiplayerGameModeDescription" : "قريباً",
 	"music" : "الموسيقا",
 
 	"newGame" : "لعبة جديدة",
 	"notifications" : "الإشعارات",
 
+	"runGameMode" : "هروب سريع",
+	"runGameModeDescriptionTitle" : "شرح وضع اللعب هروب سريع", 
+  	"runGameModeDescription" : " عليك أن تهرب! عليك أن تزيل الألغام قبل أن يسقط اللغم الكبير على رأسك! ستفوز عندما توصل شخصيتك إلى وجهتها قبل أن تموت. لن تخسر مباشرة إن انفجر بك لغم ما، لكن ستنقص نقاط حياتك.",
+
 	"settings" : "الإعدادات",
 	"sfx" : "التأثيرات الصوتية",
+	"standardGameMode" : "أصلي",
+	"standardGameModeDescriptionTitle" : "شرح وضع اللعب الأصلي", 
+	"standardGameModeDescription" : "نمط اللعب الأصلي/الكلاسيكي. عليك أن تكشف كل الخانات الآمنة. ستحصل على نقاط أكثر كلما أسرعت.",
 
-	"theme" : "التنسيق"
+	"theme" : "التنسيق",
+
+	"width" : "العرض"
 }
