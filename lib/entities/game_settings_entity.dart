@@ -1,6 +1,9 @@
+import 'package:equatable/equatable.dart';
 import 'package:minesweeper_flutter/constants/db_keys.dart';
 
-class GameSettingsEntity {
+import 'entity.dart';
+
+class GameSettingsEntity extends Entity with EquatableMixin {
   final int music;
 
   final int sfx;
@@ -16,9 +19,11 @@ class GameSettingsEntity {
   GameSettingsEntity.fromMap(Map<String, dynamic> map) :
     this.music = map[kkGameSettingsMusic],
     this.sfx = map[kkGameSettingsSFX],
-    this.notifications = map[kkGameSettingsNotifications]
+    this.notifications = map[kkGameSettingsNotifications],
+    super()
   ;
 
+  @override
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = Map();
     map[kkGameSettingsMusic] = this.music;
@@ -26,4 +31,7 @@ class GameSettingsEntity {
     map[kkGameSettingsNotifications] = this.notifications;
     return map;
   }
+
+  @override
+  List<Object?> get props => [music, sfx, notifications];
 }

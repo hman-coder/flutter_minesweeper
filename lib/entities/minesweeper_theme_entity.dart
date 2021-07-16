@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:minesweeper_flutter/constants/db_keys.dart';
+import 'entity.dart';
 
-class MinesweeperThemeEntity extends Equatable {
+class MinesweeperThemeEntity extends Entity with EquatableMixin {
   final int backgroundColorValue;
 
   final String tileAnimation;
@@ -50,7 +51,7 @@ class MinesweeperThemeEntity extends Equatable {
     map[kkTileColorKey] = tileColorValue;
     map[kkTileIconKey] = tileIcon;
     return map;
-  } 
+  }
 
   @override
   List<Object?> get props => [backgroundColorValue, tileAnimation, mineColorValue, flagColorValue, tileColorValue, mineIcon, flagIcon, tileIcon];
