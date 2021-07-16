@@ -54,7 +54,7 @@ class MinesweeperThemeBloc
   Stream<MinesweeperThemeState> _handleBackgroundChange(
       BackgroundColorChangeEvent event) async* {
     var newTheme = currentTheme.copyWith(backgroundColor: event.color);
-    var newThemeEntity = transformModel(newTheme);
+    var newThemeEntity = transformModel(newTheme) as MinesweeperThemeEntity;
     var success = await _repository.update(newThemeEntity);
 
     if (success) {
