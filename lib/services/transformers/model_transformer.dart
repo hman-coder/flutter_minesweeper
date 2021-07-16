@@ -3,7 +3,7 @@ import 'package:minesweeper_flutter/entities/game_settings_entity.dart';
 import 'package:minesweeper_flutter/entities/minesweeper_theme_entity.dart';
 import 'package:minesweeper_flutter/model/game_settings.dart';
 import 'package:minesweeper_flutter/model/minesweeper_theme.dart';
-import 'package:minesweeper_flutter/services/transformers/db_values_converters.dart';
+import 'package:minesweeper_flutter/services/transformers/model_value_converters.dart';
 
 Entity transformModel(dynamic model) {
   if (model is MinesweeperTheme) return _transformThemeModel(model);

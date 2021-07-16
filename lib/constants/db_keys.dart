@@ -28,3 +28,14 @@ const String kkMineIconKey = "mine_icon";
 const String kkTileIconKey = "tile_icon";
 
 const String kkAnimationKey = "animation";
+
+// Minesweeper level settings ---------------------------------------------------------------------
+const String kkHeight = "height";
+
+const String kkWidth = "width";
+
+const String kkMines = "mines";
+
+const String kkGameMode = "game_mode";
+
+const String kkGameDifficulty = "difficulty";
