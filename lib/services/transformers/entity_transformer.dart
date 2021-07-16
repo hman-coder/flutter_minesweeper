@@ -1,15 +1,15 @@
 import 'package:minesweeper_flutter/entities/game_settings_entity.dart';
-import 'package:minesweeper_flutter/entities/minesweeper_theme_entity.dart';
+import 'package:minesweeper_flutter/entities/game_theme_entity.dart';
 import 'package:minesweeper_flutter/model/game_settings.dart';
-import 'package:minesweeper_flutter/model/minesweeper_theme.dart';
+import 'package:minesweeper_flutter/model/game_theme.dart';
 import 'package:minesweeper_flutter/services/transformers/entity_value_converters.dart';
 
 dynamic transformEntity(dynamic entity) {
-  if (entity is MinesweeperThemeEntity) return _themeEntityTransformer(entity);
+  if (entity is GameThemeEntity) return _themeEntityTransformer(entity);
   else if (entity is GameSettingsEntity) return _settingsEntityTransformer(entity);
 }
 
-MinesweeperTheme _themeEntityTransformer(MinesweeperThemeEntity entity) {
+MinesweeperTheme _themeEntityTransformer(GameThemeEntity entity) {
   var mineTheme = MinesweeperElementTheme(
       color: entity.mineColorValue.toColor(),
       icon: entity.mineIcon.toMinesweeperIcon());

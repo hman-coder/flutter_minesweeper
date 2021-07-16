@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/painting.dart';
-import 'package:minesweeper_flutter/model/minesweeper_theme.dart';
+import 'package:minesweeper_flutter/model/game_theme.dart';
 
-abstract class MinesweeperThemeState extends Equatable {
+abstract class GameThemeState extends Equatable {
 }
 
-class InitialState extends MinesweeperThemeState {
+class InitialState extends GameThemeState {
   final MinesweeperTheme theme;
   
   InitialState() : this.theme= MinesweeperTheme.initial();
@@ -14,7 +14,7 @@ class InitialState extends MinesweeperThemeState {
   List<Object?> get props => [theme];
 }
 
-class ThemeReloadedState extends MinesweeperThemeState{
+class ThemeReloadedState extends GameThemeState{
   final MinesweeperTheme theme;
 
   ThemeReloadedState(this.theme);
@@ -23,7 +23,7 @@ class ThemeReloadedState extends MinesweeperThemeState{
   List<Object?> get props => [theme];
 }
 
-class BackgroundColorUpdatedState extends MinesweeperThemeState {
+class BackgroundColorUpdatedState extends GameThemeState {
   final Color color;
 
   BackgroundColorUpdatedState(this.color);
@@ -32,7 +32,7 @@ class BackgroundColorUpdatedState extends MinesweeperThemeState {
   List<Object?> get props => [color];
 }
 
-class MineThemeUpdatedState extends MinesweeperThemeState {
+class MineThemeUpdatedState extends GameThemeState {
   final MinesweeperElementTheme mineTheme;
 
   MineThemeUpdatedState(this.mineTheme);
@@ -41,7 +41,7 @@ class MineThemeUpdatedState extends MinesweeperThemeState {
   List<Object?> get props => [mineTheme];
 }
 
-class FlagThemeUpdatedState extends MinesweeperThemeState {
+class FlagThemeUpdatedState extends GameThemeState {
   final MinesweeperElementTheme flagTheme;
 
   FlagThemeUpdatedState(this.flagTheme);
@@ -50,7 +50,7 @@ class FlagThemeUpdatedState extends MinesweeperThemeState {
   List<Object?> get props => [flagTheme];
 }
 
-class TileThemeUpdatedState extends MinesweeperThemeState {
+class TileThemeUpdatedState extends GameThemeState {
   final MinesweeperElementTheme tileTheme;
 
   TileThemeUpdatedState(this.tileTheme);
@@ -59,7 +59,7 @@ class TileThemeUpdatedState extends MinesweeperThemeState {
   List<Object?> get props => [tileTheme];
 }
 
-class TileAnimationUpdatedState extends MinesweeperThemeState {
+class TileAnimationUpdatedState extends GameThemeState {
   final TileAnimation animation;
 
   TileAnimationUpdatedState(this.animation);
@@ -69,7 +69,7 @@ class TileAnimationUpdatedState extends MinesweeperThemeState {
   
 }
 
-class MinesweeperThemeUpdatedState extends MinesweeperThemeState {
+class MinesweeperThemeUpdatedState extends GameThemeState {
   final MinesweeperTheme theme;
 
   MinesweeperThemeUpdatedState(this.theme);
@@ -78,7 +78,7 @@ class MinesweeperThemeUpdatedState extends MinesweeperThemeState {
   List<Object?> get props => [theme];
 }
 
-class ErrorState extends MinesweeperThemeState {
+class ErrorState extends GameThemeState {
   final String message;
 
   ErrorState(this.message);

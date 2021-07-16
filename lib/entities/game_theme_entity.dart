@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:minesweeper_flutter/constants/db_keys.dart';
 import 'entity.dart';
 
-class MinesweeperThemeEntity extends Entity with EquatableMixin {
+class GameThemeEntity extends Entity with EquatableMixin {
   final int backgroundColorValue;
 
   final String tileAnimation;
@@ -19,7 +19,7 @@ class MinesweeperThemeEntity extends Entity with EquatableMixin {
 
   final String tileIcon;
 
-  MinesweeperThemeEntity({
+  GameThemeEntity({
     required this.backgroundColorValue,
     required this.tileAnimation,
     required this.mineColorValue,
@@ -30,7 +30,7 @@ class MinesweeperThemeEntity extends Entity with EquatableMixin {
     required this.tileIcon,
   });
 
-  MinesweeperThemeEntity.fromMap(Map<String, dynamic> map)
+  GameThemeEntity.fromMap(Map<String, dynamic> map)
       : this.backgroundColorValue = map[kkBackgroundColorKey],
         this.tileAnimation = map[kkAnimationKey],
         this.mineColorValue = map[kkMineColorKey],

@@ -3,10 +3,9 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:minesweeper_flutter/bloc/audio_manager.dart';
-import 'package:minesweeper_flutter/bloc/minesweeper_theme/minesweeper_theme_bloc.dart';
 import 'package:minesweeper_flutter/helpers/context_extensions.dart';
 import 'package:minesweeper_flutter/helpers/math.dart';
-import 'package:minesweeper_flutter/model/minesweeper_level_settings.dart';
+import 'package:minesweeper_flutter/model/level_settings.dart';
 import 'package:minesweeper_flutter/presentation/animations/rocking_animation.dart';
 import 'package:minesweeper_flutter/presentation/icons/minesweeper_icons.dart';
 import 'package:minesweeper_flutter/presentation/widgets/enabled_widget.dart';
@@ -16,6 +15,7 @@ import 'package:minesweeper_flutter/presentation/widgets/spacers.dart';
 import 'package:minesweeper_flutter/presentation/widgets/spinner.dart';
 import 'package:minesweeper_flutter/presentation/widgets/text_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:minesweeper_flutter/bloc/game_theme/game_theme_bloc.dart';
 
 /// The duration after which elements that are not related to the selected mode
 /// disapper.
@@ -114,7 +114,7 @@ class _NewGameUIState extends State<NewGameUI> with TickerProviderStateMixin {
       child: TextWidget(
         data: "Play",
         type: TextWidgetType.headline6,
-        color: context.watch<MinesweeperThemeBloc>().currentTheme.isDarkTheme ? Colors.black : Colors.white,
+        color: context.watch<GameThemeBloc>().currentTheme.isDarkTheme ? Colors.black : Colors.white,
       ),
     );
   }
@@ -231,7 +231,7 @@ class _GameModeDescriptionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color collapseColor =
-        context.watch<MinesweeperThemeBloc>().currentTheme.isDarkTheme
+        context.watch<GameThemeBloc>().currentTheme.isDarkTheme
             ? Colors.white
             : Colors.black;
     return Card(

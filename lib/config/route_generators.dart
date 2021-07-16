@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:minesweeper_flutter/bloc/minesweeper_level_settings/minesweeper_level_settings_bloc.dart';
+import 'package:minesweeper_flutter/bloc/level_settings/level_settings_bloc.dart';
 import 'package:minesweeper_flutter/constants/routes.dart';
 import 'package:minesweeper_flutter/presentation/ui/new_game_ui.dart';
 import 'package:minesweeper_flutter/presentation/ui/uis.dart';
-import 'package:minesweeper_flutter/repository/minesweeper_level_settings_repository.dart';
+import 'package:minesweeper_flutter/repository/level_settings_repository.dart';
 
 Route Function(RouteSettings settings) materialRouteGenerator = (settings) {
   print(settings.name);
@@ -19,9 +19,9 @@ Route Function(RouteSettings settings) materialRouteGenerator = (settings) {
       return CustomMaterialPageRoute(builder: (context) => ThemesUI());
     case kprNewGameRoute:
       return CustomMaterialPageRoute(
-        builder: (context) => BlocProvider<MinesweeperLevelSettingsBloc>(
-          create: (context) => MinesweeperLevelSettingsBloc(
-              repository: MinesweeperSqliteSettingsRepository()),
+        builder: (context) => BlocProvider<LevelSettingsBloc>(
+          create: (context) => LevelSettingsBloc(
+              repository: LevelSettingsSqliteRepository()),
           child: NewGameUI(),
         ),
       );

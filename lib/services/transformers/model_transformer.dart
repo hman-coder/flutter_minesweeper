@@ -1,8 +1,8 @@
 import 'package:minesweeper_flutter/entities/entity.dart';
 import 'package:minesweeper_flutter/entities/game_settings_entity.dart';
-import 'package:minesweeper_flutter/entities/minesweeper_theme_entity.dart';
+import 'package:minesweeper_flutter/entities/game_theme_entity.dart';
 import 'package:minesweeper_flutter/model/game_settings.dart';
-import 'package:minesweeper_flutter/model/minesweeper_theme.dart';
+import 'package:minesweeper_flutter/model/game_theme.dart';
 import 'package:minesweeper_flutter/services/transformers/model_value_converters.dart';
 
 Entity transformModel(dynamic model) {
@@ -11,8 +11,8 @@ Entity transformModel(dynamic model) {
   throw Exception("The model you passed doesn't have a transformer");
 }
 
-MinesweeperThemeEntity _transformThemeModel(MinesweeperTheme model) {
-  return MinesweeperThemeEntity(
+GameThemeEntity _transformThemeModel(MinesweeperTheme model) {
+  return GameThemeEntity(
     backgroundColorValue: model.backgroundColor.value,
     tileAnimation: model.tileAnimation.toDatabaseString(),
     mineColorValue: model.mineTheme.color.value,

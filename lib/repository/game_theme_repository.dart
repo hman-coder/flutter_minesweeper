@@ -1,24 +1,24 @@
 import 'package:minesweeper_flutter/constants/db_keys.dart';
-import 'package:minesweeper_flutter/entities/minesweeper_theme_entity.dart';
+import 'package:minesweeper_flutter/entities/game_theme_entity.dart';
 import 'package:minesweeper_flutter/repository/sqlite_accessor.dart';
 
-abstract class MinesweeperThemeRepository {
-  Future<MinesweeperThemeEntity> fetchTheme();
+abstract class GameThemeRepository {
+  Future<GameThemeEntity> fetchTheme();
 
-  Future<bool> update(MinesweeperThemeEntity theme);
+  Future<bool> update(GameThemeEntity theme);
 }
 
-class MinesweeperThemeSqliteRepository extends MinesweeperThemeRepository {
+class GameThemeSqliteRepository extends GameThemeRepository {
   @override
-  Future<MinesweeperThemeEntity> fetchTheme() async {
+  Future<GameThemeEntity> fetchTheme() async {
     var accessor = await SqliteAccessor.accessor;
     var results = await accessor.fetch(kkMinesweeperThemeTableKey);
-    var entity = MinesweeperThemeEntity.fromMap(results[0]!);
+    var entity = GameThemeEntity.fromMap(results[0]!);
     return entity;
   }
 
   @override
-  Future<bool> update(MinesweeperThemeEntity entity) async {
+  Future<bool> update(GameThemeEntity entity) async {
     var accessor = await SqliteAccessor.accessor;
     int updatedRows = await accessor.updateSettings(
         kkMinesweeperThemeTableKey, entity.toMap());

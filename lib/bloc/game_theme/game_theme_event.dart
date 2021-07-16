@@ -1,17 +1,17 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:minesweeper_flutter/model/minesweeper_theme.dart';
+import 'package:minesweeper_flutter/model/game_theme.dart';
 
-abstract class MinesweeperThemeEvent implements Equatable {
+abstract class GameThemeEvent implements Equatable {
   bool get stringify => true;
 }
 
-class ReloadEvent extends MinesweeperThemeEvent {
+class ReloadEvent extends GameThemeEvent {
   @override
   List<Object?> get props => [];
 }
 
-class BackgroundColorChangeEvent extends MinesweeperThemeEvent {
+class BackgroundColorChangeEvent extends GameThemeEvent {
   final Color color;
 
   BackgroundColorChangeEvent(this.color);
@@ -20,7 +20,7 @@ class BackgroundColorChangeEvent extends MinesweeperThemeEvent {
   List<Object?> get props => [color];
 }
 
-class FlagThemeChangeEvent extends MinesweeperThemeEvent {
+class FlagThemeChangeEvent extends GameThemeEvent {
   final Color? color;
 
   final IconData? icon;
@@ -33,7 +33,7 @@ class FlagThemeChangeEvent extends MinesweeperThemeEvent {
   List<Object?> get props => [color, icon];
 }
 
-class MineThemeChangeEvent extends MinesweeperThemeEvent {
+class MineThemeChangeEvent extends GameThemeEvent {
   final Color? color;
 
   final IconData? icon;
@@ -46,7 +46,7 @@ class MineThemeChangeEvent extends MinesweeperThemeEvent {
   List<Object?> get props => [color, icon];
 }
 
-class TileThemeChangeEvent extends MinesweeperThemeEvent {
+class TileThemeChangeEvent extends GameThemeEvent {
   final Color? color;
 
   final IconData? icon;
@@ -59,7 +59,7 @@ class TileThemeChangeEvent extends MinesweeperThemeEvent {
   List<Object?> get props => [color, icon];
 }
 
-class TileAnimationChangeEvent extends MinesweeperThemeEvent {
+class TileAnimationChangeEvent extends GameThemeEvent {
   final TileAnimation animation;
 
   TileAnimationChangeEvent(this.animation);

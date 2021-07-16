@@ -5,31 +5,31 @@ const String kkMinesKey = 'mines';
 const String kkHeightKey = 'height';
 const String kkWidthKey = 'width';
 
-class MinesweeperLevelSettings {
+class LevelSettings {
   final int height;
 
   final int width;
 
   final int mines;
 
-  MinesweeperLevelSettings.fromDifficulty(GameDifficulty difficulty)
+  LevelSettings.fromDifficulty(GameDifficulty difficulty)
       : height = difficulty.height,
         width = difficulty.width,
         mines = difficulty.mines;
 
-  const MinesweeperLevelSettings({
+  const LevelSettings({
     required this.height,
     required this.width,
     required this.mines,
   });
 
-  MinesweeperLevelSettings.fromMap(Map<String, dynamic> map)
+  LevelSettings.fromMap(Map<String, dynamic> map)
       : this.height = map[kkHeightKey],
         this.width = map[kkWidthKey],
         this.mines = map[kkMinesKey];
 
-  MinesweeperLevelSettings copyWith({int? height, int? width, int? mines}) {
-    return MinesweeperLevelSettings(
+  LevelSettings copyWith({int? height, int? width, int? mines}) {
+    return LevelSettings(
       height: height ?? this.height,
       width: width ?? this.width,
       mines: mines ?? this.mines,

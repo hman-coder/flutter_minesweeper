@@ -1,36 +1,34 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:minesweeper_flutter/bloc/minesweeper_theme/minesweeper_theme_event.dart';
-import 'package:minesweeper_flutter/entities/minesweeper_theme_entity.dart';
-import 'package:minesweeper_flutter/model/minesweeper_theme.dart';
-import 'package:minesweeper_flutter/repository/minesweeper_theme_repository.dart';
+import 'package:minesweeper_flutter/entities/game_theme_entity.dart';
+import 'package:minesweeper_flutter/model/game_theme.dart';
+import 'package:minesweeper_flutter/repository/game_theme_repository.dart';
 import 'package:minesweeper_flutter/services/transformers.dart';
-import 'minesweeper_theme_state.dart';
 import 'package:minesweeper_flutter/services/transformers/entity_transformer.dart';
 
-/// Transforms the given [MinesweeperTheme] object into an entity and then tries to update it using the [MinesweeperThemeRepository].
+import 'game_theme_event.dart';
+import 'game_theme_state.dart';
+
+/// Transforms the given [MinesweeperTheme] object into an entity and then tries to update it using the [GameThemeRepository].
 Future<bool> _transformThemeAndUpdate(
-    MinesweeperThemeRepository repository, MinesweeperTheme theme) {
-  var entity = transformModel(theme) as MinesweeperThemeEntity;
+    GameThemeRepository repository, MinesweeperTheme theme) {
+  var entity = transformModel(theme) as GameThemeEntity;
   return repository.update(entity);
 }
 
-class MinesweeperThemeBloc
-    extends Bloc<MinesweeperThemeEvent, MinesweeperThemeState> {
-
-  final MinesweeperThemeRepository _repository;
+class GameThemeBloc extends Bloc<GameThemeEvent, GameThemeState> {
+  final GameThemeRepository _repository;
 
   MinesweeperTheme currentTheme;
 
   bool initialized = false;
 
-  MinesweeperThemeBloc(
+  GameThemeBloc(
     this._repository,
   )   : currentTheme = MinesweeperTheme.initial(),
         super(InitialState());
 
   @override
-  Stream<MinesweeperThemeState> mapEventToState(
-      MinesweeperThemeEvent event) async* {
+  Stream<GameThemeState> mapEventToState(GameThemeEvent event) async* {
     if (event is ReloadEvent) yield* _handleReload(event);
     if (event is BackgroundColorChangeEvent)
       yield* _handleBackgroundChange(event);
@@ -44,17 +42,17 @@ class MinesweeperThemeBloc
       yield* _handleTileAnimationChange(event);
   }
 
-  Stream<MinesweeperThemeState> _handleReload(ReloadEvent event) async* {
+  Stream<GameThemeState> _handleReload(ReloadEvent event) async* {
     var result = await _repository.fetchTheme();
     currentTheme = transformEntity(result);
     yield ThemeReloadedState(currentTheme);
     initialized = true;
   }
 
-  Stream<MinesweeperThemeState> _handleBackgroundChange(
+  Stream<GameThemeState> _handleBackgroundChange(
       BackgroundColorChangeEvent event) async* {
     var newTheme = currentTheme.copyWith(backgroundColor: event.color);
-    var newThemeEntity = transformModel(newTheme) as MinesweeperThemeEntity;
+    var newThemeEntity = transformModel(newTheme) as GameThemeEntity;
     var success = await _repository.update(newThemeEntity);
 
     if (success) {
@@ -65,7 +63,7 @@ class MinesweeperThemeBloc
     }
   }
 
-  Stream<MinesweeperThemeState> _handleFlagThemeChange(
+  Stream<GameThemeState> _handleFlagThemeChange(
       FlagThemeChangeEvent event) async* {
     var newFlagTheme =
         currentTheme.flagTheme.copyWith(color: event.color, icon: event.icon);
@@ -80,7 +78,7 @@ class MinesweeperThemeBloc
     }
   }
 
-  Stream<MinesweeperThemeState> _handleMineThemeChange(
+  Stream<GameThemeState> _handleMineThemeChange(
       MineThemeChangeEvent event) async* {
     var newMineTheme =
         currentTheme.mineTheme.copyWith(color: event.color, icon: event.icon);
@@ -95,7 +93,7 @@ class MinesweeperThemeBloc
     }
   }
 
-  Stream<MinesweeperThemeState> _handleTileThemeChange(
+  Stream<GameThemeState> _handleTileThemeChange(
       TileThemeChangeEvent event) async* {
     var newTileTheme =
         currentTheme.tileTheme.copyWith(color: event.color, icon: event.icon);
@@ -110,7 +108,7 @@ class MinesweeperThemeBloc
     }
   }
 
-  Stream<MinesweeperThemeState> _handleTileAnimationChange(
+  Stream<GameThemeState> _handleTileAnimationChange(
       TileAnimationChangeEvent event) async* {
     var newTheme = currentTheme.copyWith(tileAnimation: event.animation);
     var success = await _transformThemeAndUpdate(_repository, newTheme);

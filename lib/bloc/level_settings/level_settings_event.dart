@@ -1,14 +1,14 @@
 import 'package:equatable/equatable.dart';
 
-abstract class MinesweeperLevelSettingsEvent with EquatableMixin {
+abstract class LevelSettingsEvent with EquatableMixin {
 
-  const MinesweeperLevelSettingsEvent();
+  const LevelSettingsEvent();
 
   @override
   List<Object?> get props => [];
 }
 
-class HeightChangedEvent extends MinesweeperLevelSettingsEvent {
+class HeightChangedEvent extends LevelSettingsEvent {
   final int height;
 
   const HeightChangedEvent(this.height);
@@ -17,7 +17,7 @@ class HeightChangedEvent extends MinesweeperLevelSettingsEvent {
   List<Object?> get props => [height];
 }
 
-class WidthChangedEvent extends MinesweeperLevelSettingsEvent {
+class WidthChangedEvent extends LevelSettingsEvent {
   final int width;
 
   const WidthChangedEvent(this.width);
@@ -26,7 +26,7 @@ class WidthChangedEvent extends MinesweeperLevelSettingsEvent {
   List<Object?> get props => [width];
 }
 
-class MinesChangedEvent extends MinesweeperLevelSettingsEvent {
+class MinesChangedEvent extends LevelSettingsEvent {
   final int mines;
 
   const MinesChangedEvent(this.mines);
@@ -35,6 +35,6 @@ class MinesChangedEvent extends MinesweeperLevelSettingsEvent {
   List<Object?> get props => [mines];
 }
 
-class ReloadEvent extends MinesweeperLevelSettingsEvent {
+class ReloadEvent extends LevelSettingsEvent {
   
 }

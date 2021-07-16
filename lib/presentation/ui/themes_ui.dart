@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:minesweeper_flutter/bloc/minesweeper_theme.dart';
+import 'package:minesweeper_flutter/bloc/game_theme.dart';
 import 'package:minesweeper_flutter/bloc/unlocked_features_bloc.dart';
 import 'package:minesweeper_flutter/helpers/math.dart';
 import 'package:minesweeper_flutter/presentation/animations/rocking_animation.dart';
@@ -66,14 +66,14 @@ class ThemesUI extends StatelessWidget {
   Widget _buildBackgroundModifier(BuildContext context) {
     return SizedBox(
       height: 70,
-      child: BlocBuilder<MinesweeperThemeBloc, MinesweeperThemeState>(
+      child: BlocBuilder<GameThemeBloc, GameThemeState>(
           buildWhen: (prev, cur) =>
               cur is BackgroundColorUpdatedState ||
               cur is InitialState ||
               cur is ThemeReloadedState,
           builder: (context, state) {
             var color = context
-                .read<MinesweeperThemeBloc>()
+                .read<GameThemeBloc>()
                 .currentTheme
                 .backgroundColor;
             return Spinner<Color>(
@@ -81,7 +81,7 @@ class ThemesUI extends StatelessWidget {
                   context.watch<UnlockedFeaturesBloc>().state.backgroundColors,
               itemBuilder: (item) => ColorWidget(item),
               onValueChanged: (value) => context
-                  .read<MinesweeperThemeBloc>()
+                  .read<GameThemeBloc>()
                   .add(BackgroundColorChangeEvent(value)),
               value: color,
             );
@@ -90,14 +90,14 @@ class ThemesUI extends StatelessWidget {
   }
 
   Widget _buildMineModifier(BuildContext context) {
-    return BlocBuilder<MinesweeperThemeBloc, MinesweeperThemeState>(
+    return BlocBuilder<GameThemeBloc, GameThemeState>(
         buildWhen: (prev, cur) =>
             cur is MineThemeUpdatedState ||
             cur is InitialState ||
             cur is ThemeReloadedState,
         builder: (context, state) {
           var mineTheme =
-              context.read<MinesweeperThemeBloc>().currentTheme.mineTheme;
+              context.read<GameThemeBloc>().currentTheme.mineTheme;
 
           return ThemeModifier(
             title: TextWidget(
@@ -107,10 +107,10 @@ class ThemesUI extends StatelessWidget {
             color: mineTheme.color,
             icon: mineTheme.icon,
             onColorChanged: (color) => context
-                .read<MinesweeperThemeBloc>()
+                .read<GameThemeBloc>()
                 .add(MineThemeChangeEvent(color: color)),
             onIconChanged: (icon) => context
-                .read<MinesweeperThemeBloc>()
+                .read<GameThemeBloc>()
                 .add(MineThemeChangeEvent(icon: icon)),
             colors: context.watch<UnlockedFeaturesBloc>().state.mineColors,
             icons: context.watch<UnlockedFeaturesBloc>().state.mineIcons,
@@ -119,14 +119,14 @@ class ThemesUI extends StatelessWidget {
   }
 
   Widget _buildFlagModifier(BuildContext context) {
-    return BlocBuilder<MinesweeperThemeBloc, MinesweeperThemeState>(
+    return BlocBuilder<GameThemeBloc, GameThemeState>(
       buildWhen: (prev, cur) =>
           cur is FlagThemeUpdatedState ||
           cur is InitialState ||
           cur is ThemeReloadedState,
       builder: (context, state) {
         var flagTheme =
-            context.read<MinesweeperThemeBloc>().currentTheme.flagTheme;
+            context.read<GameThemeBloc>().currentTheme.flagTheme;
         return ThemeModifier(
           title: TextWidget(
             data: context.localization().flagAppearance,
@@ -135,10 +135,10 @@ class ThemesUI extends StatelessWidget {
           color: flagTheme.color,
           icon: flagTheme.icon,
           onColorChanged: (color) => context
-              .read<MinesweeperThemeBloc>()
+              .read<GameThemeBloc>()
               .add(FlagThemeChangeEvent(color: color)),
           onIconChanged: (icon) => context
-              .read<MinesweeperThemeBloc>()
+              .read<GameThemeBloc>()
               .add(FlagThemeChangeEvent(icon: icon)),
           colors: context.watch<UnlockedFeaturesBloc>().state.flagColors,
           icons: context.watch<UnlockedFeaturesBloc>().state.flagIcons,

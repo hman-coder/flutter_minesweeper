@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:minesweeper_flutter/bloc/audio_manager.dart';
-import 'package:minesweeper_flutter/bloc/minesweeper_theme.dart' as gameTheme;
+import 'package:minesweeper_flutter/bloc/game_theme.dart' as gameTheme;
 import 'package:minesweeper_flutter/bloc/unlocked_features_bloc.dart';
 import 'package:minesweeper_flutter/bloc/bloc_observer.dart';
 import 'package:minesweeper_flutter/config/themes/neumorphic_light.dart';
 import 'package:minesweeper_flutter/constants/routes.dart';
 import 'package:minesweeper_flutter/repository/game_settings_repository.dart';
-import 'package:minesweeper_flutter/repository/minesweeper_theme_repository.dart';
+import 'package:minesweeper_flutter/repository/game_theme_repository.dart';
 import 'package:minesweeper_flutter/config/route_generators.dart';
 import 'package:minesweeper_flutter/bloc/game_settings.dart' as gameSettings;
 import 'package:flutter_gen/gen_l10n/minesweeper_localizations.dart';
@@ -24,12 +24,12 @@ class MinesweeperApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CoreBlocsProvider(
-      child: BlocBuilder<gameTheme.MinesweeperThemeBloc,
-              gameTheme.MinesweeperThemeState>(
+      child: BlocBuilder<gameTheme.GameThemeBloc,
+              gameTheme.GameThemeState>(
           buildWhen: _rebuildWhen,
           builder: (context, state) {
             var themeMode = context
-                .read<gameTheme.MinesweeperThemeBloc>()
+                .read<gameTheme.GameThemeBloc>()
                 .currentTheme
                 .themeMode;
             return NeumorphicTheme(
@@ -68,7 +68,7 @@ class CoreBlocsProvider extends StatefulWidget {
 }
 
 class _CoreBlocsProviderState extends State<CoreBlocsProvider> {
-  late gameTheme.MinesweeperThemeBloc _themeBloc;
+  late gameTheme.GameThemeBloc _themeBloc;
   late UnlockedFeaturesBloc _featuresBloc;
   late gameSettings.GameSettingsBloc _gameSettingsBloc;
 
@@ -76,7 +76,7 @@ class _CoreBlocsProviderState extends State<CoreBlocsProvider> {
   void initState() {
     super.initState();
     _themeBloc =
-        gameTheme.MinesweeperThemeBloc(MinesweeperThemeSqliteRepository());
+        gameTheme.GameThemeBloc(GameThemeSqliteRepository());
     _featuresBloc = UnlockedFeaturesBloc(_themeBloc);
     _gameSettingsBloc =
         gameSettings.GameSettingsBloc(GameSettingsSqliteRepository());
@@ -98,7 +98,7 @@ class _CoreBlocsProviderState extends State<CoreBlocsProvider> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<gameTheme.MinesweeperThemeBloc>.value(
+        BlocProvider<gameTheme.GameThemeBloc>.value(
           value: _themeBloc,
         ),
         BlocProvider<gameSettings.GameSettingsBloc>.value(

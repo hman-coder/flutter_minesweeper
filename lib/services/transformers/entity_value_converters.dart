@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minesweeper_flutter/constants/db_default_values.dart';
-import 'package:minesweeper_flutter/model/minesweeper_level_settings.dart';
-import 'package:minesweeper_flutter/model/minesweeper_theme.dart';
+import 'package:minesweeper_flutter/model/level_settings.dart';
+import 'package:minesweeper_flutter/model/game_theme.dart';
 import 'package:minesweeper_flutter/presentation/icons/minesweeper_icons.dart';
 
 extension IntToColor on int {

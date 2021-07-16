@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:minesweeper_flutter/bloc/minesweeper_theme/minesweeper_theme_bloc.dart';
+import 'package:minesweeper_flutter/bloc/game_theme/game_theme_bloc.dart';
 
 /// A button that expands infinitely to fill its parent
 /// Its background color is the same as the color of Mines found in
@@ -21,7 +21,7 @@ class FillSizeButton extends StatelessWidget {
     return ConstrainedBox(
       constraints: BoxConstraints.expand(),
       child: MaterialButton(
-        color: context.watch<MinesweeperThemeBloc>().currentTheme.mineTheme.color,
+        color: context.watch<GameThemeBloc>().currentTheme.mineTheme.color,
         onPressed: this.onPressed,
         child: Center(child: child),
       ),
