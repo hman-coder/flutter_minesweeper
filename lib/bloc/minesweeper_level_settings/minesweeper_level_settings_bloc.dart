@@ -29,7 +29,7 @@ class MinesweeperLevelSettingsBloc extends Bloc<MinesweeperLevelSettingsEvent, M
     MinesweeperLevelSettings? settings;
     
     settings = await repository.fetchSettings();
-    if(settings == null) settings = MinesweeperLevelSettings.beginner();
+    if(settings == null) settings = MinesweeperLevelSettings.fromDifficulty(GameDifficulty.beginner);
     _currentSettings = settings;
     yield SettingsUpdatedState(settings);
   }
