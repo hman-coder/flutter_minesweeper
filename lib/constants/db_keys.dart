@@ -30,6 +30,8 @@ const String kkTileIconKey = "tile_icon";
 const String kkAnimationKey = "animation";
 
 // Minesweeper level settings ---------------------------------------------------------------------
+const String kkLevelSettingsTableKey = "minesweeper_level_settings";
+
 const String kkHeight = "height";
 
 const String kkWidth = "width";
