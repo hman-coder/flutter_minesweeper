@@ -1,12 +1,14 @@
 import 'package:equatable/equatable.dart';
+import 'package:minesweeper_flutter/model/level_settings.dart';
 
 abstract class LevelSettingsEvent with EquatableMixin {
-
   const LevelSettingsEvent();
 
   @override
   List<Object?> get props => [];
 }
+
+class ReloadEvent extends LevelSettingsEvent {}
 
 class HeightChangedEvent extends LevelSettingsEvent {
   final int height;
@@ -35,6 +37,20 @@ class MinesChangedEvent extends LevelSettingsEvent {
   List<Object?> get props => [mines];
 }
 
-class ReloadEvent extends LevelSettingsEvent {
-  
+class DifficultyChangedEvent extends LevelSettingsEvent {
+  final GameDifficulty difficulty;
+
+  const DifficultyChangedEvent(this.difficulty);
+
+  @override
+  List<Object?> get props => [difficulty];
+}
+
+class GameModeChangedEvent extends LevelSettingsEvent {
+  final GameMode mode;
+
+  const GameModeChangedEvent(this.mode);
+
+  @override
+  List<Object?> get props => [mode];
 }

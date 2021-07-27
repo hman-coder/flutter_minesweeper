@@ -1,48 +1,45 @@
-import 'package:flutter/cupertino.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:minesweeper_flutter/helpers/context_extensions.dart';
 
-const String kkMinesKey = 'mines';
-const String kkHeightKey = 'height';
-const String kkWidthKey = 'width';
-
-class LevelSettings {
+class LevelSettings extends Equatable {
   final int height;
 
   final int width;
 
   final int mines;
 
-  LevelSettings.fromDifficulty(GameDifficulty difficulty)
+  final GameDifficulty difficulty;
+
+  final GameMode mode;
+
+  LevelSettings.standardWithDifficulty(GameDifficulty difficulty)
       : height = difficulty.height,
         width = difficulty.width,
-        mines = difficulty.mines;
+        mines = difficulty.mines,
+        this.difficulty = difficulty,
+        this.mode = GameMode.standard;
 
   const LevelSettings({
     required this.height,
     required this.width,
     required this.mines,
+    required this.difficulty,
+    required this.mode
   });
 
-  LevelSettings.fromMap(Map<String, dynamic> map)
-      : this.height = map[kkHeightKey],
-        this.width = map[kkWidthKey],
-        this.mines = map[kkMinesKey];
-
-  LevelSettings copyWith({int? height, int? width, int? mines}) {
+  LevelSettings copyWith({int? height, int? width, int? mines, GameMode? mode, GameDifficulty? difficulty}) {
     return LevelSettings(
       height: height ?? this.height,
       width: width ?? this.width,
       mines: mines ?? this.mines,
+      difficulty: difficulty ?? this.difficulty,
+      mode: mode ?? this.mode
     );
   }
 
-  Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = Map();
-    map[kkMinesKey] = this.mines;
-    map[kkHeightKey] = this.height;
-    map[kkWidthKey] = this.width;
-    return map;
-  }
+  @override
+  List<Object?> get props => [height, width, mines, difficulty, mode];
 }
 
 enum GameMode { standard, endless, run, multiplayer }

@@ -20,8 +20,10 @@ Route Function(RouteSettings settings) materialRouteGenerator = (settings) {
     case kprNewGameRoute:
       return CustomMaterialPageRoute(
         builder: (context) => BlocProvider<LevelSettingsBloc>(
+          lazy: false,
           create: (context) => LevelSettingsBloc(
-              repository: LevelSettingsSqliteRepository()),
+            repository: LevelSettingsSqliteRepository(),
+          ),
           child: NewGameUI(),
         ),
       );

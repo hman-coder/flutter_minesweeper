@@ -36,7 +36,7 @@ extension StringToTileAnimation on String {
         return TileAnimation.normal;
     }
 
-    throw Exception("The given string is not a TileAnimation representation");
+    throw Exception("The given string ($this) is not a TileAnimation representation");
   }
 }
 

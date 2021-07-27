@@ -20,3 +20,48 @@ class SettingsUpdatedState extends LevelSettingsState{
   @override
   List<Object?> get props => [newSettings];
 }
+
+class HeightUpdatedState extends LevelSettingsState{
+  final int height;
+
+  HeightUpdatedState(this.height);
+
+  @override
+  List<Object?> get props => [height];
+}
+
+class WidthUpdatedState extends LevelSettingsState{
+  final int width;
+
+  WidthUpdatedState(this.width);
+
+  @override
+  List<Object?> get props => [width];
+}
+
+class MinesUpdatedState extends LevelSettingsState{
+  final int mines;
+
+  MinesUpdatedState(this.mines);
+
+  @override
+  List<Object?> get props => [mines];
+}
+
+class DifficultyUpdatedState extends LevelSettingsState {
+  final GameDifficulty difficulty;
+
+  DifficultyUpdatedState(this.difficulty);
+
+  @override
+  List<Object?> get props => [difficulty];
+}
+
+class GameModeUpdatedState extends LevelSettingsState {
+  final GameMode mode;
+
+  GameModeUpdatedState(this.mode);
+
+  @override
+  List<Object?> get props => [mode];
+}

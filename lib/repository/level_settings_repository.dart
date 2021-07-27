@@ -1,25 +1,26 @@
-import 'package:minesweeper_flutter/model/level_settings.dart';
+import 'package:minesweeper_flutter/constants/db_keys.dart';
+import 'package:minesweeper_flutter/entities/level_settings_entity.dart';
 import 'package:minesweeper_flutter/repository/sqlite_accessor.dart';
 
-const String ktnLevelSettingsTableName = "minesweeper_level_settings";
-
 abstract class LevelSettingsRepository {
-  Future<LevelSettings?> fetchSettings();  
+  Future<LevelSettingsEntity?> fetchSettings();  
 
-  Future<bool> updateSettings(LevelSettings settingsEntity);
+  Future<bool> updateSettings(LevelSettingsEntity settingsEntity);
 }
 
 class LevelSettingsSqliteRepository extends LevelSettingsRepository{
   @override
-  Future<LevelSettings?> fetchSettings() async {
+  Future<LevelSettingsEntity?> fetchSettings() async {
     var accessor = await SqliteAccessor.accessor;
-    List<Map<String, dynamic>?> results = await accessor.fetch(ktnLevelSettingsTableName);
+    List<Map<String, dynamic>?> results = await accessor.fetch(kkLevelSettingsTableKey);
     if(results[0] == null) return null;
-    return LevelSettings.fromMap(results[0]!);
+    return LevelSettingsEntity.fromMap(results[0]!);
   }
 
   @override
-  Future<bool> updateSettings(LevelSettings settingsEntity) async {
-    return true;
+  Future<bool> updateSettings(LevelSettingsEntity settingsEntity) async {
+    var accessor = await SqliteAccessor.accessor;
+    int updatedRows =  await accessor.updateSettings(kkLevelSettingsTableKey, settingsEntity.toMap());
+    return updatedRows > 0;
   }
 }

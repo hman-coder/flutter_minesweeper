@@ -1,24 +1,25 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:minesweeper_flutter/entities/game_theme_entity.dart';
 import 'package:minesweeper_flutter/presentation/icons/minesweeper_icons.dart';
-import 'package:minesweeper_flutter/repository/minesweeper_theme_repository.dart';
+import 'package:minesweeper_flutter/repository/game_theme_repository.dart';
 import 'package:minesweeper_flutter/services/transformers.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:minesweeper_flutter/bloc/minesweeper_theme.dart';
-import 'package:minesweeper_flutter/model/minesweeper_theme.dart';
+import 'package:minesweeper_flutter/bloc/game_theme.dart';
+import 'package:minesweeper_flutter/model/game_theme.dart';
 import 'package:flutter/material.dart';
 
-class MockThemeRepository extends Mock implements MinesweeperThemeRepository {}
+class MockThemeRepository extends Mock implements GameThemeRepository {}
 
 void main() {
-  late MinesweeperThemeRepository _repo;
-  late MinesweeperThemeBloc _bloc;
+  late GameThemeRepository _repo;
+  late GameThemeBloc _bloc;
 
   final MinesweeperTheme initialTheme = MinesweeperTheme.initial();
   final Color testColor = Colors.yellow;
 
   setUp(() {
     _repo = MockThemeRepository();
-    _bloc = MinesweeperThemeBloc(_repo);
+    _bloc = GameThemeBloc(_repo);
   });
 
   tearDown(() {
@@ -35,7 +36,7 @@ void main() {
 
   test("Check initialized to be true after adding the first ReloadEvent", () {
     when(() => _repo.fetchTheme()).thenAnswer((invocation) =>
-        Future(() => transformModel(initialTheme)));
+        Future(() => transformModel<GameThemeEntity>(initialTheme)));
 
     expectLater(_bloc.stream.map((event) => _bloc.initialized), emitsInOrder([true]));
     _bloc.add(ReloadEvent());
@@ -53,7 +54,7 @@ void main() {
     var updatedColor = initialTheme;
 
     when(() => _repo.fetchTheme()).thenAnswer((invocation) =>
-        Future(() => transformModel(updatedColor)));
+        Future(() => transformModel<GameThemeEntity>(updatedColor)));
 
     expectLater(
         _bloc.stream,
@@ -66,7 +67,7 @@ void main() {
 
   test("Adding ReloadEvent sets initialized to true", () {
     when(() => _repo.fetchTheme())
-        .thenAnswer((invocation) => Future(() => transformModel(initialTheme)));
+        .thenAnswer((invocation) => Future(() => transformModel<GameThemeEntity>(initialTheme)));
 
     expectLater(
         _bloc.stream.map((_) => _bloc.initialized), emitsInOrder([true]));

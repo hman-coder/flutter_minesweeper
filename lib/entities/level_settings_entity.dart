@@ -14,6 +14,14 @@ class LevelSettingsEntity extends Entity with EquatableMixin {
 
   final String difficulty;
 
+  LevelSettingsEntity({
+    required this.height,
+    required this.width,
+    required this.mines,
+    required this.gameMode,
+    required this.difficulty,
+  });
+
   LevelSettingsEntity.fromMap(Map<String, dynamic> map)
       : height = map[kkHeight],
         width = map[kkWidth],

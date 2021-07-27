@@ -72,7 +72,7 @@ class MainMenuUI extends StatelessWidget {
   Widget _buildDeleteTableButton() {
     return IconButton(
       icon: Icon(Icons.delete),
-      onPressed: () async => (await SqliteAccessor.accessor).deleteDb(),
+      onPressed: () async => (await SqliteAccessor.accessor).deleteAllData(),
     );
   }
 

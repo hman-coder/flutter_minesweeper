@@ -1,14 +1,20 @@
 import 'package:minesweeper_flutter/entities/entity.dart';
 import 'package:minesweeper_flutter/entities/game_settings_entity.dart';
 import 'package:minesweeper_flutter/entities/game_theme_entity.dart';
+import 'package:minesweeper_flutter/entities/level_settings_entity.dart';
 import 'package:minesweeper_flutter/model/game_settings.dart';
 import 'package:minesweeper_flutter/model/game_theme.dart';
+import 'package:minesweeper_flutter/model/level_settings.dart';
 import 'package:minesweeper_flutter/services/transformers/model_value_converters.dart';
 
-Entity transformModel(dynamic model) {
-  if (model is MinesweeperTheme) return _transformThemeModel(model);
-  else if (model is GameSettings) return _transformSettingsModel(model);
-  throw Exception("The model you passed doesn't have a transformer");
+T transformModel<T extends Entity>(dynamic model) {
+  if (model is MinesweeperTheme)
+    return _transformThemeModel(model) as T;
+  else if (model is GameSettings)
+    return _transformSettingsModel(model) as T;
+  else if (model is LevelSettings) return _transformLevelSettings(model) as T;
+  throw Exception(
+      "The model you passed (type ${model.runtimeType}) doesn't have a transformer");
 }
 
 GameThemeEntity _transformThemeModel(MinesweeperTheme model) {
@@ -30,4 +36,13 @@ GameSettingsEntity _transformSettingsModel(GameSettings model) {
     sfx: model.sfx ? 1 : 0,
     notifications: model.notifications ? 1 : 0,
   );
+}
+
+LevelSettingsEntity _transformLevelSettings(LevelSettings model) {
+  return LevelSettingsEntity(
+      height: model.height,
+      width: model.width,
+      mines: model.mines,
+      gameMode: model.mode.toDatabaseString(),
+      difficulty: model.difficulty.toDatabaseString());
 }
