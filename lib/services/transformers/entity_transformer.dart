@@ -7,9 +7,12 @@ import 'package:minesweeper_flutter/model/level_settings.dart';
 import 'package:minesweeper_flutter/services/transformers/entity_value_converters.dart';
 
 dynamic transformEntity(dynamic entity) {
-  if(entity == null) return null;
+  if(entity == null) throw Exception("Null entity was given to entity transformer");
   if (entity is GameThemeEntity) return _themeEntityTransformer(entity);
   else if (entity is GameSettingsEntity) return _settingsEntityTransformer(entity);
+  else if (entity is LevelSettingsEntity) return _levelSettingsEntityTransformer(entity);
+  
+  throw Exception("The entity passed to transformEntity method is not a known entity");
 }
 
 MinesweeperTheme _themeEntityTransformer(GameThemeEntity entity) {
