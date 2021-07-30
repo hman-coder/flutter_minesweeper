@@ -11,7 +11,7 @@ class Spinner<T> extends StatefulWidget {
 
   /// The current selected value
   final T value;
-  
+
   /// All values available to select from
   final List<T> values;
 
@@ -52,8 +52,23 @@ class _SpinnerState<T> extends State<Spinner<T>> {
   }
 
   _animateTo(int index) {
-    scrollController.animateToItem(index,
-        duration: Duration(milliseconds: 150), curve: Curves.easeInOut);
+    scrollController.animateToItem(
+      index,
+      duration: Duration(milliseconds: 150),
+      curve: Curves.decelerate,
+    );
+  }
+
+  @override
+  void didUpdateWidget(covariant Spinner<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if(widget.value != oldWidget.value) {
+      int newValueIndex = widget.values.indexOf(widget.value);
+      int oldValueIndex = widget.values.indexOf(oldWidget.value);
+      int difference = newValueIndex - oldValueIndex;
+      int currentIndex = scrollController.selectedItem;
+      _animateTo(currentIndex + difference);
+    }
   }
 
   @override
