@@ -77,8 +77,11 @@ extension StringToDifficulty on String {
         
       case kvExpertGameDifficulty:
         return GameDifficulty.expert;
+
+      case kvCustomGameDifficulty:
+        return GameDifficulty.custom;
     }
 
-    throw Exception("The given string is not a GameDifficulty representation");
+    throw Exception("The given string ($this) is not a GameDifficulty representation");
   }
 }
