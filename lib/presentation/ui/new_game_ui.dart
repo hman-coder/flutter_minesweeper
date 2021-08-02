@@ -17,6 +17,8 @@ import 'package:minesweeper_flutter/presentation/widgets/text_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:minesweeper_flutter/bloc/game_theme/game_theme_bloc.dart';
 
+import 'package:minesweeper_flutter/bloc/level_settings.dart';
+
 /// The duration after which elements that are not related to the selected mode
 /// disapper.
 const Duration _kdShowOrHideWidgetsDuration = Duration(milliseconds: 300);
@@ -31,15 +33,6 @@ class NewGameUI extends StatefulWidget {
 }
 
 class _NewGameUIState extends State<NewGameUI> with TickerProviderStateMixin {
-  GameDifficulty difficulty = GameDifficulty.intermediate;
-
-  GameMode gameMode = GameMode.standard;
-
-  void _changeGameMode(GameMode mode) {
-    if (this.gameMode == mode) return;
-    this.gameMode = mode;
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -48,46 +41,42 @@ class _NewGameUIState extends State<NewGameUI> with TickerProviderStateMixin {
         appBar: AppBar(
           title: Text(context.localization().newGame),
         ),
-        body: Stack(
-          fit: StackFit.expand,
-          alignment: Alignment.center,
-          children: [
-            Positioned(child: _buildBackgroundMine()),
-            Positioned(
-              top: 0,
-              right: 0,
-              left: 0,
-              bottom: _kdBottomPlayButtonHeight,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _GameModePicker(
-                        onGameModeChanged: (mode) =>
-                            setState(() => this._changeGameMode(mode)),
-                        selectedGameMode: this.gameMode),
-                    _GameModeDescriptionCard(gameMode: gameMode),
-                    _DifficultyPicker(
-                      gameMode: gameMode,
-                      currentDifficulty: this.difficulty,
-                      onDifficultyChanged: (difficulty) =>
-                          setState(() => this.difficulty = difficulty),
+        body: BlocBuilder<LevelSettingsBloc, LevelSettingsState>(
+          buildWhen: (prev, cur) =>
+              cur is InitialState || cur is SettingsUpdatedState,
+          builder: (_, state) {
+            bool blocInitialized = state is SettingsUpdatedState;
+            return Stack(
+              fit: StackFit.expand,
+              alignment: Alignment.center,
+              children: [
+                Positioned(child: _buildBackgroundMine()),
+                ! blocInitialized ? Center(child: CircularProgressIndicator()) : Positioned(
+                  top: 0,
+                  right: 0,
+                  left: 0,
+                  bottom: _kdBottomPlayButtonHeight,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        _GameModePicker(),
+                        _GameModeDescriptionCard(),
+                        _DifficultyPicker(),
+                        _DifficultyDetailsCard(),
+                      ],
                     ),
-                    _DifficultyDetailsCard(
-                      currentGameMode: gameMode,
-                      difficulty: difficulty,
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              left: 0,
-              height: _kdBottomPlayButtonHeight,
-              child: _buildPlayButton(),
-            )
-          ],
+                ! blocInitialized ? const SizedBox() : Positioned(
+                  bottom: 0,
+                  right: 0,
+                  left: 0,
+                  height: _kdBottomPlayButtonHeight,
+                  child: _buildPlayButton(),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -114,7 +103,9 @@ class _NewGameUIState extends State<NewGameUI> with TickerProviderStateMixin {
       child: TextWidget(
         data: "Play",
         type: TextWidgetType.headline6,
-        color: context.watch<GameThemeBloc>().currentTheme.isDarkTheme ? Colors.black : Colors.white,
+        color: context.watch<GameThemeBloc>().currentTheme.isDarkTheme
+            ? Colors.black
+            : Colors.white,
       ),
     );
   }
@@ -122,15 +113,12 @@ class _NewGameUIState extends State<NewGameUI> with TickerProviderStateMixin {
 
 /// A card through which players can pick between different [GameMode]s
 class _GameModePicker extends StatelessWidget {
-  final Function(GameMode) onGameModeChanged;
+  const _GameModePicker({
+    Key? key,
+  }) : super(key: key);
 
-  final GameMode selectedGameMode;
-
-  const _GameModePicker(
-      {Key? key,
-      required this.onGameModeChanged,
-      required this.selectedGameMode})
-      : super(key: key);
+  bool _buildWhen(prev, cur) =>
+      cur is SettingsUpdatedState || cur is GameModeUpdatedState;
 
   @override
   Widget build(BuildContext context) {
@@ -139,43 +127,31 @@ class _GameModePicker extends StatelessWidget {
         padding: EdgeInsets.all(20),
         child: Column(
           children: [
-            TextWidget(
-              data:
-                  "${context.localization().gameMode}: ${selectedGameMode.toAppString(context)}",
-              type: TextWidgetType.subtitle1,
+            BlocBuilder<LevelSettingsBloc, LevelSettingsState>(
+              buildWhen: _buildWhen,
+              builder: (context, state) => TextWidget(
+                data:
+                    "${context.localization().gameMode}: ${context.read<LevelSettingsBloc>().currentSettings.mode.toAppString(context)}",
+                type: TextWidgetType.subtitle1,
+              ),
             ),
             kwEnormousVerticalSpacer,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _GameModeButton(
-                  groupValue: this.selectedGameMode,
                   value: GameMode.endless,
                   icon: MinesweeperIcons.infinity,
-                  onTap: (value) {
-                    AudioManager().normalClick();
-                    onGameModeChanged(GameMode.endless);
-                  },
                 ),
                 kwMediumHorizontalSpacer,
                 _GameModeButton(
-                  groupValue: this.selectedGameMode,
                   value: GameMode.standard,
                   icon: MinesweeperIcons.standard,
-                  onTap: (value) {
-                    AudioManager().normalClick();
-                    onGameModeChanged(GameMode.standard);
-                  },
                 ),
                 kwMediumHorizontalSpacer,
                 _GameModeButton(
-                  groupValue: this.selectedGameMode,
                   value: GameMode.run,
                   icon: MinesweeperIcons.run,
-                  onTap: (value) {
-                    AudioManager().normalClick();
-                    onGameModeChanged(GameMode.run);
-                  },
                 ),
               ],
             ),
@@ -187,46 +163,51 @@ class _GameModePicker extends StatelessWidget {
 }
 
 /// The radio button that appears in a [_GameModePicker] instance.
+/// Requires an instance of [LevelSettingsBloc] as an ancestor in the
+/// widget tree.
 class _GameModeButton extends StatelessWidget {
   final GameMode value;
-
-  final GameMode groupValue;
-
-  final NeumorphicRadioListener<GameMode?> onTap;
 
   final IconData icon;
 
   const _GameModeButton({
     Key? key,
     required this.value,
-    required this.groupValue,
-    required this.onTap,
     required this.icon,
   }) : super(key: key);
 
+  bool _buildWhen(prev, cur) =>
+      cur is GameModeUpdatedState || cur is SettingsUpdatedState;
+
   @override
   Widget build(BuildContext context) {
-    return NeumorphicRadio<GameMode>(
-      padding: EdgeInsets.all(10),
-      duration: Duration(milliseconds: 300),
-      onChanged: this.onTap,
-      child: Center(
-        child: Icon(
-          icon,
-          size: 50,
-        ),
-      ),
-      value: value,
-      groupValue: groupValue,
-    );
+    return BlocBuilder<LevelSettingsBloc, LevelSettingsState>(
+        buildWhen: _buildWhen,
+        builder: (_, state) {
+          var bloc = context.read<LevelSettingsBloc>();
+          return NeumorphicRadio<GameMode>(
+            padding: EdgeInsets.all(10),
+            duration: Duration(milliseconds: 300),
+            onChanged: (mode) {
+              bloc.add(GameModeChangedEvent(this.value));
+              AudioManager().normalClick();
+            },
+            child: Center(
+              child: Icon(
+                icon,
+                size: 50,
+              ),
+            ),
+            value: value,
+            groupValue: bloc.currentSettings.mode,
+          );
+        });
   }
 }
 
 class _GameModeDescriptionCard extends StatelessWidget {
-  final GameMode gameMode;
-
-  const _GameModeDescriptionCard({Key? key, required this.gameMode})
-      : super(key: key);
+  bool _buildWhen(prev, cur) =>
+      cur is SettingsUpdatedState || cur is GameModeUpdatedState;
 
   @override
   Widget build(BuildContext context) {
@@ -234,58 +215,52 @@ class _GameModeDescriptionCard extends StatelessWidget {
         context.watch<GameThemeBloc>().currentTheme.isDarkTheme
             ? Colors.white
             : Colors.black;
-    return Card(
-      child: ListTileTheme(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: ExpansionTile(
-          collapsedIconColor: collapseColor,
-          collapsedTextColor: collapseColor,
-          initiallyExpanded: true,
-          childrenPadding: EdgeInsets.all(20),
-          title: AnimatedSwitcher(
-            duration: Duration(milliseconds: 500),
-            child: Text(
-              gameMode.descriptionTitle(context),
-              textAlign: TextAlign.start,
-              key: ValueKey(gameMode),
-            ),
-            transitionBuilder: (child, animation) => FadeTransition(
-              child: child,
-              opacity: animation,
+    return BlocBuilder<LevelSettingsBloc, LevelSettingsState>(
+      buildWhen: _buildWhen,
+      builder: (ctx, state) {
+        var gameMode = ctx.read<LevelSettingsBloc>().currentSettings.mode;
+        return Card(
+          child: ListTileTheme(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: ExpansionTile(
+              collapsedIconColor: collapseColor,
+              collapsedTextColor: collapseColor,
+              initiallyExpanded: true,
+              childrenPadding: EdgeInsets.all(20),
+              title: AnimatedSwitcher(
+                duration: Duration(milliseconds: 500),
+                child: Text(
+                  gameMode.descriptionTitle(context),
+                  textAlign: TextAlign.start,
+                  key: ValueKey(gameMode),
+                ),
+                transitionBuilder: (child, animation) => FadeTransition(
+                  child: child,
+                  opacity: animation,
+                ),
+              ),
+              children: [
+                AnimatedSwitcher(
+                  duration: Duration(milliseconds: 500),
+                  child: Text(
+                    gameMode.description(context),
+                    key: ValueKey(gameMode.toAppString(context)),
+                  ),
+                )
+              ],
             ),
           ),
-          children: [
-            AnimatedSwitcher(
-              duration: Duration(milliseconds: 500),
-              child: Text(
-                gameMode.description(context),
-                key: ValueKey(gameMode.toAppString(context)),
-              ),
-            )
-          ],
-        ),
-      ),
+        );
+      },
     );
   }
 }
 
 /// A [Card] containing a [Text] as a title and a [Spinner] as body.
 /// This widgets allows the user to pick difficulties.
-/// This widget will hide/show itself based on the [gameMode] parameter.
+/// This widget will hide/show itself based on the [LevelSettingsBloc] state.
 class _DifficultyPicker extends StatefulWidget {
-  final Function(GameDifficulty) onDifficultyChanged;
-
-  final GameDifficulty currentDifficulty;
-
-  final GameMode gameMode;
-
-  const _DifficultyPicker(
-      {Key? key,
-      required this.gameMode,
-      required this.currentDifficulty,
-      required this.onDifficultyChanged})
-      : super(key: key);
-
   @override
   _DifficultyPickerState createState() => _DifficultyPickerState();
 }
@@ -298,69 +273,87 @@ class _DifficultyPickerState extends State<_DifficultyPicker>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
 
-  // late List<GameDifficulty> gameDifficulties;
+  @override
+  dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
+    super.initState();
     controller = AnimationController(
         vsync: this, duration: _kdShowOrHideWidgetsDuration);
-    if (_shouldBeVisible) controller.value = 1;
     controller.addListener(() => setState(() {}));
-    super.initState();
+    _onModeUpdated(context.read<LevelSettingsBloc>().currentSettings.mode);
   }
 
-  @override
-  void didUpdateWidget(covariant _DifficultyPicker oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.gameMode != this.widget.gameMode)
-      _showOrHideWidgetBasedOnMode();
-  }
-
-  _showOrHideWidgetBasedOnMode() {
-    if (_shouldBeVisible)
-      controller.forward();
+  _onModeUpdated(GameMode mode) {
+    if (_modeHasDifficulties(mode))
+      _show();
     else
-      controller.reverse();
+      _hide();
   }
 
-  bool get _shouldBeVisible => widget.gameMode.difficulties.isNotEmpty;
+  _show() => controller.forward();
+
+  _hide() => controller.reverse();
+
+  bool _modeHasDifficulties(GameMode mode) => mode.difficulties.isNotEmpty;
+
+  bool _buildWhen(prev, cur) =>
+      cur is InitialState ||
+      cur is SettingsUpdatedState ||
+      cur is GameModeUpdatedState;
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-        maxHeight: _kdDifficultyPickerMaxHeight * controller.value,
-        minHeight: 0,
-      ),
-      child: Card(
-        child: Padding(
-          padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: TextWidget(
-                  type: TextWidgetType.subtitle1,
-                  data: context.localization().difficulty,
-                ),
-              ),
-              SizedBox(
-                height: _kdDifficultlySpinnerHeight * controller.value,
-                child: Spinner<GameDifficulty>(
-                  itemWidth: _kdDifficultyItemWidth,
-                  values: widget.gameMode.difficulties,
-                  itemBuilder: (difficulty) =>
-                      Text(difficulty.toAppString(context)),
-                  onValueChanged: this.widget.onDifficultyChanged,
-                  value: this.widget.currentDifficulty,
-                ),
-              ),
-            ],
+    return BlocConsumer<LevelSettingsBloc, LevelSettingsState>(
+      buildWhen: _buildWhen,
+      listenWhen: _buildWhen,
+      listener: (ctx, state) =>
+          _onModeUpdated(ctx.read<LevelSettingsBloc>().currentSettings.mode),
+      builder: (ctx, state) {
+        print("rebuilding for state $state");
+        var settings = ctx.read<LevelSettingsBloc>().currentSettings;
+        return ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: _kdDifficultyPickerMaxHeight * controller.value,
+            minHeight: 0,
           ),
-        ),
-      ),
+          child: Card(
+            child: Padding(
+              padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: TextWidget(
+                      type: TextWidgetType.subtitle1,
+                      data: context.localization().difficulty,
+                    ),
+                  ),
+                  SizedBox(
+                    height: _kdDifficultlySpinnerHeight * controller.value,
+                    child: Spinner<GameDifficulty>(
+                      itemWidth: _kdDifficultyItemWidth,
+                      values: settings.mode.difficulties,
+                      itemBuilder: (difficulty) =>
+                          Text(difficulty.toAppString(context)),
+                      onValueChanged: (value) => ctx
+                          .read<LevelSettingsBloc>()
+                          .add(DifficultyChangedEvent(value)),
+                      value: settings.difficulty,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -370,14 +363,6 @@ class _DifficultyPickerState extends State<_DifficultyPicker>
 /// can specify/see the number of mines and number of tiles in both horizontal and vertical directions.
 /// This widget hides/shows itself base on the selected [GameMode].
 class _DifficultyDetailsCard extends StatefulWidget {
-  final GameDifficulty difficulty;
-
-  final GameMode currentGameMode;
-
-  const _DifficultyDetailsCard(
-      {Key? key, required this.difficulty, required this.currentGameMode})
-      : super(key: key);
-
   @override
   _DifficultyDetailsCardState createState() => _DifficultyDetailsCardState();
 }
@@ -391,78 +376,90 @@ class _DifficultyDetailsCardState extends State<_DifficultyDetailsCard>
     super.initState();
     controller = AnimationController(
         vsync: this, duration: _kdShowOrHideWidgetsDuration);
-    if (_shouldBeVisible) controller.value = 1;
     controller.addListener(() => setState(() {}));
   }
 
-  @override
-  void didUpdateWidget(covariant _DifficultyDetailsCard oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (this.widget.currentGameMode != oldWidget.currentGameMode)
-      _showOrHideWidgetBasedOnMode();
-  }
-
-  _showOrHideWidgetBasedOnMode() {
-    if (_shouldBeVisible)
-      controller.forward();
+  _onModeUpdated(GameMode mode) {
+    if (_modeHasDifficulties(mode))
+      _show();
     else
-      controller.reverse();
+      _hide();
   }
 
-  bool get _shouldBeVisible =>
-      [GameMode.standard].contains(widget.currentGameMode);
+  _show() => controller.forward();
+
+  _hide() => controller.reverse();
+
+  bool _modeHasDifficulties(GameMode mode) =>
+      [GameMode.standard].contains(mode);
+
+  bool _buildWhen(prev, cur) =>
+      cur is GameModeUpdatedState ||
+      cur is SettingsUpdatedState ||
+      cur is DifficultyUpdatedState;
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(maxHeight: controller.value * 190),
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Center(
-                    child: _DifficultyDetail(
-                  enabled: widget.difficulty == GameDifficulty.custom,
-                  tooltipMessage: context.localization().mines,
-                  icon: MineIcon(size: 40),
-                  initialValue: widget.difficulty.mines,
-                  onValueChanged: (value) => print(value),
-                )),
-              ),
-              Expanded(
-                child: Center(
-                  child: _DifficultyDetail(
-                    enabled: widget.difficulty == GameDifficulty.custom,
-                    tooltipMessage: context.localization().height,
-                    icon: Icon(Icons.expand, size: 40),
-                    initialValue: widget.difficulty.height,
-                    onValueChanged: (value) => print(value),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Center(
-                  child: _DifficultyDetail(
-                    enabled: widget.difficulty == GameDifficulty.custom,
-                    tooltipMessage: context.localization().width,
-                    icon: RotatedBox(
-                      quarterTurns: 1,
-                      child: Icon(Icons.expand, size: 40),
+    return BlocConsumer<LevelSettingsBloc, LevelSettingsState>(
+        buildWhen: _buildWhen,
+        listener: (context, _) => _onModeUpdated(
+            context.read<LevelSettingsBloc>().currentSettings.mode),
+        builder: (context, _) {
+          var bloc = context.read<LevelSettingsBloc>();
+          return ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: controller.value * 190),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Center(
+                        child: _DifficultyDetail(
+                          enabled: bloc.currentSettings.difficulty ==
+                              GameDifficulty.custom,
+                          tooltipMessage: context.localization().mines,
+                          icon: MineIcon(size: 40),
+                          initialValue: bloc.currentSettings.difficulty.mines,
+                          onValueChanged: (value) => print(value),
+                        ),
+                      ),
                     ),
-                    initialValue: widget.difficulty.width,
-                    onValueChanged: (value) => print(value),
-                  ),
+                    Expanded(
+                      child: Center(
+                        child: _DifficultyDetail(
+                          enabled: bloc.currentSettings.difficulty ==
+                              GameDifficulty.custom,
+                          tooltipMessage: context.localization().height,
+                          icon: Icon(Icons.expand, size: 40),
+                          initialValue: bloc.currentSettings.difficulty.height,
+                          onValueChanged: (value) => print(value),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Center(
+                        child: _DifficultyDetail(
+                          enabled: bloc.currentSettings.difficulty ==
+                              GameDifficulty.custom,
+                          tooltipMessage: context.localization().width,
+                          icon: RotatedBox(
+                            quarterTurns: 1,
+                            child: Icon(Icons.expand, size: 40),
+                          ),
+                          initialValue: bloc.currentSettings.difficulty.width,
+                          onValueChanged: (value) => print(value),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
+        });
   }
 }
 
