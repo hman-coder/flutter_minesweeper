@@ -105,11 +105,16 @@ class LevelSettingsBloc extends Bloc<LevelSettingsEvent, LevelSettingsState> {
   Stream<LevelSettingsState> _handleModeChangedEvent(
       GameModeChangedEvent event) async* {
     yield LoadingState();
-    var newSettings = currentSettings.copyWith(mode: event.mode);
-    bool success = await transformModelAndUpdate(newSettings, repository);
+    GameDifficulty? difficulty;
+    if(event.mode == GameMode.run && currentSettings.difficulty == GameDifficulty.custom) {
+      difficulty = GameDifficulty.intermediate;
+    }
 
+    var newSettings = currentSettings.copyWith(mode: event.mode, difficulty: difficulty);
+    bool success = await transformModelAndUpdate(newSettings, repository);
     if (success) {
       yield GameModeUpdatedState(event.mode);
+      if(difficulty != null) yield DifficultyUpdatedState(difficulty);
       this.currentSettings = newSettings;
     }
   }
