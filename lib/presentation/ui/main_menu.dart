@@ -35,7 +35,7 @@ class MainMenuUI extends StatelessWidget {
       appBar: AppBar(
         title: Text(context.localization().minesweeper),
         toolbarHeight: appBarHeight,
-        actions: [_buildDeleteTableButton()],
+        actions: [_buildDeleteTableButton(), _buildDescribeTableButton()],
       ),
       extendBodyBehindAppBar: true,
       body: DelayedWidgetsController(
@@ -73,6 +73,13 @@ class MainMenuUI extends StatelessWidget {
     return IconButton(
       icon: Icon(Icons.delete),
       onPressed: () async => (await SqliteAccessor.accessor).deleteAllData(),
+    );
+  }
+
+  Widget _buildDescribeTableButton() {
+    return IconButton(
+      icon: Icon(Icons.print),
+      onPressed: () async => (await SqliteAccessor.accessor).printData(),
     );
   }
 
